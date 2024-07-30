@@ -1,7 +1,7 @@
 package main
 
 import (
-	"image/color"
+	"image"
 	"log"
 
 	"GoPlat/Components/animations"
@@ -12,7 +12,9 @@ import (
 )
 
 type Game struct {
-	Player *sprites.Player
+	Player       *sprites.Player
+	tilemapJSON  *TilemapJSON
+	tilemapImage *ebiten.Image
 }
 
 func (g *Game) Update() error {
@@ -60,8 +62,32 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	if len(g.Player.ActionAnimations) == 0 {
 		return
 	}
-	screen.Fill(color.RGBA{150, 150, 255, 255})
-	ebitenutil.DebugPrint(screen, "Hello! Welcome to GoPlat!")
+
+	mapDrawOptions := ebiten.DrawImageOptions{}
+	//loop over layers
+	for _, layer := range g.tilemapJSON.Layers {
+		for index, id := range layer.Data {
+			x := index % layer.Width
+			y := index / layer.Width
+
+			x *= 16
+			y *= 16
+
+			srcX := (id - 1) % 15
+			srcY := (id - 1) / 15
+
+			srcX *= 16
+			srcY *= 16
+
+			mapDrawOptions.GeoM.Translate(float64(x), float64(y))
+
+			screen.DrawImage(g.tilemapImage.SubImage(image.Rect(srcX, srcY, srcX+16, srcY+16)).(*ebiten.Image),
+				&mapDrawOptions,
+			)
+
+			mapDrawOptions.GeoM.Reset()
+		}
+	}
 
 	playerDrawOptions := ebiten.DrawImageOptions{}
 
@@ -97,8 +123,17 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 
 func main() {
 	ebiten.SetWindowSize(640, 480)
-	ebiten.SetWindowTitle("Hello, World!")
+	ebiten.SetWindowTitle("GoPlat!")
 
+	tilemapJSON, err := newTilemapJSON("Assets/Maps/test.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tilemapImage, _, err := ebitenutil.NewImageFromFile("Assets/Maps/Tilesets/Dungeon Tile Set.png")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	playerWalk := animations.GeneratePlayerWalk()
 	playerJump := animations.GeneratePlayerJump()
 	playerIdle := animations.GeneratePlayerIdle()
@@ -124,7 +159,9 @@ func main() {
 	}
 
 	game := Game{
-		Player: player,
+		Player:       player,
+		tilemapJSON:  tilemapJSON,
+		tilemapImage: tilemapImage,
 	}
 
 	if err := ebiten.RunGame(&game); err != nil {
