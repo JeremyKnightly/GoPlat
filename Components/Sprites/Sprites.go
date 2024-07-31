@@ -22,6 +22,7 @@ type BioSprite struct {
 
 type Player struct {
 	*BioSprite
+	IsAnimationLocked bool
 	HasSecondJump bool
 	IsWallSliding bool
 }
