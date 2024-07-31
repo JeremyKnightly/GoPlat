@@ -1,10 +1,12 @@
 package main
 
 import (
+	controls "GoPlat/Components/Controls"
 	levels "GoPlat/Components/Levels"
 	sprites "GoPlat/Components/Sprites"
 	startup "GoPlat/Processes/Startup"
 	runtime "GoPlat/Processes/runtime"
+	"fmt"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -13,14 +15,36 @@ import (
 type Game struct {
 	Player       *sprites.Player
 	levels []*levels.Level
-	screen *ebiten.Image
+	controls []controls.Control
 }
 
 func (g *Game) Update() error {
 	shouldIdle := true
 
-	
+
 	//handle movement
+	for idx,_ := range g.controls {
+		controlActivated := true
+		if len(g.controls[idx].Keys) >0 {
+			for _,key := range g.controls[idx].Keys {
+				if !ebiten.IsKeyPressed(key){
+					controlActivated = false
+				}
+			}
+		}else if ebiten.IsKeyPressed(g.controls[idx].Key){
+			controlActivated = true
+		} else {
+			controlActivated = false
+		}
+
+		if controlActivated {
+			fmt.Println("moving ",g.controls[idx].GetDirection())
+		}
+	}
+
+
+
+
 	if ebiten.IsKeyPressed(ebiten.KeyD) {
 		g.Player.IsMovingRight = true
 		g.Player.X += 1
@@ -77,6 +101,7 @@ func main() {
 	var game Game
 	game.Player = startup.CreateDefaultPlayer()
 	game.levels = startup.CreateLevels()
+	game.controls = startup.GetControls()
 
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)

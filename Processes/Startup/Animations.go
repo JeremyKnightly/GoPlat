@@ -21,6 +21,8 @@ func GetPlayerActionAnimations() ([]*animations.ActionAnimation){
 	return animations
 }
 
+
+
 func GetPlayerIdleAnimation() (*animations.Animation){
 	playerIdle := animations.GeneratePlayerIdle()
 
