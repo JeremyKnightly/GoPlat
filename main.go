@@ -4,8 +4,9 @@ import (
 	controls "GoPlat/Components/Controls"
 	levels "GoPlat/Components/Levels"
 	sprites "GoPlat/Components/Sprites"
-	startup "GoPlat/Processes/Startup"
-	runtime "GoPlat/Processes/runtime"
+	movement "GoPlat/Engine/Movement"
+	startup "GoPlat/Engine/Processes/Startup"
+	runtime "GoPlat/Engine/Processes/runtime"
 	"fmt"
 	"log"
 
@@ -19,67 +20,29 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
-	shouldIdle := true
-
-
 	//handle movement
-	for idx,_ := range g.controls {
-		controlActivated := true
-		if len(g.controls[idx].Keys) >0 {
-			for _,key := range g.controls[idx].Keys {
-				if !ebiten.IsKeyPressed(key){
-					controlActivated = false
-				}
-			}
-		}else if ebiten.IsKeyPressed(g.controls[idx].Key){
-			controlActivated = true
+	directions := movement.GetControlsPressed(g.controls)
+	playerVector, specialAction := movement.GetMovementVector(directions)
+
+	g.Player.IsMovingRight = movement.IsMovingRight(playerVector)
+	g.Player.IsIdle = movement.IsIdle(playerVector, specialAction)
+	//Idle Detection
+
+
+	if len(specialAction.Name) > 0  {
+		if specialAction.Name == "JUMP" {
+			g.Player.CurrentAnimationIndex = 1
 		} else {
-			controlActivated = false
+			fmt.Println(specialAction.Name)
 		}
-
-		if controlActivated {
-			fmt.Println("moving ",g.controls[idx].GetDirection())
-		}
-	}
-
-
-
-
-	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.Player.IsMovingRight = true
-		g.Player.X += 1
-		g.Player.CurrentAnimationIndex = 0
-		g.Player.IsIdle = false
-		shouldIdle = false
-	} else if ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.Player.IsMovingRight = false
-		g.Player.X -= 1
-		g.Player.CurrentAnimationIndex = 0
-		g.Player.IsIdle = false
-		shouldIdle = false
-	} else if ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		g.Player.IsMovingRight = true
-		g.Player.X += 1
-		g.Player.CurrentAnimationIndex = 0
-		g.Player.IsIdle = false
-		shouldIdle = false
-	} else if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		g.Player.IsMovingRight = false
-		g.Player.X -= 1
-		g.Player.CurrentAnimationIndex = 0
-		g.Player.IsIdle = false
-		shouldIdle = false
-	}
-
-	if ebiten.IsKeyPressed(ebiten.KeySpace) {
-		g.Player.CurrentAnimationIndex = 1
-		g.Player.IsIdle = false
-		shouldIdle = false
 		g.Player.IsAnimationLocked = true
+	} else {
+		g.Player.CurrentAnimationIndex = 0
 	}
-	if shouldIdle {
-		g.Player.IsIdle = true
-	}
+	fmt.Println(playerVector)
+	newX, newY := controls.AddVector(g.Player.X, g.Player.Y, playerVector)
+	g.Player.X = newX
+	g.Player.Y = newY
 
 	return nil
 }
