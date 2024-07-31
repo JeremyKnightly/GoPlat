@@ -61,6 +61,11 @@ func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 		currentFrame = player.IdleAnimation.Animate()
 	} else {
 		currentFrame = player.ActionAnimations[player.CurrentAnimationIndex].Animate()
+		if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
+			player.IsAnimationLocked = false
+			player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
+		}
 	}
 	screen.DrawImage(currentFrame, &playerDrawOptions)
+
 }

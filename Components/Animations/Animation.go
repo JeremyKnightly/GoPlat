@@ -47,12 +47,11 @@ func (a *ActionAnimation) Animate() *ebiten.Image {
 
 		if a.CurrentFrameIndex >= a.NumberOfFrames {
 			a.AnimationComplete = true
-			if !a.WillAwaitInput {
-				a.CurrentFrameIndex = 0
-
-			} else {
+			if a.WillAwaitInput {
 				a.CurrentFrameIndex = a.NumberOfFrames - 1
 				a.stopAnimation = true
+			} else {
+				a.CurrentFrameIndex = 0
 			}
 		}
 		a.lastUpdate = now

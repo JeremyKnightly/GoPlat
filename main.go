@@ -20,8 +20,8 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
-	if g.Player.IsAnimationLocked{ return nil}
-	
+	if g.Player.IsAnimationLocked{return nil}
+
 	//handle movement
 	directions := movement.GetControlsPressed(g.controls)
 	playerVector, specialAction := movement.GetMovementVector(directions)
