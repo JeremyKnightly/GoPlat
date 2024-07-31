@@ -20,6 +20,8 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
+	if g.Player.IsAnimationLocked{ return nil}
+	
 	//handle movement
 	directions := movement.GetControlsPressed(g.controls)
 	playerVector, specialAction := movement.GetMovementVector(directions)
@@ -39,10 +41,10 @@ func (g *Game) Update() error {
 	} else {
 		g.Player.CurrentAnimationIndex = 0
 	}
-	fmt.Println(playerVector)
 	newX, newY := controls.AddVector(g.Player.X, g.Player.Y, playerVector)
 	g.Player.X = newX
 	g.Player.Y = newY
+
 
 	return nil
 }
