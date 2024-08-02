@@ -136,6 +136,12 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		{0, 0},
 	}
 
+	cancelDirections := []controls.Direction{
+		controls.JUMP,
+		controls.DASHLEFT, 
+		controls.DASHRIGHT,
+	}
+
 	playerJump := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
@@ -146,6 +152,8 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete: false,
 		FrameVectors: frameVectors,
+		AllowCancelAfterFrame: 6,
+		AllowCancelOnDirections: cancelDirections,
 	}
 
 	return playerJump

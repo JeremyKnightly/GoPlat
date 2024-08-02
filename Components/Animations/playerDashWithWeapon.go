@@ -10,8 +10,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerRunNoWeapon() *ActionAnimation {
-	fullRunPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Run.png")
+func GeneratePlayerDashWithWeapon() *ActionAnimation {
+	fullRunPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightWithWeap/Run.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,14 +59,20 @@ func GeneratePlayerRunNoWeapon() *ActionAnimation {
 	}
 
 	frameVectors := []controls.Vector{
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
+		{.6, 0},
+		{.9, 0},
+		{.9, 0},
+		{.9, 0},
+		{.8, 0},
+		{.4, 0},
+		{.3, 0},
+		{.2, 0},
+	}
+
+	cancelDirections := []controls.Direction{
+		controls.JUMP,
+		controls.DASHLEFT, 
+		controls.DASHRIGHT,
 	}
 
 	playerRun := &ActionAnimation{
@@ -79,6 +85,8 @@ func GeneratePlayerRunNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete: false,
 		FrameVectors: frameVectors,
+		AllowCancelAfterFrame: 2,
+		AllowCancelOnDirections: cancelDirections,
 	}
 
 	return playerRun

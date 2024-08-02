@@ -72,6 +72,10 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 		jumpPngSquat,
 		jumpPngLeap,
 		jumpPngLeap,
+		jumpPngLeap,
+		jumpPngLeap,
+		jumpPngLeap,
+		jumpPngLeap,
 		jumpPngPinnacle,
 		jumpPngDown1,
 		jumpPngDown2,
@@ -87,18 +91,29 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 	frameVectors := []controls.Vector{
 		{0, 0},
 		{0, 0},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.25},
+		{.3, .25},
+		{.3, .4},
+		{.3, .4},
+		{.3, .4},
+		{.3, .4},
+		{.3, .4},
+		{.3, .4},
 		{0, 0},
 		{0, 0},
 		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
+	}
+
+	cancelDirections := []controls.Direction{
+		controls.JUMP,
+		controls.DASHLEFT, 
+		controls.DASHRIGHT,
 	}
 
 	playerJump := &ActionAnimation{
@@ -111,6 +126,8 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 		},
 		AnimationComplete: false,
 		FrameVectors: frameVectors,
+		AllowCancelAfterFrame: 6,
+		AllowCancelOnDirections: cancelDirections,
 	}
 
 	return playerJump

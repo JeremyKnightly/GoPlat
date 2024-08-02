@@ -22,6 +22,8 @@ type ActionAnimation struct {
 	WillAwaitInput    bool
 	stopAnimation     bool
 	FrameVectors []controls.Vector
+	AllowCancelAfterFrame uint16
+	AllowCancelOnDirections []controls.Direction
 }
 
 func (a *Animation) Animate() *ebiten.Image {
@@ -39,7 +41,7 @@ func (a *Animation) Animate() *ebiten.Image {
 	return a.Frames[a.CurrentFrameIndex]
 }
 
-func (a *ActionAnimation) Animate() (*ebiten.Image,controls.Vector) {
+func (a *ActionAnimation) Animate() (*ebiten.Image,controls.Vector, bool) {
 	now := time.Now()
 
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
@@ -57,7 +59,9 @@ func (a *ActionAnimation) Animate() (*ebiten.Image,controls.Vector) {
 			}
 		}
 		a.lastUpdate = now
-	}
+	}	
+	allowCancel := false
+	if a.CurrentFrameIndex > a.AllowCancelAfterFrame{allowCancel = true}
 
-	return a.Frames[a.CurrentFrameIndex],a.FrameVectors[a.CurrentFrameIndex]
+	return a.Frames[a.CurrentFrameIndex], a.FrameVectors[a.CurrentFrameIndex], allowCancel
 }
