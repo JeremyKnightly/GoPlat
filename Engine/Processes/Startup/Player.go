@@ -21,7 +21,7 @@ func CreateDefaultPlayer() *sprites.Player {
 		},
 		DashCooldowntime:  time.Millisecond * 3000,
 		DashLastUsed:      time.Date(1994,time.April,4,2,0,0,0,time.Now().Local().Location()),
-		JumpCooldownTime:  time.Millisecond * 1800,
+		JumpCooldownTime:  time.Millisecond * 2200,
 		JumpLastUsed:      time.Date(1994,time.April,4,2,0,0,0,time.Now().Local().Location()),
 		HasSecondJump:     true,
 		IsWallSliding:     false,

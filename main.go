@@ -20,12 +20,16 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
-	if g.Player.IsAnimationLocked {
+	if g.Player.IsAnimationLocked && !g.Player.CanAnimationCancel {
 		return nil
 	}
-
-	//handle movement
 	directions := movement.GetControlsPressed(g.controls)
+	if g.Player.IsAnimationLocked && !movement.IsAnimationCancelling(g.Player, directions) {return nil}
+	if g.Player.IsAnimationLocked {
+		g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
+	}
+	//handle movement
+
 	playerVector, specialAction := movement.GetMovementVector(directions)
 
 	g.Player.IsMovingRight = movement.IsMovingRight(playerVector)

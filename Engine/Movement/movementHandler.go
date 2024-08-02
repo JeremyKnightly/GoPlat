@@ -2,6 +2,7 @@ package movement
 
 import (
 	controls "GoPlat/components/controls"
+	"GoPlat/components/sprites"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -67,4 +68,16 @@ func IsIdle(vector controls.Vector,specialAction controls.Direction) bool {
 	}
 
 	return true
+}
+
+func IsAnimationCancelling (p *sprites.Player, input []controls.Direction) (bool) {
+	for _,direction := range input {
+		for _,cancelDirection := range 
+		p.ActionAnimations[p.CurrentAnimationIndex].AllowCancelOnDirections {
+			if direction == cancelDirection {
+				return true
+			}
+		}
+	}
+	return false
 }

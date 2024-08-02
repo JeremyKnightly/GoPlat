@@ -58,7 +58,7 @@ func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 		screen.DrawImage(currentFrame, &playerDrawOptions)
 		return
 	}
-	currentFrame,frameVector,_ := player.ActionAnimations[player.CurrentAnimationIndex].Animate()
+	currentFrame,frameVector,canCancel := player.ActionAnimations[player.CurrentAnimationIndex].Animate()
 	if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
 		player.IsAnimationLocked = false
 		player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
@@ -72,7 +72,7 @@ func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 		player.X = newVec.DeltaX
 		player.Y = newVec.DeltaY
 	}
+	player.CanAnimationCancel = canCancel
 	playerDrawOptions.GeoM.Translate(frameVector.DeltaX, frameVector.DeltaY)
 	screen.DrawImage(currentFrame, &playerDrawOptions)
-
 }
