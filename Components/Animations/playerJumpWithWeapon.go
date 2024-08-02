@@ -1,6 +1,7 @@
 package animations
 
 import (
+	controls "GoPlat/components/controls"
 	"image"
 	"log"
 	"time"
@@ -83,6 +84,22 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 		jumpPngFlourish,
 		jumpPngReset,
 	}
+	frameVectors := []controls.Vector{
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+	}
 
 	playerJump := &ActionAnimation{
 		Animation: &Animation{
@@ -93,6 +110,7 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 		},
 		AnimationComplete: false,
+		FrameVectors: frameVectors,
 	}
 
 	return playerJump

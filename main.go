@@ -51,9 +51,9 @@ func (g *Game) Update() error {
 	} else {
 		g.Player.CurrentAnimationIndex = 0
 	}
-	newX, newY := controls.AddVector(g.Player.X, g.Player.Y, playerVector)
-	g.Player.X = newX
-	g.Player.Y = newY
+	newVec := playerVector.Add(g.Player.X, g.Player.Y)
+	g.Player.X = newVec.DeltaX
+	g.Player.Y = newVec.DeltaY
 
 	return nil
 }

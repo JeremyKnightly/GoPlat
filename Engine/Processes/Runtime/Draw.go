@@ -53,16 +53,26 @@ func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 	}
 
 	playerDrawOptions.GeoM.Translate(player.X, player.Y)
-	var currentFrame *ebiten.Image
 	if player.IsIdle {
-		currentFrame = player.IdleAnimation.Animate()
-	} else {
-		currentFrame = player.ActionAnimations[player.CurrentAnimationIndex].Animate()
-		if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
-			player.IsAnimationLocked = false
-			player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
-		}
+		currentFrame := player.IdleAnimation.Animate()
+		screen.DrawImage(currentFrame, &playerDrawOptions)
+		return
 	}
+	currentFrame,frameVector := player.ActionAnimations[player.CurrentAnimationIndex].Animate()
+	if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
+		player.IsAnimationLocked = false
+		player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
+	}
+	if player.IsMovingRight {
+		newVec := frameVector.Add(player.X, player.Y)
+		player.X = newVec.DeltaX
+		player.Y = newVec.DeltaY
+	} else {
+		newVec := frameVector.InvertX(player.X, player.Y)
+		player.X = newVec.DeltaX
+		player.Y = newVec.DeltaY
+	}
+	playerDrawOptions.GeoM.Translate(frameVector.DeltaX, frameVector.DeltaY)
 	screen.DrawImage(currentFrame, &playerDrawOptions)
 
 }

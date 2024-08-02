@@ -1,6 +1,7 @@
 package animations
 
 import (
+	controls "GoPlat/components/controls"
 	"image"
 	"log"
 	"time"
@@ -57,6 +58,16 @@ func GeneratePlayerWalkWithWeapon() *ActionAnimation {
 		walkPng7,
 		walkPng8,
 	}
+	frameVectors := []controls.Vector{
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+	}
 
 	playerWalk := &ActionAnimation{
 		Animation: &Animation{
@@ -67,6 +78,7 @@ func GeneratePlayerWalkWithWeapon() *ActionAnimation {
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 		},
 		AnimationComplete: false,
+		FrameVectors: frameVectors,
 	}
 
 	return playerWalk

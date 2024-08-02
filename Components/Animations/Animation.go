@@ -1,6 +1,7 @@
 package animations
 
 import (
+	controls "GoPlat/components/controls"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -20,6 +21,7 @@ type ActionAnimation struct {
 	AnimationComplete bool
 	WillAwaitInput    bool
 	stopAnimation     bool
+	FrameVectors []controls.Vector
 }
 
 func (a *Animation) Animate() *ebiten.Image {
@@ -37,7 +39,7 @@ func (a *Animation) Animate() *ebiten.Image {
 	return a.Frames[a.CurrentFrameIndex]
 }
 
-func (a *ActionAnimation) Animate() *ebiten.Image {
+func (a *ActionAnimation) Animate() (*ebiten.Image,controls.Vector) {
 	now := time.Now()
 
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
@@ -57,5 +59,5 @@ func (a *ActionAnimation) Animate() *ebiten.Image {
 		a.lastUpdate = now
 	}
 
-	return a.Frames[a.CurrentFrameIndex]
+	return a.Frames[a.CurrentFrameIndex],a.FrameVectors[a.CurrentFrameIndex]
 }
