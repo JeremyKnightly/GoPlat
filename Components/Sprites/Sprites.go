@@ -2,6 +2,7 @@ package sprites
 
 import (
 	"GoPlat/Components/animations"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -22,7 +23,11 @@ type BioSprite struct {
 
 type Player struct {
 	*BioSprite
+	DashCooldowntime  time.Duration
+	DashLastUsed      time.Time
+	JumpCooldownTime  time.Duration
+	JumpLastUsed      time.Time
 	IsAnimationLocked bool
-	HasSecondJump bool
-	IsWallSliding bool
+	HasSecondJump     bool
+	IsWallSliding     bool
 }

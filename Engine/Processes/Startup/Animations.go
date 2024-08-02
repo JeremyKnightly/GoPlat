@@ -8,10 +8,12 @@ import (
 func GetPlayerActionAnimations() []*animations.ActionAnimation {
 	playerWalk := animations.GeneratePlayerWalkNoWeapon()
 	playerJump := animations.GeneratePlayerJumpNoWeapon()
+	playerRun := animations.GeneratePlayerRunNoWeapon()
 
 	animations := []*animations.ActionAnimation{
 		playerWalk,
 		playerJump,
+		playerRun,
 	}
 
 	if len(animations) == 0 {

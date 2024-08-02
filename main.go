@@ -7,20 +7,22 @@ import (
 	movement "GoPlat/engine/movement"
 	runtime "GoPlat/engine/processes/runtime"
 	startup "GoPlat/engine/processes/startup"
-	"fmt"
 	"log"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Game struct {
-	Player       *sprites.Player
-	levels []*levels.Level
+	Player   *sprites.Player
+	levels   []*levels.Level
 	controls []controls.Control
 }
 
 func (g *Game) Update() error {
-	if g.Player.IsAnimationLocked{return nil}
+	if g.Player.IsAnimationLocked {
+		return nil
+	}
 
 	//handle movement
 	directions := movement.GetControlsPressed(g.controls)
@@ -30,12 +32,20 @@ func (g *Game) Update() error {
 	g.Player.IsIdle = movement.IsIdle(playerVector, specialAction)
 	//Idle Detection
 
-
-	if len(specialAction.Name) > 0  {
-		if specialAction.Name == "JUMP" {
+	if len(specialAction.Name) > 0 {
+		if specialAction.Name == "JUMP" && time.Now().Sub(g.Player.JumpLastUsed) >= g.Player.JumpCooldownTime {
 			g.Player.CurrentAnimationIndex = 1
+			g.Player.JumpLastUsed = time.Now()
+		} else if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime &&
+			specialAction.Name == "DASHLEFT" {
+			g.Player.CurrentAnimationIndex = 2
+			g.Player.DashLastUsed = time.Now()
+		} else if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime &&
+			specialAction.Name == "DASHRIGHT" {
+			g.Player.CurrentAnimationIndex = 2
+			g.Player.DashLastUsed = time.Now()
 		} else {
-			fmt.Println(specialAction.Name)
+			return nil
 		}
 		g.Player.IsAnimationLocked = true
 	} else {
@@ -45,14 +55,13 @@ func (g *Game) Update() error {
 	g.Player.X = newX
 	g.Player.Y = newY
 
-
 	return nil
 }
 
-//func (g *Game) Draw(screen *ebiten.Image) {
+// func (g *Game) Draw(screen *ebiten.Image) {
 func (g *Game) Draw(screen *ebiten.Image) {
 	runtime.DrawLevel(g.levels[0], screen)
-	runtime.DrawPlayer(g.Player, screen)	
+	runtime.DrawPlayer(g.Player, screen)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
