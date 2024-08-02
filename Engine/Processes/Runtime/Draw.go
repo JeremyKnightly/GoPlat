@@ -1,8 +1,8 @@
 package runtime
 
 import (
-	levels "GoPlat/Components/Levels"
-	sprites "GoPlat/Components/Sprites"
+	levels "GoPlat/components/levels"
+	sprites "GoPlat/components/sprites"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -40,9 +40,6 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 	playerDrawOptions := ebiten.DrawImageOptions{}
 
-	if player.CurrentAnimationIndex == 1 {
-		playerDrawOptions.GeoM.Translate(0, -16)
-	}
 	if !player.IsMovingRight {
 		playerDrawOptions.GeoM.Scale(-1, 1)
 

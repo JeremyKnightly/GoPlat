@@ -1,7 +1,7 @@
 package movement
 
 import (
-	controls "GoPlat/Components/Controls"
+	controls "GoPlat/components/controls"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"

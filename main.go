@@ -1,12 +1,12 @@
 package main
 
 import (
-	controls "GoPlat/Components/Controls"
-	levels "GoPlat/Components/Levels"
-	sprites "GoPlat/Components/Sprites"
-	movement "GoPlat/Engine/Movement"
-	startup "GoPlat/Engine/Processes/Startup"
-	runtime "GoPlat/Engine/Processes/runtime"
+	controls "GoPlat/components/controls"
+	levels "GoPlat/components/levels"
+	sprites "GoPlat/components/sprites"
+	movement "GoPlat/engine/movement"
+	runtime "GoPlat/engine/processes/runtime"
+	startup "GoPlat/engine/processes/startup"
 	"fmt"
 	"log"
 

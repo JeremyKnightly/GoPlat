@@ -1,7 +1,7 @@
 package startup
 
 import (
-	controls "GoPlat/Components/Controls"
+	controls "GoPlat/components/controls"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )

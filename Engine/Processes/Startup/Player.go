@@ -1,8 +1,8 @@
 package startup
 
-import sprites "GoPlat/Components/Sprites"
+import "GoPlat/components/sprites"
 
-func CreateDefaultPlayer() (*sprites.Player) {
+func CreateDefaultPlayer() *sprites.Player {
 	player := &sprites.Player{
 		BioSprite: &sprites.BioSprite{
 			Sprite: &sprites.Sprite{

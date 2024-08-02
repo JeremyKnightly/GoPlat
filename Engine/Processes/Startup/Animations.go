@@ -5,9 +5,9 @@ import (
 	"log"
 )
 
-func GetPlayerActionAnimations() ([]*animations.ActionAnimation){
-	playerWalk := animations.GeneratePlayerWalk()
-	playerJump := animations.GeneratePlayerJump()
+func GetPlayerActionAnimations() []*animations.ActionAnimation {
+	playerWalk := animations.GeneratePlayerWalkNoWeapon()
+	playerJump := animations.GeneratePlayerJumpNoWeapon()
 
 	animations := []*animations.ActionAnimation{
 		playerWalk,
@@ -21,10 +21,8 @@ func GetPlayerActionAnimations() ([]*animations.ActionAnimation){
 	return animations
 }
 
-
-
-func GetPlayerIdleAnimation() (*animations.Animation){
-	playerIdle := animations.GeneratePlayerIdle()
+func GetPlayerIdleAnimation() *animations.Animation {
+	playerIdle := animations.GeneratePlayerIdleNoWeapon()
 
 	return playerIdle
 }
