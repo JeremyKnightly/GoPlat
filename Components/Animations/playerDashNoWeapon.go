@@ -71,7 +71,7 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
-		controls.DASHLEFT, 
+		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 
@@ -83,9 +83,9 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			frameDuration:     time.Millisecond * 100,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 		},
-		AnimationComplete: false,
-		FrameVectors: frameVectors,
-		AllowCancelAfterFrame: 2,
+		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
+		AllowCancelAfterFrame:   2,
 		AllowCancelOnDirections: cancelDirections,
 	}
 

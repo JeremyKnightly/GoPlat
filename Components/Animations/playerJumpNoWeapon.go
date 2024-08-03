@@ -91,7 +91,6 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		image.Rect(1168, 16, 1200, 48),
 	).(*ebiten.Image)
 
-
 	frames := []*ebiten.Image{
 		jumpPng1,
 		jumpPng2,
@@ -138,7 +137,7 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
-		controls.DASHLEFT, 
+		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 
@@ -147,12 +146,12 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 30,
+			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 		},
-		AnimationComplete: false,
-		FrameVectors: frameVectors,
-		AllowCancelAfterFrame: 6,
+		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
+		AllowCancelAfterFrame:   6,
 		AllowCancelOnDirections: cancelDirections,
 	}
 

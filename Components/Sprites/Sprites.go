@@ -23,13 +23,14 @@ type BioSprite struct {
 
 type Player struct {
 	*BioSprite
-	DashCooldowntime  time.Duration
-	DashLastUsed      time.Time
-	JumpCooldownTime  time.Duration
-	JumpLastUsed      time.Time
-	IsPhysicsLocked bool
+	DashCooldowntime   time.Duration
+	DashLastUsed       time.Time
+	JumpCooldownTime   time.Duration
+	JumpLastUsed       time.Time
+	DoubleJumpWindow   time.Duration
+	IsPhysicsLocked    bool
 	CanAnimationCancel bool
-	IsAnimationLocked bool
-	HasSecondJump     bool
-	IsWallSliding     bool
+	IsAnimationLocked  bool
+	HasSecondJump      bool
+	IsWallSliding      bool
 }

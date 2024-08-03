@@ -7,6 +7,7 @@ import (
 	movement "GoPlat/engine/movement"
 	runtime "GoPlat/engine/processes/runtime"
 	startup "GoPlat/engine/processes/startup"
+	"fmt"
 	"log"
 	"time"
 
@@ -24,12 +25,11 @@ func (g *Game) Update() error {
 		return nil
 	}
 	directions := movement.GetControlsPressed(g.controls)
-	if g.Player.IsAnimationLocked && !movement.IsAnimationCancelling(g.Player, directions) {return nil}
-	if g.Player.IsAnimationLocked {
-		g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
+	if g.Player.IsAnimationLocked && !movement.IsAnimationCancelling(g.Player, directions) {
+		return nil
 	}
-	//handle movement
 
+	//handle movement
 	playerVector, specialAction := movement.GetMovementVector(directions)
 
 	g.Player.IsMovingRight = movement.IsMovingRight(playerVector)
@@ -37,17 +37,47 @@ func (g *Game) Update() error {
 	//Idle Detection
 
 	if len(specialAction.Name) > 0 {
-		if specialAction.Name == "JUMP" && time.Now().Sub(g.Player.JumpLastUsed) >= g.Player.JumpCooldownTime {
-			g.Player.CurrentAnimationIndex = 1
-			g.Player.JumpLastUsed = time.Now()
-		} else if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime &&
-			specialAction.Name == "DASHLEFT" {
-			g.Player.CurrentAnimationIndex = 2
-			g.Player.DashLastUsed = time.Now()
-		} else if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime &&
-			specialAction.Name == "DASHRIGHT" {
-			g.Player.CurrentAnimationIndex = 2
-			g.Player.DashLastUsed = time.Now()
+		if specialAction.Name == "JUMP" {
+			//checks if cooldown has reset or if player can double jump
+			if time.Now().Sub(g.Player.JumpLastUsed) >= g.Player.JumpCooldownTime {
+				if g.Player.IsAnimationLocked {
+					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
+				}
+				g.Player.HasSecondJump = true
+				fmt.Println("Jump")
+				g.Player.CurrentAnimationIndex = 1
+				g.Player.JumpLastUsed = time.Now()
+			} else if g.Player.JumpLastUsed.Add(g.Player.DoubleJumpWindow).After(time.Now()) &&
+				g.Player.HasSecondJump {
+				fmt.Println("Do Dbl Jump")
+				if g.Player.IsAnimationLocked {
+					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
+				}
+				g.Player.CurrentAnimationIndex = 1
+				g.Player.HasSecondJump = false
+			} else {
+				return nil
+			}
+		} else if specialAction.Name == "DASHLEFT" {
+			if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime {
+				g.Player.CurrentAnimationIndex = 2
+				g.Player.DashLastUsed = time.Now()
+				if g.Player.IsAnimationLocked {
+					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
+				}
+			} else {
+				return nil
+			}
+		} else if specialAction.Name == "DASHRIGHT" {
+			if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime {
+				g.Player.CurrentAnimationIndex = 2
+				g.Player.DashLastUsed = time.Now()
+				if g.Player.IsAnimationLocked {
+					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
+				}
+			} else {
+				return nil
+			}
 		} else {
 			return nil
 		}

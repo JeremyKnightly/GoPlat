@@ -112,7 +112,7 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
-		controls.DASHLEFT, 
+		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 
@@ -121,12 +121,12 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 150,
+			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 		},
-		AnimationComplete: false,
-		FrameVectors: frameVectors,
-		AllowCancelAfterFrame: 6,
+		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
+		AllowCancelAfterFrame:   6,
 		AllowCancelOnDirections: cancelDirections,
 	}
 

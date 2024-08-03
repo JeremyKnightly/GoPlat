@@ -58,11 +58,14 @@ func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 		screen.DrawImage(currentFrame, &playerDrawOptions)
 		return
 	}
-	currentFrame,frameVector,canCancel := player.ActionAnimations[player.CurrentAnimationIndex].Animate()
 	if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
 		player.IsAnimationLocked = false
 		player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
+		player.CurrentAnimationIndex = 0
 	}
+
+	currentFrame, frameVector, canCancel := player.ActionAnimations[player.CurrentAnimationIndex].Animate()
+
 	if player.IsMovingRight {
 		newVec := frameVector.Add(player.X, player.Y)
 		player.X = newVec.DeltaX
