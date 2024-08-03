@@ -27,7 +27,6 @@ type Player struct {
 	DashLastUsed       time.Time
 	JumpCooldownTime   time.Duration
 	JumpLastUsed       time.Time
-	DoubleJumpWindow   time.Duration
 	IsPhysicsLocked    bool
 	CanAnimationCancel bool
 	IsAnimationLocked  bool

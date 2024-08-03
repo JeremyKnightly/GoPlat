@@ -7,7 +7,6 @@ import (
 	movement "GoPlat/engine/movement"
 	runtime "GoPlat/engine/processes/runtime"
 	startup "GoPlat/engine/processes/startup"
-	"fmt"
 	"log"
 	"time"
 
@@ -44,12 +43,9 @@ func (g *Game) Update() error {
 					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
 				}
 				g.Player.HasSecondJump = true
-				fmt.Println("Jump")
 				g.Player.CurrentAnimationIndex = 1
 				g.Player.JumpLastUsed = time.Now()
-			} else if g.Player.JumpLastUsed.Add(g.Player.DoubleJumpWindow).After(time.Now()) &&
-				g.Player.HasSecondJump {
-				fmt.Println("Do Dbl Jump")
+			} else if g.Player.HasSecondJump {
 				if g.Player.IsAnimationLocked {
 					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
 				}

@@ -24,7 +24,6 @@ func CreateDefaultPlayer() *sprites.Player {
 		JumpCooldownTime:   time.Millisecond * 2200,
 		JumpLastUsed:       time.Date(1994, time.April, 4, 2, 0, 0, 0, time.Now().Local().Location()),
 		HasSecondJump:      true,
-		DoubleJumpWindow:   time.Millisecond * 550,
 		IsWallSliding:      false,
 		IsAnimationLocked:  false,
 		IsPhysicsLocked:    false,
