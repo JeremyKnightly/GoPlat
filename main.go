@@ -8,7 +8,6 @@ import (
 	runtime "GoPlat/engine/processes/runtime"
 	startup "GoPlat/engine/processes/startup"
 	"log"
-	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -20,71 +19,7 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
-	if g.Player.IsAnimationLocked && !g.Player.CanAnimationCancel {
-		return nil
-	}
-	directions := movement.GetControlsPressed(g.controls)
-	if g.Player.IsAnimationLocked && !movement.IsAnimationCancelling(g.Player, directions) {
-		return nil
-	}
-
-	//handle movement
-	playerVector, specialAction := movement.GetMovementVector(directions)
-
-	g.Player.IsMovingRight = movement.IsMovingRight(playerVector)
-	g.Player.IsIdle = movement.IsIdle(playerVector, specialAction)
-	//Idle Detection
-
-	if len(specialAction.Name) > 0 {
-		if specialAction.Name == "JUMP" {
-			//checks if cooldown has reset or if player can double jump
-			if time.Now().Sub(g.Player.JumpLastUsed) >= g.Player.JumpCooldownTime {
-				if g.Player.IsAnimationLocked {
-					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
-				}
-				g.Player.HasSecondJump = true
-				g.Player.CurrentAnimationIndex = 1
-				g.Player.JumpLastUsed = time.Now()
-			} else if g.Player.HasSecondJump {
-				if g.Player.IsAnimationLocked {
-					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
-				}
-				g.Player.CurrentAnimationIndex = 1
-				g.Player.HasSecondJump = false
-			} else {
-				return nil
-			}
-		} else if specialAction.Name == "DASHLEFT" {
-			if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime {
-				g.Player.CurrentAnimationIndex = 2
-				g.Player.DashLastUsed = time.Now()
-				if g.Player.IsAnimationLocked {
-					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
-				}
-			} else {
-				return nil
-			}
-		} else if specialAction.Name == "DASHRIGHT" {
-			if time.Now().Sub(g.Player.DashLastUsed) >= g.Player.DashCooldowntime {
-				g.Player.CurrentAnimationIndex = 2
-				g.Player.DashLastUsed = time.Now()
-				if g.Player.IsAnimationLocked {
-					g.Player.ActionAnimations[g.Player.CurrentAnimationIndex].ResetAnimation = true
-				}
-			} else {
-				return nil
-			}
-		} else {
-			return nil
-		}
-		g.Player.IsAnimationLocked = true
-	} else {
-		g.Player.CurrentAnimationIndex = 0
-	}
-	newVec := playerVector.Add(g.Player.X, g.Player.Y)
-	g.Player.X = newVec.DeltaX
-	g.Player.Y = newVec.DeltaY
-
+	movement.HandleMovementCalculations(g.Player, g.controls)
 	return nil
 }
 
@@ -95,7 +30,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	return 340, 270
 }
 
 func main() {

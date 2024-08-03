@@ -8,6 +8,36 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+func HandleMovementCalculations(p *sprites.Player, controls []controls.Control) {
+	if p.IsAnimationLocked && !p.CanAnimationCancel {
+		return
+	}
+	directions := GetControlsPressed(controls)
+	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
+		return
+	}
+
+	//handle movement
+	playerVector, specialAction := GetMovementVector(directions)
+
+	p.IsMovingRight = IsMovingRight(playerVector)
+	p.IsIdle = IsIdle(playerVector, specialAction)
+	//Idle Detection
+
+	if len(specialAction.Name) > 0 {
+		validMove := HandleSpecialAction(p, specialAction.Name)
+		if !validMove {return}
+		p.IsAnimationLocked = true
+	} else {
+		p.CurrentAnimationIndex = 0
+	}
+	newVec := playerVector.Add(p.X, p.Y)
+	p.X = newVec.DeltaX
+	p.Y = newVec.DeltaY
+}
+
+
+
 func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
 	var directions []controls.Direction
 	for _, control := range controlSlice {

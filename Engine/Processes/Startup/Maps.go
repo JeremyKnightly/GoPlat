@@ -8,7 +8,11 @@ import (
 )
 
 func CreateLevels() ([]*levels.Level) {
-	testLevel, err := levels.NewTilemapScene("Assets/Maps/test.json")
+	//testLevel, err := levels.NewTilemapScene("Assets/Maps/test.json")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	levelOneMap, err := levels.NewTilemapScene("Assets/Maps/LevelOne.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -18,7 +22,7 @@ func CreateLevels() ([]*levels.Level) {
 	}
 
 	levelOne := &levels.Level{
-		TilemapScene: testLevel,
+		TilemapScene: levelOneMap,
 		TilemapImage: dungeonTiles,
 	}
 

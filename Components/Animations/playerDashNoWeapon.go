@@ -50,6 +50,9 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 	frames := []*ebiten.Image{
 		runPng1,
 		runPng2,
+		runPng2,
+		runPng2,
+		runPng2,
 		runPng3,
 		runPng4,
 		runPng5,
@@ -60,18 +63,21 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{.6, 0},
-		{.9, 0},
-		{.9, 0},
-		{.9, 0},
 		{.8, 0},
+		{.8, 0},
+		{.8, 0},
+		{.8, 0},
+		{.7, 0},
+		{.6, 0},
+		{.5, 0},
 		{.4, 0},
 		{.3, 0},
-		{.2, 0},
+		{.25, 0},
 	}
 
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
-		controls.DASHLEFT,
+		controls.DASHLEFT, 
 		controls.DASHRIGHT,
 	}
 
@@ -80,12 +86,12 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 100,
+			frameDuration:     time.Millisecond * 80,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 		},
-		AnimationComplete:       false,
-		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   2,
+		AnimationComplete: false,
+		FrameVectors: frameVectors,
+		AllowCancelAfterFrame: 2,
 		AllowCancelOnDirections: cancelDirections,
 	}
 

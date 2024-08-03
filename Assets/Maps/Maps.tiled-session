@@ -5,23 +5,54 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        "Tilesets",
+        "."
     ],
     "fileStates": {
+        "Dungeon.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
         "Tilesets/Dungeon.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "test.json": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 183.75,
+                "y": 150
+            }
+        },
+        "test.tmj": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 974.2424242424242,
+                "y": 272.72727272727275
+            }
         }
     },
-    "last.imagePath": "C:/Users/THEKi/Downloads/Dungeon Tile Set/Dungeon Tile Set",
-    "map.height": 200,
+    "last.externalTilesetPath": "C:/Users/Jeremy D Chevalier/Downloads",
+    "last.imagePath": "C:/Users/Jeremy D Chevalier/Downloads",
+    "map.height": 100,
     "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
+        "test.tmj",
+        "test.json"
     ],
     "project": "Maps.tiled-project",
     "recentFiles": [
+        "test.tmj",
+        "test.json",
         "Tilesets/Dungeon.tsx"
     ],
+    "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
