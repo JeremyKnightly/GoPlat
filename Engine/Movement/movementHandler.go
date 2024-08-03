@@ -8,13 +8,17 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func HandleMovementCalculations(p *sprites.Player, controls []controls.Control) {
-	if p.IsAnimationLocked && !p.CanAnimationCancel {
-		return
+func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control) controls.Vector {
+	rtnVector := controls.Vector{
+		DeltaX: 0,
+		DeltaY: 0,
 	}
-	directions := GetControlsPressed(controls)
+	if p.IsAnimationLocked && !p.CanAnimationCancel {
+		return rtnVector
+	}
+	directions := GetControlsPressed(playerControls)
 	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
-		return
+		return rtnVector
 	}
 
 	//handle movement
@@ -26,14 +30,15 @@ func HandleMovementCalculations(p *sprites.Player, controls []controls.Control) 
 
 	if len(specialAction.Name) > 0 {
 		validMove := HandleSpecialAction(p, specialAction.Name)
-		if !validMove {return}
+		if !validMove {return rtnVector}
 		p.IsAnimationLocked = true
 	} else {
 		p.CurrentAnimationIndex = 0
 	}
-	newVec := playerVector.Add(p.X, p.Y)
-	p.X = newVec.DeltaX
-	p.Y = newVec.DeltaY
+	rtnVector.DeltaX = playerVector.DeltaX
+	rtnVector.DeltaY = playerVector.DeltaY
+
+	return rtnVector
 }
 
 
