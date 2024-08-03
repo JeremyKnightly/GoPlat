@@ -13,8 +13,8 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 	//loop over layers
 	for _, layer := range level.Layers {
 		for index, id := range layer.Data {
-			x := index % layer.Width
-			y := index / layer.Width
+			x := index % int(layer.Width)
+			y := index / int(layer.Width)
 
 			x *= 16
 			y *= 16

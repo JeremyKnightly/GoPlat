@@ -14,6 +14,7 @@ type Animation struct {
 	frameDuration     time.Duration
 	lastUpdate        time.Time
 	MaxFrameWidth     float64
+	MaxFrameHeight    float64
 }
 
 type ActionAnimation struct {

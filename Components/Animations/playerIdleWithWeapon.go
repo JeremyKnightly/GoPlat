@@ -94,6 +94,7 @@ func GeneratePlayerIdleWithWeapon() *Animation {
 		CurrentFrameIndex: 0,
 		frameDuration:     time.Millisecond * 200,
 		MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
+		MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 	}
 
 	return playerIdle

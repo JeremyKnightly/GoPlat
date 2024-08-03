@@ -82,6 +82,7 @@ func GeneratePlayerDashWithWeapon() *ActionAnimation {
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 100,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
+			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete: false,
 		FrameVectors: frameVectors,

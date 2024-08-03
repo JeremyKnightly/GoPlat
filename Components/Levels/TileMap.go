@@ -14,8 +14,8 @@ type Level struct {
 
 type TilemapLayer struct {
 	Data   []int `json:"data"`
-	Width  int   `json: "width"`
-	Height int   `json:"height"`
+	Width  float64   `json: "width"`
+	Height float64   `json:"height"`
 }
 
 type TilemapScene struct {

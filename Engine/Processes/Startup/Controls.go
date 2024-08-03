@@ -7,6 +7,10 @@ import (
 )
 
 func GetControls() []controls.Control {
+	w := controls.Control{
+		Key: ebiten.KeyW,
+		Direction: controls.UP,
+	}
 	a := controls.Control{
 		Key: ebiten.KeyA,
 		Direction: controls.LEFT,
@@ -73,6 +77,7 @@ func GetControls() []controls.Control {
 	}
 
 	return []controls.Control{
+		w,
 		a,
 		left,
 		d,
