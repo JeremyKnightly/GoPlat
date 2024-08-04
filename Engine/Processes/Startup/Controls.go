@@ -43,35 +43,7 @@ func GetControls() []controls.Control {
 		Key: ebiten.KeyQ,
 		Direction: controls.DASHLEFT,
 	}
-/*	shiftD := controls.Control {
-		Keys: []ebiten.Key{
-			ebiten.KeyShift,
-			ebiten.KeyD,
-		},
-		Direction: controls.DASHRIGHT,
-	}
-	shiftR := controls.Control {
-		Keys: []ebiten.Key{
-			ebiten.KeyShift,
-			ebiten.KeyArrowRight,
-		},
-		Direction: controls.DASHRIGHT,
-	}
-	shiftA := controls.Control {
-		Keys: []ebiten.Key{
-			ebiten.KeyShift,
-			ebiten.KeyA,
-		},
-		Direction: controls.DASHLEFT,
-	}
-	shiftL := controls.Control {
-		Keys: []ebiten.Key{
-			ebiten.KeyShift,
-			ebiten.KeyArrowLeft,
-		},
-		Direction: controls.DASHLEFT,
-	}
-*/	space := controls.Control {
+	space := controls.Control {
 		Key: ebiten.KeySpace,
 		Direction: controls.JUMP,
 	}

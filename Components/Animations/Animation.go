@@ -13,8 +13,7 @@ type Animation struct {
 	CurrentFrameIndex uint16
 	frameDuration     time.Duration
 	lastUpdate        time.Time
-	MaxFrameWidth     float64
-	MaxFrameHeight    float64
+	MaxFrameWidth, MaxFrameHeight     float64
 }
 
 type ActionAnimation struct {
@@ -43,7 +42,7 @@ func (a *Animation) Animate() *ebiten.Image {
 	return a.Frames[a.CurrentFrameIndex]
 }
 
-func (a *ActionAnimation) Animate() (*ebiten.Image,controls.Vector, bool) {
+func (a *ActionAnimation) AnimateAction() (*ebiten.Image,controls.Vector, bool) {
 	now := time.Now()
 
 	if now.Sub(a.lastUpdate) >= a.frameDuration {

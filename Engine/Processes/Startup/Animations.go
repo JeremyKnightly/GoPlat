@@ -1,7 +1,7 @@
 package startup
 
 import (
-	"GoPlat/Components/animations"
+	"GoPlat/components/animations"
 	"log"
 )
 

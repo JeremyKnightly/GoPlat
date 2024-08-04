@@ -18,7 +18,7 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 
 func handleJump(p *sprites.Player) bool {
 	//checks if cooldown has reset or if player can double jump
-	if time.Now().Sub(p.JumpLastUsed) >= p.JumpCooldownTime {
+	if time.Since(p.JumpLastUsed) >= p.JumpCooldownTime {
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
@@ -38,7 +38,7 @@ func handleJump(p *sprites.Player) bool {
 }
 
 func handleDashRight(p *sprites.Player) bool {
-	if time.Now().Sub(p.DashLastUsed) >= p.DashCooldowntime {
+	if time.Since(p.DashLastUsed) >= p.DashCooldowntime {
 		p.CurrentAnimationIndex = 2
 		p.DashLastUsed = time.Now()
 		if p.IsAnimationLocked {
@@ -50,7 +50,7 @@ func handleDashRight(p *sprites.Player) bool {
 }
 
 func handleDashLeft(p *sprites.Player) bool {
-	if time.Now().Sub(p.DashLastUsed) >= p.DashCooldowntime {
+	if time.Since(p.DashLastUsed) >= p.DashCooldowntime {
 		p.CurrentAnimationIndex = 2
 		p.DashLastUsed = time.Now()
 		if p.IsAnimationLocked {
