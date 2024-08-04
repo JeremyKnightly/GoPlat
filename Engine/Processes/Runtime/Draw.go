@@ -11,19 +11,24 @@ import (
 func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 	mapDrawOptions := ebiten.DrawImageOptions{}
 	//loop over layers
+	tileSize := 16
 	for _, layer := range level.Layers {
 		for index, id := range layer.Data {
+			if id == 0 {
+				continue
+			}
+
 			x := index % int(layer.Width)
 			y := index / int(layer.Width)
 
-			x *= 16
-			y *= 16
+			x *= tileSize
+			y *= tileSize
 
 			srcX := (id - 1) % 15
 			srcY := (id - 1) / 15
 
-			srcX *= 16
-			srcY *= 16
+			srcX *= tileSize
+			srcY *= tileSize
 
 			mapDrawOptions.GeoM.Translate(float64(x), float64(y))
 

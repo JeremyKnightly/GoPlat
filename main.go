@@ -25,19 +25,11 @@ type Game struct {
 
 func (g *Game) Update() error {
 	newVector := movement.HandleMovementCalculations(g.Player, g.controls)
-	g.Player.X += newVector.DeltaX
-	g.Player.Y += newVector.DeltaY
-	collisionMap := g.getCollisionMap()
-	//left Collision
-	if collisionMap[0] && collisionMap[2] {
-		g.Player.X -= newVector.DeltaX
-	}else if collisionMap[1] && collisionMap[3] {
-		g.Player.X -= newVector.DeltaX
-	} 
-	if collisionMap[0] || collisionMap[1] {
+	
+	validVector := collision.IsValidMove(g.levels[g.currentLevel], g.Player, newVector)
+	if validVector {
+		g.Player.X += newVector.DeltaX
 		g.Player.Y += newVector.DeltaY
-	} else if collisionMap[2] || collisionMap[3] {
-		g.Player.Y -= newVector.DeltaY
 	}
 
 	return nil
@@ -69,20 +61,6 @@ func main() {
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
 	}
-}
-
-
-func (g *Game)getCollisionMap () []bool {
-
-	left, top, right, bottom := collision.GetPlayerCorners(g.Player, g.tileSize, g.levels[0].TilemapScene.Layers[1])
-
-	collisionMap := collision.CheckCollision(g.levels[g.currentLevel].TilemapScene.Layers[1], left, top, right, bottom)
-
-	if collisionMap[g.currentLevel] || collisionMap[1] || collisionMap[2] || collisionMap[3] {
-		//fmt.Printf("\n\n%v %v\n%v %v",collisionMap[g.currentLevel],collisionMap[1],collisionMap[2],collisionMap[3])
-	}
-
-	return collisionMap
 }
 
 
