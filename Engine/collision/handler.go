@@ -24,15 +24,15 @@ func IsValidMove(lvl *levels.Level, player *sprites.Player, vector controls.Vect
 
 func getPlayerRect(p *sprites.Player) Rect {
 	var playerRect Rect
-	playerRect.X = p.X
-	playerRect.Y = p.Y
+	playerRect.X = p.X + 8
+	playerRect.Y = p.Y + 8
 	
 	if p.IsIdle {
-		playerRect.Width = p.IdleAnimation.MaxFrameWidth
-		playerRect.Height = p.IdleAnimation.MaxFrameHeight
+		playerRect.Width = p.IdleAnimation.MaxFrameWidth - 16
+		playerRect.Height = p.IdleAnimation.MaxFrameHeight - 8
 	} else {
-		playerRect.Width = p.ActionAnimations[p.CurrentAnimationIndex].MaxFrameWidth
-		playerRect.Height = p.ActionAnimations[p.CurrentAnimationIndex].MaxFrameHeight
+		playerRect.Width = p.ActionAnimations[p.CurrentAnimationIndex].MaxFrameWidth - 16
+		playerRect.Height = p.ActionAnimations[p.CurrentAnimationIndex].MaxFrameHeight - 8
 	}
 
 	return playerRect
@@ -40,12 +40,45 @@ func getPlayerRect(p *sprites.Player) Rect {
 
 
 func checkPlayerCollision(pRect Rect, coll Rect) bool {
-	xCollision := (pRect.X > coll.X && pRect.X < coll.X + coll.Width) ||
-	(pRect.X + pRect.Width > coll.X && pRect.X + pRect.Width < coll.X + coll.Width)
+	//Because of the way rects are drawn, X < X + Width. If either the player or the coll
+	//has an x or x + width that fits between the opposite two, it is a collision.
+	// example sides: P C P C== collision. however, it will not detect PCCP collisions 
+	xCollision := false
+	yCollision := false
 
-	yCollision := (pRect.Y > coll.Y && pRect.Y < coll.Y + coll.Height) ||
-	(pRect.Y + pRect.Height > coll.Y && pRect.Y + pRect.Height < coll.Y + coll.Height)
+	//player left in bounds
+	if (pRect.X > coll.X && pRect.X < coll.X + coll.Width) {
+		xCollision = true
 
+		//player right in bounds
+	} else if (pRect.X + pRect.Width > coll.X && pRect.X + pRect.Width < coll.X + coll.Width){
+		xCollision = true
+
+		//coll left in bounds
+	} else if (coll.X > pRect.X  && coll.X < pRect.X + pRect.Width) {
+		xCollision = true
+
+		//coll right in bounds
+	} else if (coll.X + coll.Width > pRect.X && coll.X + coll.Width < pRect.X + pRect.Width){
+		xCollision = true
+	} 
+
+	//player left in bounds
+	if (pRect.Y > coll.Y && pRect.Y < coll.Y + coll.Height) {
+		yCollision = true
+
+		//player right in bounds
+	} else if (pRect.Y + pRect.Height > coll.Y && pRect.Y + pRect.Height < coll.Y + coll.Height){
+		yCollision = true
+
+		//coll left in bounds
+	} else if (coll.Y > pRect.Y  && coll.Y < pRect.Y + pRect.Height) {
+		yCollision = true
+
+		//coll right in bounds
+	} else if (coll.Y + coll.Height > pRect.Y && coll.Y + coll.Height < pRect.Y + pRect.Height){
+		yCollision = true
+	} 
 
 	return xCollision && yCollision
 }

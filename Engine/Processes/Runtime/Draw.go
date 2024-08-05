@@ -3,7 +3,6 @@ package runtime
 import (
 	levels "GoPlat/components/levels"
 	sprites "GoPlat/components/sprites"
-	"GoPlat/engine/collision"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -41,22 +40,6 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 		}
 	}
 
-}
-
-func DrawCollision(collisions []collision.Rect, screen *ebiten.Image) {
-	collisionDrawOptions := ebiten.DrawImageOptions{}
-	redSquare := sprites.GetRed()
-	
-	//loop over objects
-	for _, collision := range collisions {
-			collisionDrawOptions.GeoM.Translate(collision.X, collision.Y)
-
-			screen.DrawImage(redSquare.SubImage(image.Rect(0, 0, int(collision.Width), int(collision.Height))).(*ebiten.Image),
-				&collisionDrawOptions,
-			)
-
-			collisionDrawOptions.GeoM.Reset()
-	}
 }
 
 
