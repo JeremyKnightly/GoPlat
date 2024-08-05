@@ -13,6 +13,17 @@
             "dynamicWrapping": true,
             "scaleInDock": 1
         },
+        "LevelOne.JSON": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 201.25,
+                "y": 125.5
+            }
+        },
+        "Tilesets/Dungeon Tile Set.tsx": {
+            "dynamicWrapping": false
+        },
         "Tilesets/Dungeon.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 1,
@@ -48,8 +59,8 @@
     ],
     "project": "Maps.tiled-project",
     "recentFiles": [
-        "test.tmj",
         "test.json",
+        "test.tmj",
         "Tilesets/Dungeon.tsx"
     ],
     "tileset.lastUsedFilter": "All Files (*)",

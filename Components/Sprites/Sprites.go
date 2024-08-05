@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Sprite struct {
@@ -32,4 +33,12 @@ type Player struct {
 	IsAnimationLocked  bool
 	HasSecondJump      bool
 	IsWallSliding      bool
+}
+
+func GetRed () *ebiten.Image {
+	redSquare, _, err := ebitenutil.NewImageFromFile("Assets/Maps/Tilesets/red.png")
+	if err != nil {
+		return nil
+	}
+	return redSquare
 }

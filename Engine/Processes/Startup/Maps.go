@@ -8,10 +8,6 @@ import (
 )
 
 func CreateLevels() ([]*levels.Level) {
-	//testLevel, err := levels.NewTilemapScene("Assets/Maps/test.json")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
 	levelOneMap, err := levels.NewTilemapScene("Assets/Maps/LevelOne.json")
 	if err != nil {
 		log.Fatal(err)

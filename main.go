@@ -35,10 +35,12 @@ func (g *Game) Update() error {
 	return nil
 }
 
-// func (g *Game) Draw(screen *ebiten.Image) {
 func (g *Game) Draw(screen *ebiten.Image) {
+	collisionData := collision.ExtractCollisionData(g.levels[g.currentLevel])
+
 	runtime.DrawLevel(g.levels[0], screen)
 	runtime.DrawPlayer(g.Player, screen)
+	runtime.DrawCollision(collisionData, screen)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
@@ -62,5 +64,7 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
+
 
 
