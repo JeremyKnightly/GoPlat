@@ -1,8 +1,11 @@
 package runtime
 
 import (
+	"GoPlat/Components/animations"
 	levels "GoPlat/components/levels"
 	sprites "GoPlat/components/sprites"
+	"GoPlat/engine/collision"
+	"fmt"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -42,46 +45,97 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 
 }
 
-
-func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
-	playerDrawOptions := ebiten.DrawImageOptions{}
-
-	if !player.IsMovingRight {
-		playerDrawOptions.GeoM.Scale(-1, 1)
-
-		var frameWidth float64
-		if player.IsIdle {
-			frameWidth = player.IdleAnimation.MaxFrameWidth
-		} else {
-			frameWidth = player.ActionAnimations[player.CurrentAnimationIndex].MaxFrameWidth
-		}
-		playerDrawOptions.GeoM.Translate(frameWidth, 0)
-	}
-
-	playerDrawOptions.GeoM.Translate(player.X, player.Y)
-	if player.IsIdle {
-		currentFrame := player.IdleAnimation.Animate()
-		screen.DrawImage(currentFrame, &playerDrawOptions)
-		return
-	}
+func stopCompletedAnimations(player *sprites.Player) {
 	if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
 		player.IsAnimationLocked = false
 		player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
 		player.CurrentAnimationIndex = 0
 	}
+}
 
-	currentFrame, frameVector, canCancel := player.ActionAnimations[player.CurrentAnimationIndex].AnimateAction()
+func DrawPlayer(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level) {
+	playerDrawOptions := ebiten.DrawImageOptions{}
 
-	if player.IsMovingRight {
-		newVec := frameVector.Add(player.X, player.Y)
-		player.X = newVec.DeltaX
-		player.Y = newVec.DeltaY
+	if player.IsIdle {
+		handleIdleDraw(player, screen, &playerDrawOptions)
 	} else {
-		newVec := frameVector.InvertX(player.X, player.Y)
-		player.X = newVec.DeltaX
-		player.Y = newVec.DeltaY
+		handleActiveDraw(player, screen, lvl)
 	}
+}
+
+func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level) {
+	playerDrawOptions := ebiten.DrawImageOptions{}
+	effectDrawOptions := ebiten.DrawImageOptions{}
+	stopCompletedAnimations(player)
+	hasAnimationEffect := player.ActionAnimations[player.CurrentAnimationIndex].HasEffect
+
+	if !hasAnimationEffect {
+		prepSpriteNoEffect(player, &playerDrawOptions)
+	} else {
+		prepSpriteWithEffect(player,&playerDrawOptions, &effectDrawOptions)
+	}
+
+	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
+	currentFrame, frameVector, canCancel := currentAnimation.AnimateAction()
 	player.CanAnimationCancel = canCancel
-	playerDrawOptions.GeoM.Translate(frameVector.DeltaX, frameVector.DeltaY)
+
+	newPosition := frameVector.PlayerMove(player.X, player.Y, player.IsMovingRight)
+	validMove := collision.IsValidMove(lvl, player, newPosition)
+	
+	if validMove {
+		player.X = newPosition.DeltaX
+		player.Y = newPosition.DeltaY
+		playerDrawOptions.GeoM.Translate(frameVector.DeltaX, frameVector.DeltaY)
+	}
+
+	if hasAnimationEffect{
+		fmt.Println("Frame# ",currentAnimation.CurrentFrameIndex)
+		fmt.Println("IDX: ",player.CurrentAnimationIndex)
+		effectFrame := currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
+		screen.DrawImage(effectFrame, &effectDrawOptions)
+	}
+
 	screen.DrawImage(currentFrame, &playerDrawOptions)
+}
+
+func getAnimationMaxFrameWidth(p *sprites.Player) float64 {
+	if p.IsIdle {
+		return p.IdleAnimation.MaxFrameWidth
+	} else {
+		return p.ActionAnimations[p.CurrentAnimationIndex].MaxFrameWidth
+	}
+}
+
+func getEffectMaxFrameWidth(effect *animations.Animation) float64 {
+	return effect.MaxFrameWidth
+}
+
+func adjustDrawOptionsForLeftMove(options *ebiten.DrawImageOptions, maxWidth float64) {
+	options.GeoM.Scale(-1,1)
+	options.GeoM.Translate(maxWidth, 0)
+} 
+
+func prepSpriteNoEffect(p *sprites.Player, options *ebiten.DrawImageOptions) {
+	if !p.IsMovingRight {
+		frameWidth := getAnimationMaxFrameWidth(p)
+		adjustDrawOptionsForLeftMove(options,frameWidth)
+	}
+	options.GeoM.Translate(p.X, p.Y)
+}
+
+func prepSpriteWithEffect(p *sprites.Player, options *ebiten.DrawImageOptions, effectOptions *ebiten.DrawImageOptions) {
+	if !p.IsMovingRight {
+		effectWidth := getEffectMaxFrameWidth(&p.ActionAnimations[p.CurrentAnimationIndex].Effect)
+		adjustDrawOptionsForLeftMove(effectOptions,effectWidth)
+		frameWidth := getAnimationMaxFrameWidth(p)
+		adjustDrawOptionsForLeftMove(options,frameWidth)
+	}
+	options.GeoM.Translate(p.X, p.Y)
+	effectOptions.GeoM.Translate(p.X, p.Y)
+}
+
+func handleIdleDraw(player *sprites.Player, screen *ebiten.Image, options *ebiten.DrawImageOptions) {
+	prepSpriteNoEffect(player, options)
+	currentFrame := player.IdleAnimation.Animate()
+	screen.DrawImage(currentFrame, options)
 }

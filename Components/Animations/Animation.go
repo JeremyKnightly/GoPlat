@@ -35,7 +35,7 @@ func (a *Animation) Animate() *ebiten.Image {
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
 		a.CurrentFrameIndex++
 
-		if a.CurrentFrameIndex >= a.NumberOfFrames {
+		if a.CurrentFrameIndex >= a.NumberOfFrames - 1 {
 			a.CurrentFrameIndex = 0
 		}
 		a.lastUpdate = now
@@ -52,7 +52,7 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image,controls.Vector, bool) 
 			a.CurrentFrameIndex++
 		}
 
-		if a.CurrentFrameIndex >= a.NumberOfFrames {
+		if a.CurrentFrameIndex >= a.NumberOfFrames - 1 {
 			a.AnimationComplete = true
 			if a.WillAwaitInput {
 				a.CurrentFrameIndex = a.NumberOfFrames - 1

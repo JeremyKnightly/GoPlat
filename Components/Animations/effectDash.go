@@ -19,27 +19,27 @@ func GenerateEffectDash() *Animation {
 	).(*ebiten.Image)
 	
 	dash1 := fullPng.SubImage(
-		image.Rect(16, 16, 48, 48),
+		image.Rect(0, 16, 32, 48),
 	).(*ebiten.Image)
 
 	dash2 := fullPng.SubImage(
-		image.Rect(80, 16, 112, 48),
+		image.Rect(64, 16, 112, 48),
 	).(*ebiten.Image)
 
 	dash3 := fullPng.SubImage(
-		image.Rect(144, 16, 176, 48),
+		image.Rect(128, 16, 176, 48),
 	).(*ebiten.Image)
 
 	dash4 := fullPng.SubImage(
-		image.Rect(208, 16, 240, 48),
+		image.Rect(192, 16, 240, 48),
 	).(*ebiten.Image)
 
 	dash5 := fullPng.SubImage(
-		image.Rect(272, 16, 304, 48),
+		image.Rect(256, 16, 304, 48),
 	).(*ebiten.Image)
 
 	dash6 := fullPng.SubImage(
-		image.Rect(336, 16, 368, 48),
+		image.Rect(320, 16, 368, 48),
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
