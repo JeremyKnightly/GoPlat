@@ -28,6 +28,7 @@ func CreateDefaultPlayer() *sprites.Player {
 		IsAnimationLocked:  false,
 		IsPhysicsLocked:    false,
 		CanAnimationCancel: false,
+		IsAirborn: false,
 	}
 
 	return player

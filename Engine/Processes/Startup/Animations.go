@@ -6,14 +6,26 @@ import (
 )
 
 func GetPlayerActionAnimations() []*animations.ActionAnimation {
-	playerWalk := animations.GeneratePlayerWalkNoWeapon()
-	playerJump := animations.GeneratePlayerJumpNoWeapon()
-	playerRun := animations.GeneratePlayerDashNoWeapon()
+	Walk := animations.GeneratePlayerWalkNoWeapon()
+	Jump := animations.GeneratePlayerJumpNoWeapon()
+	Run := animations.GeneratePlayerDashNoWeapon()
+	DblJump := animations.GeneratePlayerDoubleJumpNoWeapon()
+	EdgeClimb := animations.GeneratePlayerEdgeClimbNoWeapon()
+	Hurt := animations.GeneratePlayerHurtNoWeapon()
+	WallGrab := animations.GeneratePlayerWallGrabNoWeapon()
+	WallSlide := animations.GeneratePlayerWallSlideNoWeapon()
+	Death := animations.GeneratePlayerDeathNoWeapon()
 
 	animations := []*animations.ActionAnimation{
-		playerWalk,
-		playerJump,
-		playerRun,
+		Walk,	
+		Run,
+		Jump,
+		DblJump,
+		EdgeClimb,
+		Hurt,
+		WallGrab,
+		WallSlide,
+		Death,
 	}
 
 	if len(animations) == 0 {

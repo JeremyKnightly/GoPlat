@@ -26,7 +26,7 @@ func handleJump(p *sprites.Player) bool {
 		p.CurrentAnimationIndex = 1
 		p.JumpLastUsed = time.Now()
 		return true
-	} else if p.HasSecondJump {
+	} else if p.HasSecondJump && p.IsAirborn{
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}

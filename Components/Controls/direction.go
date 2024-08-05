@@ -13,4 +13,7 @@ var (
 	DASHLEFT  = Direction{Name: "DASHLEFT", DeltaX: 0, DeltaY: 0}
 	DASHRIGHT = Direction{Name: "DASHRIGHT", DeltaX: 0, DeltaY: 0}
 	JUMP      = Direction{Name: "JUMP", DeltaX: 0, DeltaY: 0}
+	EDGECLIMB      = Direction{Name: "EDGECLIMB", DeltaX: 0, DeltaY: 0}
+	WALLSLIDE      = Direction{Name: "WALLSLIDE", DeltaX: 0, DeltaY: 0}
+	FALL      = Direction{Name: "FALL", DeltaX: 0, DeltaY: 0}
 )
