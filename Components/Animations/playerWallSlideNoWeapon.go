@@ -94,6 +94,8 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   1,
 		AllowCancelOnDirections: cancelDirections,
+		HasEffect: true,
+		Effect: *GenerateEffectWallSlide(),
 	}
 
 	return wallSlide

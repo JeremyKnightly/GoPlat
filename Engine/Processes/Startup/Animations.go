@@ -15,6 +15,8 @@ func GetPlayerActionAnimations() []*animations.ActionAnimation {
 	WallGrab := animations.GeneratePlayerWallGrabNoWeapon()
 	WallSlide := animations.GeneratePlayerWallSlideNoWeapon()
 	Death := animations.GeneratePlayerDeathNoWeapon()
+	Fall := animations.GeneratePlayerFallNoWeapon()
+	Land := animations.GeneratePlayerLandNoWeapon()
 
 	animations := []*animations.ActionAnimation{
 		Walk,	
@@ -26,6 +28,8 @@ func GetPlayerActionAnimations() []*animations.ActionAnimation {
 		WallGrab,
 		WallSlide,
 		Death,
+		Fall,
+		Land,
 	}
 
 	if len(animations) == 0 {

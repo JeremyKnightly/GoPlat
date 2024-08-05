@@ -25,6 +25,8 @@ type ActionAnimation struct {
 	AllowCancelAfterFrame uint16
 	AllowCancelOnDirections []controls.Direction
 	ResetAnimation bool
+	HasEffect bool
+	Effect Animation
 }
 
 func (a *Animation) Animate() *ebiten.Image {

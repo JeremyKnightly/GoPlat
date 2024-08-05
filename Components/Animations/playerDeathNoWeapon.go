@@ -91,6 +91,7 @@ func GeneratePlayerDeathNoWeapon() *ActionAnimation {
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   7,
 		AllowCancelOnDirections: cancelDirections,
+		HasEffect: false,
 	}
 
 	return death

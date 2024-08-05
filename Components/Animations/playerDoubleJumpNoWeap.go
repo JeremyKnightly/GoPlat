@@ -88,6 +88,8 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
+		HasEffect: true,
+		Effect: *GenerateEffectDblJump(),
 	}
 
 	return playerDblJump

@@ -10,73 +10,63 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
-	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Wall-Grab.png")
+func GeneratePlayerFallNoWeapon() *ActionAnimation {
+	fullJumpPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Jump.png")
 	if err != nil {
 		log.Fatal(err)
 	}
-	png1 := fullPng.SubImage(
-		image.Rect(16, 16, 48, 48),
+/*
+	jumpPng10 := fullJumpPng.SubImage(
+		image.Rect(592, 16, 624, 48),
 	).(*ebiten.Image)
 
-	png2 := fullPng.SubImage(
-		image.Rect(80, 16, 112, 48),
+	jumpPng11 := fullJumpPng.SubImage(
+		image.Rect(656, 16, 688, 48),
+	).(*ebiten.Image)
+*/
+	jumpPng12 := fullJumpPng.SubImage(
+		image.Rect(720, 16, 752, 48),
 	).(*ebiten.Image)
 
-	png3 := fullPng.SubImage(
-		image.Rect(144, 16, 176, 48),
+	jumpPng13 := fullJumpPng.SubImage(
+		image.Rect(784, 16, 816, 48),
 	).(*ebiten.Image)
 
-	png4 := fullPng.SubImage(
-		image.Rect(208, 16, 240, 48),
+	jumpPng14 := fullJumpPng.SubImage(
+		image.Rect(848, 16, 880, 48),
 	).(*ebiten.Image)
 
-	png5 := fullPng.SubImage(
-		image.Rect(272, 16, 304, 48),
+	jumpPng15 := fullJumpPng.SubImage(
+		image.Rect(912, 16, 944, 48),
 	).(*ebiten.Image)
 
-	png6 := fullPng.SubImage(
-		image.Rect(336, 16, 368, 48),
-	).(*ebiten.Image)
-
-	png7 := fullPng.SubImage(
-		image.Rect(400, 16, 432, 48),
-	).(*ebiten.Image)
-
-	png8 := fullPng.SubImage(
-		image.Rect(464, 16, 496, 48),
+	jumpPng16 := fullJumpPng.SubImage(
+		image.Rect(976, 16, 1008, 48),
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
-		png1,
-		png2,
-		png3,
-		png4,
-		png5,
-		png6,
-		png7,
-		png8,
+		jumpPng12,
+		jumpPng13,
+		jumpPng14,
+		jumpPng15,
+		jumpPng16,
 	}
 
 	frameVectors := []controls.Vector{
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
 	}
 
 	cancelDirections := []controls.Direction{
+		controls.JUMP,
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
-		controls.EDGECLIMB,
-		controls.FALL,
 	}
 
-	wallGrab := &ActionAnimation{
+	playerFall := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
@@ -87,10 +77,10 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   3,
+		AllowCancelAfterFrame:   0,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect: false,
 	}
 
-	return wallGrab
+	return playerFall
 }

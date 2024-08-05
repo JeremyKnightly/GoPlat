@@ -88,6 +88,8 @@ func GeneratePlayerDashWithWeapon() *ActionAnimation {
 		FrameVectors: frameVectors,
 		AllowCancelAfterFrame: 2,
 		AllowCancelOnDirections: cancelDirections,
+		HasEffect: true,
+		Effect: *GenerateEffectDash(),
 	}
 
 	return playerRun

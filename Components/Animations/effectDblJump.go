@@ -1,7 +1,6 @@
 package animations
 
 import (
-	"GoPlat/components/controls"
 	"image"
 	"log"
 	"time"
@@ -10,32 +9,40 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
-	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Edge-Climb.png")
+func GenerateEffectDblJump() *Animation {
+	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/Effects/DblJump_effect.png")
 	if err != nil {
 		log.Fatal(err)
 	}
 	png1 := fullPng.SubImage(
+		image.Rect(24, 16, 24, 48),
+	).(*ebiten.Image)
+	
+	png2 := fullPng.SubImage(
 		image.Rect(16, 16, 48, 48),
 	).(*ebiten.Image)
 
-	png2 := fullPng.SubImage(
+	png3 := fullPng.SubImage(
 		image.Rect(80, 16, 112, 48),
 	).(*ebiten.Image)
 
-	png3 := fullPng.SubImage(
+	png4 := fullPng.SubImage(
 		image.Rect(144, 16, 176, 48),
 	).(*ebiten.Image)
 
-	png4 := fullPng.SubImage(
+	png5 := fullPng.SubImage(
 		image.Rect(208, 16, 240, 48),
 	).(*ebiten.Image)
 
-	png5 := fullPng.SubImage(
+	png6 := fullPng.SubImage(
 		image.Rect(272, 16, 304, 48),
 	).(*ebiten.Image)
 
-	png6 := fullPng.SubImage(
+	png7 := fullPng.SubImage(
+		image.Rect(336, 16, 368, 48),
+	).(*ebiten.Image)
+
+	png8 := fullPng.SubImage(
 		image.Rect(336, 16, 368, 48),
 	).(*ebiten.Image)
 
@@ -46,37 +53,18 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 		png4,
 		png5,
 		png6,
+		png7,
+		png8,
 	}
 
-	frameVectors := []controls.Vector{
-		{0,0},
-		{0,8},
-		{4,6},
-		{8,6},
-		{8,6},
-		{0,0},
-	}
-
-	cancelDirections := []controls.Direction{
-		controls.DASHLEFT,
-		controls.DASHRIGHT,
-	}
-
-	edgeClimb := &ActionAnimation{
-		Animation: &Animation{
+	effect := &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
-		},
-		AnimationComplete:       false,
-		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   2,
-		AllowCancelOnDirections: cancelDirections,
-		HasEffect: false,
-	}
+		}
 
-	return edgeClimb
+	return effect
 }

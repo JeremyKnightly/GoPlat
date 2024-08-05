@@ -10,74 +10,58 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerHurtNoWeapon() *ActionAnimation {
-	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Hurt.png")
+func GeneratePlayerLandNoWeapon() *ActionAnimation {
+	fullJumpPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Jump.png")
 	if err != nil {
 		log.Fatal(err)
 	}
-	png1 := fullPng.SubImage(
-		image.Rect(16, 16, 48, 48),
+
+	jumpPng17 := fullJumpPng.SubImage(
+		image.Rect(1040, 16, 1072, 48),
 	).(*ebiten.Image)
 
-	png2 := fullPng.SubImage(
-		image.Rect(80, 16, 112, 48),
+	jumpPng18 := fullJumpPng.SubImage(
+		image.Rect(1104, 16, 1136, 48),
 	).(*ebiten.Image)
 
-	png3 := fullPng.SubImage(
-		image.Rect(144, 16, 176, 48),
-	).(*ebiten.Image)
-
-	png4 := fullPng.SubImage(
-		image.Rect(208, 16, 240, 48),
-	).(*ebiten.Image)
-
-	png5 := fullPng.SubImage(
-		image.Rect(272, 16, 304, 48),
-	).(*ebiten.Image)
-
-	png6 := fullPng.SubImage(
-		image.Rect(336, 16, 368, 48),
+	jumpPng19 := fullJumpPng.SubImage(
+		image.Rect(1168, 16, 1200, 48),
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
-		png1,
-		png2,
-		png3,
-		png4,
-		png5,
-		png6,
+		jumpPng17,
+		jumpPng18,
+		jumpPng19,
 	}
 
 	frameVectors := []controls.Vector{
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
+		{0, 0},
+		{0, 0},
+		{0, 0},
 	}
 
 	cancelDirections := []controls.Direction{
+		controls.JUMP,
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 
-	hurt := &ActionAnimation{
+	playerLand := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 40,
+			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   3,
+		AllowCancelAfterFrame:   0,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect: true,
-		Effect: *GenerateEffectHurt(),
+		Effect: *GenerateEffectLand(),
 	}
 
-	return hurt
+	return playerLand
 }

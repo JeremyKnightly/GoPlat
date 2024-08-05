@@ -51,46 +51,6 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		image.Rect(528, 16, 560, 48),
 	).(*ebiten.Image)
 
-	jumpPng10 := fullJumpPng.SubImage(
-		image.Rect(592, 16, 624, 48),
-	).(*ebiten.Image)
-
-	jumpPng11 := fullJumpPng.SubImage(
-		image.Rect(656, 16, 688, 48),
-	).(*ebiten.Image)
-
-	jumpPng12 := fullJumpPng.SubImage(
-		image.Rect(720, 16, 752, 48),
-	).(*ebiten.Image)
-
-	jumpPng13 := fullJumpPng.SubImage(
-		image.Rect(784, 16, 816, 48),
-	).(*ebiten.Image)
-
-	jumpPng14 := fullJumpPng.SubImage(
-		image.Rect(848, 16, 880, 48),
-	).(*ebiten.Image)
-
-	jumpPng15 := fullJumpPng.SubImage(
-		image.Rect(912, 16, 944, 48),
-	).(*ebiten.Image)
-
-	jumpPng16 := fullJumpPng.SubImage(
-		image.Rect(976, 16, 1008, 48),
-	).(*ebiten.Image)
-
-	jumpPng17 := fullJumpPng.SubImage(
-		image.Rect(1040, 16, 1072, 48),
-	).(*ebiten.Image)
-
-	jumpPng18 := fullJumpPng.SubImage(
-		image.Rect(1104, 16, 1136, 48),
-	).(*ebiten.Image)
-
-	jumpPng19 := fullJumpPng.SubImage(
-		image.Rect(1168, 16, 1200, 48),
-	).(*ebiten.Image)
-
 	frames := []*ebiten.Image{
 		jumpPng1,
 		jumpPng2,
@@ -101,16 +61,6 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		jumpPng7,
 		jumpPng8,
 		jumpPng9,
-		jumpPng10,
-		jumpPng11,
-		jumpPng12,
-		jumpPng13,
-		jumpPng14,
-		jumpPng15,
-		jumpPng16,
-		jumpPng17,
-		jumpPng18,
-		jumpPng19,
 	}
 
 	frameVectors := []controls.Vector{
@@ -123,16 +73,6 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		{.3, -.4},
 		{.3, -.4},
 		{.3, -.25},
-		{.3, .25},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{0, 0},
-		{0, 0},
-		{0, 0},
 	}
 
 	cancelDirections := []controls.Direction{
@@ -152,8 +92,10 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   6,
+		AllowCancelAfterFrame:   5,
 		AllowCancelOnDirections: cancelDirections,
+		HasEffect: true,
+		Effect: *GenerateEffectJump(),
 	}
 
 	return playerJump
