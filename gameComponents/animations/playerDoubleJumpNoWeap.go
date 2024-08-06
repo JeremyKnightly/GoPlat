@@ -1,7 +1,7 @@
 package animations
 
 import (
-	"GoPlat/components/controls"
+	"GoPlat/gameComponents/controls"
 	"image"
 	"log"
 	"time"

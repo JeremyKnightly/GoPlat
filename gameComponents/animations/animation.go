@@ -1,7 +1,7 @@
 package animations
 
 import (
-	controls "GoPlat/components/controls"
+	controls "GoPlat/gameComponents/controls"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"

@@ -1,13 +1,13 @@
 package main
 
 import (
-	controls "GoPlat/components/controls"
-	levels "GoPlat/components/levels"
-	sprites "GoPlat/components/sprites"
 	"GoPlat/engine/collision"
 	movement "GoPlat/engine/movement"
 	runtime "GoPlat/engine/processes/runtime"
 	startup "GoPlat/engine/processes/startup"
+	controls "GoPlat/gameComponents/controls"
+	levels "GoPlat/gameComponents/levels"
+	sprites "GoPlat/gameComponents/sprites"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"

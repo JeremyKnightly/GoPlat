@@ -1,9 +1,9 @@
 package collision
 
 import (
-	controls "GoPlat/components/controls"
-	levels "GoPlat/components/levels"
-	"GoPlat/components/sprites"
+	controls "GoPlat/gameComponents/controls"
+	levels "GoPlat/gameComponents/levels"
+	"GoPlat/gameComponents/sprites"
 )
 
 func IsValidMove(lvl *levels.Level, player *sprites.Player, vector controls.Vector) bool {

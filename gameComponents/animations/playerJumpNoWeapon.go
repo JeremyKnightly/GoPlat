@@ -1,7 +1,7 @@
 package animations
 
 import (
-	"GoPlat/components/controls"
+	"GoPlat/gameComponents/controls"
 	"image"
 	"log"
 	"time"
@@ -10,75 +10,78 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerDeathNoWeapon() *ActionAnimation {
-	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Death.png")
+func GeneratePlayerJumpNoWeapon() *ActionAnimation {
+	fullJumpPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Jump.png")
 	if err != nil {
 		log.Fatal(err)
 	}
-	png1 := fullPng.SubImage(
+	jumpPng1 := fullJumpPng.SubImage(
 		image.Rect(16, 16, 48, 48),
 	).(*ebiten.Image)
 
-	png2 := fullPng.SubImage(
+	jumpPng2 := fullJumpPng.SubImage(
 		image.Rect(80, 16, 112, 48),
 	).(*ebiten.Image)
 
-	png3 := fullPng.SubImage(
+	jumpPng3 := fullJumpPng.SubImage(
 		image.Rect(144, 16, 176, 48),
 	).(*ebiten.Image)
 
-	png4 := fullPng.SubImage(
+	jumpPng4 := fullJumpPng.SubImage(
 		image.Rect(208, 16, 240, 48),
 	).(*ebiten.Image)
 
-	png5 := fullPng.SubImage(
+	jumpPng5 := fullJumpPng.SubImage(
 		image.Rect(272, 16, 304, 48),
 	).(*ebiten.Image)
 
-	png6 := fullPng.SubImage(
+	jumpPng6 := fullJumpPng.SubImage(
 		image.Rect(336, 16, 368, 48),
 	).(*ebiten.Image)
 
-	png7 := fullPng.SubImage(
+	jumpPng7 := fullJumpPng.SubImage(
 		image.Rect(400, 16, 432, 48),
 	).(*ebiten.Image)
 
-	png8 := fullPng.SubImage(
+	jumpPng8 := fullJumpPng.SubImage(
 		image.Rect(464, 16, 496, 48),
 	).(*ebiten.Image)
 
-	png9 := fullPng.SubImage(
-		image.Rect(464, 16, 496, 48),
+	jumpPng9 := fullJumpPng.SubImage(
+		image.Rect(528, 16, 560, 48),
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
-		png1,
-		png2,
-		png3,
-		png4,
-		png5,
-		png6,
-		png7,
-		png8,
-		png9,
+		jumpPng1,
+		jumpPng2,
+		jumpPng3,
+		jumpPng4,
+		jumpPng5,
+		jumpPng6,
+		jumpPng7,
+		jumpPng8,
+		jumpPng9,
 	}
 
 	frameVectors := []controls.Vector{
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
+		{0, 0},
+		{0, 0},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.4},
+		{.3, -.25},
 	}
 
 	cancelDirections := []controls.Direction{
+		controls.JUMP,
+		controls.DASHLEFT,
+		controls.DASHRIGHT,
 	}
 
-	death := &ActionAnimation{
+	playerJump := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
@@ -89,10 +92,11 @@ func GeneratePlayerDeathNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   7,
+		AllowCancelAfterFrame:   5,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: false,
+		HasEffect: true,
+		Effect: *GenerateEffectJump(),
 	}
 
-	return death
+	return playerJump
 }

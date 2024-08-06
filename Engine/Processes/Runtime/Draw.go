@@ -1,9 +1,9 @@
 package runtime
 
 import (
-	"GoPlat/Components/animations"
-	levels "GoPlat/components/levels"
-	sprites "GoPlat/components/sprites"
+	"GoPlat/gameComponents/animations"
+	levels "GoPlat/gameComponents/levels"
+	sprites "GoPlat/gameComponents/sprites"
 	"GoPlat/engine/collision"
 	"image"
 

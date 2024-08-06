@@ -1,7 +1,7 @@
 package animations
 
 import (
-	"GoPlat/components/controls"
+	"GoPlat/gameComponents/controls"
 	"image"
 	"log"
 	"time"
@@ -10,8 +10,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerHurtNoWeapon() *ActionAnimation {
-	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Hurt.png")
+func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
+	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Wall-Grab.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,6 +39,14 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 		image.Rect(336, 16, 368, 48),
 	).(*ebiten.Image)
 
+	png7 := fullPng.SubImage(
+		image.Rect(400, 16, 432, 48),
+	).(*ebiten.Image)
+
+	png8 := fullPng.SubImage(
+		image.Rect(464, 16, 496, 48),
+	).(*ebiten.Image)
+
 	frames := []*ebiten.Image{
 		png1,
 		png2,
@@ -46,9 +54,13 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 		png4,
 		png5,
 		png6,
+		png7,
+		png8,
 	}
 
 	frameVectors := []controls.Vector{
+		{0,0},
+		{0,0},
 		{0,0},
 		{0,0},
 		{0,0},
@@ -60,14 +72,16 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
+		controls.EDGECLIMB,
+		controls.FALL,
 	}
 
-	hurt := &ActionAnimation{
+	wallGrab := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 40,
+			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 		},
@@ -75,9 +89,8 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: true,
-		Effect: *GenerateEffectHurt(),
+		HasEffect: false,
 	}
 
-	return hurt
+	return wallGrab
 }

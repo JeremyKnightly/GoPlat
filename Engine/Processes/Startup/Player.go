@@ -1,7 +1,7 @@
 package startup
 
 import (
-	"GoPlat/components/sprites"
+	"GoPlat/gameComponents/sprites"
 	"time"
 )
 

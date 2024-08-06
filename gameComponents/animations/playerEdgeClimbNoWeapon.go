@@ -1,7 +1,7 @@
 package animations
 
 import (
-	"GoPlat/components/controls"
+	"GoPlat/gameComponents/controls"
 	"image"
 	"log"
 	"time"
@@ -10,78 +10,59 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerJumpNoWeapon() *ActionAnimation {
-	fullJumpPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Jump.png")
+func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
+	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Edge-Climb.png")
 	if err != nil {
 		log.Fatal(err)
 	}
-	jumpPng1 := fullJumpPng.SubImage(
+	png1 := fullPng.SubImage(
 		image.Rect(16, 16, 48, 48),
 	).(*ebiten.Image)
 
-	jumpPng2 := fullJumpPng.SubImage(
+	png2 := fullPng.SubImage(
 		image.Rect(80, 16, 112, 48),
 	).(*ebiten.Image)
 
-	jumpPng3 := fullJumpPng.SubImage(
+	png3 := fullPng.SubImage(
 		image.Rect(144, 16, 176, 48),
 	).(*ebiten.Image)
 
-	jumpPng4 := fullJumpPng.SubImage(
+	png4 := fullPng.SubImage(
 		image.Rect(208, 16, 240, 48),
 	).(*ebiten.Image)
 
-	jumpPng5 := fullJumpPng.SubImage(
+	png5 := fullPng.SubImage(
 		image.Rect(272, 16, 304, 48),
 	).(*ebiten.Image)
 
-	jumpPng6 := fullJumpPng.SubImage(
+	png6 := fullPng.SubImage(
 		image.Rect(336, 16, 368, 48),
 	).(*ebiten.Image)
 
-	jumpPng7 := fullJumpPng.SubImage(
-		image.Rect(400, 16, 432, 48),
-	).(*ebiten.Image)
-
-	jumpPng8 := fullJumpPng.SubImage(
-		image.Rect(464, 16, 496, 48),
-	).(*ebiten.Image)
-
-	jumpPng9 := fullJumpPng.SubImage(
-		image.Rect(528, 16, 560, 48),
-	).(*ebiten.Image)
-
 	frames := []*ebiten.Image{
-		jumpPng1,
-		jumpPng2,
-		jumpPng3,
-		jumpPng4,
-		jumpPng5,
-		jumpPng6,
-		jumpPng7,
-		jumpPng8,
-		jumpPng9,
+		png1,
+		png2,
+		png3,
+		png4,
+		png5,
+		png6,
 	}
 
 	frameVectors := []controls.Vector{
-		{0, 0},
-		{0, 0},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.25},
+		{0,0},
+		{0,8},
+		{4,6},
+		{8,6},
+		{8,6},
+		{0,0},
 	}
 
 	cancelDirections := []controls.Direction{
-		controls.JUMP,
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 
-	playerJump := &ActionAnimation{
+	edgeClimb := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
@@ -92,11 +73,10 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   5,
+		AllowCancelAfterFrame:   2,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: true,
-		Effect: *GenerateEffectJump(),
+		HasEffect: false,
 	}
 
-	return playerJump
+	return edgeClimb
 }

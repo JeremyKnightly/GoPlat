@@ -1,7 +1,7 @@
 package movement
 
 import (
-	"GoPlat/components/sprites"
+	"GoPlat/gameComponents/sprites"
 	"time"
 )
 

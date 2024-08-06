@@ -1,7 +1,7 @@
 package startup
 
 import (
-	levels "GoPlat/components/levels"
+	levels "GoPlat/gameComponents/levels"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"

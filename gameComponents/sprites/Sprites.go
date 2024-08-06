@@ -1,7 +1,7 @@
 package sprites
 
 import (
-	"GoPlat/Components/animations"
+	"GoPlat/gameComponents/animations"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"

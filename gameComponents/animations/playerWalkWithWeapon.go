@@ -1,7 +1,7 @@
 package animations
 
 import (
-	controls "GoPlat/components/controls"
+	controls "GoPlat/gameComponents/controls"
 	"image"
 	"log"
 	"time"
@@ -10,8 +10,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerWalkNoWeapon() *ActionAnimation {
-	fullWalkPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Walk.png")
+func GeneratePlayerWalkWithWeapon() *ActionAnimation {
+	fullWalkPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightWithWeap/Walk.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -21,11 +21,11 @@ func GeneratePlayerWalkNoWeapon() *ActionAnimation {
 	).(*ebiten.Image)
 
 	walkPng2 := fullWalkPng.SubImage(
-		image.Rect(112, 16, 80, 48),
+		image.Rect(80, 16, 112, 48),
 	).(*ebiten.Image)
 
 	walkPng3 := fullWalkPng.SubImage(
-		image.Rect(176, 16, 144, 48),
+		image.Rect(144, 16, 176, 48),
 	).(*ebiten.Image)
 
 	walkPng4 := fullWalkPng.SubImage(
@@ -33,21 +33,20 @@ func GeneratePlayerWalkNoWeapon() *ActionAnimation {
 	).(*ebiten.Image)
 
 	walkPng5 := fullWalkPng.SubImage(
-		image.Rect(304, 16, 272, 48),
+		image.Rect(272, 16, 304, 48),
 	).(*ebiten.Image)
 
 	walkPng6 := fullWalkPng.SubImage(
-		image.Rect(368, 16, 336, 48),
+		image.Rect(336, 16, 368, 48),
 	).(*ebiten.Image)
 
 	walkPng7 := fullWalkPng.SubImage(
-		image.Rect(432, 16, 400, 48),
+		image.Rect(400, 16, 432, 48),
 	).(*ebiten.Image)
 
 	walkPng8 := fullWalkPng.SubImage(
-		image.Rect(496, 16, 464, 48),
+		image.Rect(464, 16, 496, 48),
 	).(*ebiten.Image)
-
 
 	frames := []*ebiten.Image{
 		walkPng1,
@@ -59,7 +58,6 @@ func GeneratePlayerWalkNoWeapon() *ActionAnimation {
 		walkPng7,
 		walkPng8,
 	}
-
 	frameVectors := []controls.Vector{
 		{0, 0},
 		{0, 0},
@@ -76,7 +74,7 @@ func GeneratePlayerWalkNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 100,
+			frameDuration:     time.Millisecond * 200,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 		},

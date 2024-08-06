@@ -1,7 +1,7 @@
 package startup
 
 import (
-	"GoPlat/Components/animations"
+	"GoPlat/gameComponents/animations"
 	"log"
 )
 
@@ -19,17 +19,17 @@ func GetPlayerActionAnimations() []*animations.ActionAnimation {
 	Land := animations.GeneratePlayerLandNoWeapon()
 
 	animations := []*animations.ActionAnimation{
-		Walk,	
-		Run,
-		Jump,
-		DblJump,
-		EdgeClimb,
-		Hurt,
-		WallGrab,
-		WallSlide,
-		Death,
-		Fall,
-		Land,
+		Walk,	//0
+		Run,	//1
+		Jump,	//2
+		DblJump,	//3
+		EdgeClimb,	//4
+		Hurt,	//5	
+		WallGrab,	//6
+		WallSlide,	//7
+		Death,	//8
+		Fall,	//9
+		Land,	//10
 	}
 
 	if len(animations) == 0 {

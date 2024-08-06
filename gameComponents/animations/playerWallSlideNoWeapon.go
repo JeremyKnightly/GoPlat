@@ -1,7 +1,7 @@
 package animations
 
 import (
-	"GoPlat/components/controls"
+	"GoPlat/gameComponents/controls"
 	"image"
 	"log"
 	"time"
@@ -10,8 +10,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
-	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Wall-Grab.png")
+func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
+	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/KnightNoWeap/Wall-Slide.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,6 +47,10 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 		image.Rect(464, 16, 496, 48),
 	).(*ebiten.Image)
 
+	png9 := fullPng.SubImage(
+		image.Rect(464, 16, 496, 48),
+	).(*ebiten.Image)
+
 	frames := []*ebiten.Image{
 		png1,
 		png2,
@@ -56,27 +60,28 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 		png6,
 		png7,
 		png8,
+		png9,
 	}
 
 	frameVectors := []controls.Vector{
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
+		{2,0},
+		{2,0},
+		{2,0},
+		{1.75,0},
+		{1.75,0},
+		{1.5,0},
+		{1.5,0},
+		{1,.25},
 	}
 
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
-		controls.EDGECLIMB,
+		controls.JUMP,
 		controls.FALL,
 	}
 
-	wallGrab := &ActionAnimation{
+	wallSlide := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
@@ -87,10 +92,11 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   3,
+		AllowCancelAfterFrame:   1,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: false,
+		HasEffect: true,
+		Effect: *GenerateEffectWallSlide(),
 	}
 
-	return wallGrab
+	return wallSlide
 }

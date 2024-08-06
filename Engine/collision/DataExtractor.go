@@ -1,7 +1,7 @@
 package collision
 
 import (
-	"GoPlat/components/levels"
+	"GoPlat/gameComponents/levels"
 )
 
 func ExtractCollisionData(level *levels.Level) []Rect {
