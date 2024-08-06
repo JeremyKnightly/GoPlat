@@ -26,7 +26,12 @@ type ActionAnimation struct {
 	AllowCancelOnDirections []controls.Direction
 	ResetAnimation bool
 	HasEffect bool
-	Effect Animation
+	Effect Effect
+}
+
+type Effect struct {
+	*Animation
+	Offset float64
 }
 
 func (a *Animation) Animate() *ebiten.Image {

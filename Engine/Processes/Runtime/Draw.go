@@ -5,7 +5,6 @@ import (
 	levels "GoPlat/components/levels"
 	sprites "GoPlat/components/sprites"
 	"GoPlat/engine/collision"
-	"fmt"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -89,8 +88,6 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 	}
 
 	if hasAnimationEffect{
-		fmt.Println("Frame# ",currentAnimation.CurrentFrameIndex)
-		fmt.Println("IDX: ",player.CurrentAnimationIndex)
 		effectFrame := currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
 		screen.DrawImage(effectFrame, &effectDrawOptions)
 	}
@@ -106,7 +103,7 @@ func getAnimationMaxFrameWidth(p *sprites.Player) float64 {
 	}
 }
 
-func getEffectMaxFrameWidth(effect *animations.Animation) float64 {
+func getEffectMaxFrameWidth(effect *animations.Effect) float64 {
 	return effect.MaxFrameWidth
 }
 
@@ -124,11 +121,15 @@ func prepSpriteNoEffect(p *sprites.Player, options *ebiten.DrawImageOptions) {
 }
 
 func prepSpriteWithEffect(p *sprites.Player, options *ebiten.DrawImageOptions, effectOptions *ebiten.DrawImageOptions) {
+	effect := p.ActionAnimations[p.CurrentAnimationIndex].Effect
 	if !p.IsMovingRight {
-		effectWidth := getEffectMaxFrameWidth(&p.ActionAnimations[p.CurrentAnimationIndex].Effect)
-		adjustDrawOptionsForLeftMove(effectOptions,effectWidth)
+		effectWidth := getEffectMaxFrameWidth(&effect)
 		frameWidth := getAnimationMaxFrameWidth(p)
+		adjustDrawOptionsForLeftMove(effectOptions,effectWidth + frameWidth)
 		adjustDrawOptionsForLeftMove(options,frameWidth)
+		effectOptions.GeoM.Translate(-effect.Offset, 0)
+	} else {
+		effectOptions.GeoM.Translate(effect.Offset, 0)
 	}
 	options.GeoM.Translate(p.X, p.Y)
 	effectOptions.GeoM.Translate(p.X, p.Y)

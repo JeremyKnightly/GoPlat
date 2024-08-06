@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GenerateEffectDash() *Animation {
+func GenerateEffectDash() *Effect {
 	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/Effects/Enemy_Attack.png")
 	if err != nil {
 		log.Fatal(err)
@@ -56,14 +56,19 @@ func GenerateEffectDash() *Animation {
 		dash6,
 	}
 
-	effect := &Animation{
+	effect := 
+		&Effect{
+		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 80,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+		},
+		Offset: -16,
 		}
+
 
 	return effect
 }

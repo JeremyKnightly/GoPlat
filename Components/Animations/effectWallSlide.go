@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GenerateEffectWallSlide() *Animation {
+func GenerateEffectWallSlide() *Effect {
 	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/Effects/Wall-Slide-Smoke_Effect.png")
 	if err != nil {
 		log.Fatal(err)
@@ -62,14 +62,18 @@ func GenerateEffectWallSlide() *Animation {
 		png9,
 	}
 
-	effect := &Animation{
+	effect := &Effect{
+		Animation: 	&Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
-		}
+		},
+		Offset: 0,
+	}
+
 
 	return effect
 }

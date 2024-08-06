@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GenerateEffectJump() *Animation {
+func GenerateEffectJump() *Effect {
 	fullJumpPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/Effects/Jump_effect.png")
 	if err != nil {
 		log.Fatal(err)
@@ -42,14 +42,18 @@ func GenerateEffectJump() *Animation {
 		blank,
 	}
 
-	effect := &Animation{
+	effect := &Effect{
+				Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
-		}
+		},
+		Offset: 0,
+	}
+
 
 	return effect
 }

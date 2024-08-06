@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func GenerateEffectDblJump() *Animation {
+func GenerateEffectDblJump() *Effect {
 	fullPng, _, err := ebitenutil.NewImageFromFile("Assets/Images/Effects/DblJump_effect.png")
 	if err != nil {
 		log.Fatal(err)
@@ -57,14 +57,18 @@ func GenerateEffectDblJump() *Animation {
 		png8,
 	}
 
-	effect := &Animation{
+	effect := &Effect{
+				Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
-		}
+		},
+		Offset: 0,
+	}
+
 
 	return effect
 }
