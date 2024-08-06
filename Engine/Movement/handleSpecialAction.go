@@ -12,6 +12,12 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 		return handleDashLeft(p)
 	} else if action == "DASHRIGHT" {
 		return handleDashRight(p)
+	} else if action == "EDGECLIMB" {
+
+	} else if action == "WALLSLIDE" {
+
+	} else if action == "FALL" {
+
 	}
 	return false
 }
@@ -23,14 +29,14 @@ func handleJump(p *sprites.Player) bool {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
 		p.HasSecondJump = true
-		p.CurrentAnimationIndex = 1
+		p.CurrentAnimationIndex = 2
 		p.JumpLastUsed = time.Now()
 		return true
 	} else if p.HasSecondJump && p.IsAirborn{
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
-		p.CurrentAnimationIndex = 1
+		p.CurrentAnimationIndex = 3
 		p.HasSecondJump = false
 		return true
 	} 
@@ -39,7 +45,7 @@ func handleJump(p *sprites.Player) bool {
 
 func handleDashRight(p *sprites.Player) bool {
 	if time.Since(p.DashLastUsed) >= p.DashCooldowntime {
-		p.CurrentAnimationIndex = 2
+		p.CurrentAnimationIndex = 1
 		p.DashLastUsed = time.Now()
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
@@ -51,7 +57,8 @@ func handleDashRight(p *sprites.Player) bool {
 
 func handleDashLeft(p *sprites.Player) bool {
 	if time.Since(p.DashLastUsed) >= p.DashCooldowntime {
-		p.CurrentAnimationIndex = 2
+		p.IsMovingRight = false
+		p.CurrentAnimationIndex = 1
 		p.DashLastUsed = time.Now()
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true

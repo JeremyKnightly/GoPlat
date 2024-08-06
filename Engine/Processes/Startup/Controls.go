@@ -31,9 +31,9 @@ func GetControls() []controls.Control {
 		Key: ebiten.KeyS,
 		Direction: controls.DOWN,
 	}
-	down := controls.Control{
-		Key: ebiten.KeyArrowDown,
-		Direction: controls.DOWN,
+	x := controls.Control{
+		Key: ebiten.KeyX,
+		Direction: controls.FALL,
 	}
 	dashRight := controls.Control{
 		Key: ebiten.KeyE,
@@ -54,8 +54,8 @@ func GetControls() []controls.Control {
 		left,
 		d,
 		right,
+		x,
 		s,
-		down,
 		dashRight,
 		dashLeft,
 		space,

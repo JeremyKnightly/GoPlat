@@ -14,10 +14,12 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		DeltaY: 0,
 	}
 	if p.IsAnimationLocked && !p.CanAnimationCancel {
+		p.IsPhysicsLocked = true
 		return rtnVector
 	}
 	directions := GetControlsPressed(playerControls)
 	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
+		p.IsPhysicsLocked = false
 		return rtnVector
 	}
 

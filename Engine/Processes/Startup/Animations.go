@@ -8,7 +8,7 @@ import (
 func GetPlayerActionAnimations() []*animations.ActionAnimation {
 	Walk := animations.GeneratePlayerWalkNoWeapon()
 	Jump := animations.GeneratePlayerJumpNoWeapon()
-	Run := animations.GeneratePlayerDashNoWeapon()
+	Dash := animations.GeneratePlayerDashNoWeapon()
 	DblJump := animations.GeneratePlayerDoubleJumpNoWeapon()
 	EdgeClimb := animations.GeneratePlayerEdgeClimbNoWeapon()
 	Hurt := animations.GeneratePlayerHurtNoWeapon()
@@ -20,7 +20,7 @@ func GetPlayerActionAnimations() []*animations.ActionAnimation {
 
 	animations := []*animations.ActionAnimation{
 		Walk,	//0
-		Run,	//1
+		Dash,	//1
 		Jump,	//2
 		DblJump,	//3
 		EdgeClimb,	//4
