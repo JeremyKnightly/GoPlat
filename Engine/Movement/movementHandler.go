@@ -1,6 +1,7 @@
 package movement
 
 import (
+	"GoPlat/engine/physics"
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
@@ -37,8 +38,14 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		if !validMove {return rtnVector}
 		p.IsAnimationLocked = true
 	} else {
+		p.IsPhysicsLocked = false
 		p.CurrentAnimationIndex = 0
 	}
+
+	if !p.IsPhysicsLocked {
+		physics.HandlePhysics(p, lvl, &playerVector)
+	}
+
 	rtnVector.DeltaX = playerVector.DeltaX
 	rtnVector.DeltaY = playerVector.DeltaY
 
