@@ -33,14 +33,24 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	p.IsIdle = IsIdle(playerVector, specialAction)
 	//Idle Detection
 
+	var validMove bool
 	if len(specialAction.Name) > 0 {
-		validMove := HandleSpecialAction(p, specialAction.Name)
-		if !validMove {
+		validMove = HandleSpecialAction(p, specialAction.Name)
+		if validMove {
+			p.IsAnimationLocked = true
+		} else {
+			//if they can animation cancel, the animation is not over
+			//this prevents user from cancelling animation lock on accident
+			if p.IsAnimationLocked{
+				println("cancelling")
+				p.IsPhysicsLocked = true
+			} else {
+				p.IsPhysicsLocked = false
+				physics.HandlePhysics(p, lvl, &rtnVector)
+			}
 			return rtnVector
 		}
-		p.IsAnimationLocked = true
 	} else {
-		println("no special input")
 		p.IsPhysicsLocked = false
 		p.CurrentAnimationIndex = 0
 	}
