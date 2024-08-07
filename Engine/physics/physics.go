@@ -5,7 +5,6 @@ import (
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
-	"time"
 )
 
 //need position data.
@@ -18,19 +17,9 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	onGround := collision.DetectGround(player, lvl)
 	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)
 	
-	if player.IsAirborn {
-		if onGround {
-			player.IsAirborn = false
-			return
-			//if player is not airborn, no actions will be overridden
-		}
-	} else {
-		if onGround { 
-			return
-		}
-		player.IsAirborn = true
-		player.TimeWentAirborn = time.Now()
-	}
+	stopPhysicsCalcs := playerOnGround(player, onGround)
+	if stopPhysicsCalcs {return}
+	pVector.DeltaY += .9
 	println("things can happen")
 	
 	if nearWall{
@@ -41,4 +30,20 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 			print(" right")
 		}
 	}
+}
+
+func playerOnGround(player *sprites.Player, onGround bool) bool {
+	if player.IsAirborn {
+		if onGround {
+			player.IsAirborn = false
+			return true
+			//if player is not airborn, no actions will be overridden
+		}
+	} else {
+		if onGround { 
+			return true
+		}
+		player.IsAirborn = true
+	}
+	return false
 }
