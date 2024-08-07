@@ -35,9 +35,12 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 
 	if len(specialAction.Name) > 0 {
 		validMove := HandleSpecialAction(p, specialAction.Name)
-		if !validMove {return rtnVector}
+		if !validMove {
+			return rtnVector
+		}
 		p.IsAnimationLocked = true
 	} else {
+		println("no special input")
 		p.IsPhysicsLocked = false
 		p.CurrentAnimationIndex = 0
 	}

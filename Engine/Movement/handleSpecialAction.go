@@ -8,16 +8,19 @@ import (
 func HandleSpecialAction(p *sprites.Player, action string) bool {
 	if action == "JUMP" {
 		p.IsAirborn = false
+		p.IsPhysicsLocked = true
 		return handleJump(p)
 	} else if action == "DASHLEFT" {
 		p.IsAirborn = false
+		p.IsPhysicsLocked = true
 		return handleDashLeft(p)
 	} else if action == "DASHRIGHT" {
 		p.IsAirborn = false
+		p.IsPhysicsLocked = true
 		return handleDashRight(p)
 	} else if action == "EDGECLIMB" {
 		p.IsAirborn = false
-
+		p.IsPhysicsLocked = true
 	}
 	return false
 }

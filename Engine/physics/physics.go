@@ -15,13 +15,18 @@ import (
 
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
 	onGround := collision.DetectGround(player, lvl)
-	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)
-	
 	stopPhysicsCalcs := playerOnGround(player, onGround)
 	if stopPhysicsCalcs {return}
-	pVector.DeltaY += .9
-	println("things can happen")
+
+	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)
 	
+	if !nearWall {
+		handleFall(player, pVector)
+	}
+
+
+
+
 	if nearWall{
 		println("There is a wall to my")
 		if wallPlayerLeft {
@@ -37,7 +42,6 @@ func playerOnGround(player *sprites.Player, onGround bool) bool {
 		if onGround {
 			player.IsAirborn = false
 			return true
-			//if player is not airborn, no actions will be overridden
 		}
 	} else {
 		if onGround { 
@@ -46,4 +50,9 @@ func playerOnGround(player *sprites.Player, onGround bool) bool {
 		player.IsAirborn = true
 	}
 	return false
+}
+
+func handleFall(player *sprites.Player, pVector *controls.Vector) {
+	player.CurrentAnimationIndex = 9
+	pVector.DeltaY += 1.1
 }
