@@ -80,6 +80,7 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 		AllowCancelAfterFrame:   0,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect: false,
+		LoopAnimation: true,
 	}
 
 	return playerFall

@@ -81,6 +81,7 @@ func GeneratePlayerWalkWithWeapon() *ActionAnimation {
 		AnimationComplete: false,
 		FrameVectors: frameVectors,
 		HasEffect: false,
+		LoopAnimation: true,
 	}
 
 	return playerWalk

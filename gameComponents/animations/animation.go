@@ -23,6 +23,7 @@ type ActionAnimation struct {
 	stopAnimation     bool
 	FrameVectors []controls.Vector
 	AllowCancelAfterFrame uint16
+	LoopAnimation bool
 	AllowCancelOnDirections []controls.Direction
 	ResetAnimation bool
 	HasEffect bool

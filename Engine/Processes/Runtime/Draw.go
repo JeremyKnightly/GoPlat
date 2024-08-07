@@ -1,10 +1,10 @@
 package runtime
 
 import (
+	"GoPlat/engine/collision"
 	"GoPlat/gameComponents/animations"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
-	"GoPlat/engine/collision"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -45,11 +45,15 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 }
 
 func stopCompletedAnimations(player *sprites.Player) {
-	if player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete {
-		player.IsAnimationLocked = false
-		player.ActionAnimations[player.CurrentAnimationIndex].AnimationComplete = false
+	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
+	if !currentAnimation.AnimationComplete {return}
+	
+	//if I shouldn't loop, set index to walk
+	if !currentAnimation.LoopAnimation {
 		player.CurrentAnimationIndex = 0
 	}
+	player.IsAnimationLocked = false
+	currentAnimation.AnimationComplete = false
 }
 
 func DrawPlayer(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level) {
