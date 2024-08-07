@@ -24,7 +24,7 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
-	newVector := movement.HandleMovementCalculations(g.Player, g.controls)
+	newVector := movement.HandleMovementCalculations(g.Player, g.controls, g.levels[g.currentLevel])
 	
 	validVector := collision.IsValidMove(g.levels[g.currentLevel], g.Player, newVector)
 	if validVector {

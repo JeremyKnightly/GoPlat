@@ -2,24 +2,26 @@ package movement
 
 import (
 	controls "GoPlat/gameComponents/controls"
+	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control) controls.Vector {
+func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
 	rtnVector := controls.Vector{
 		DeltaX: 0,
 		DeltaY: 0,
 	}
-	if p.IsAnimationLocked && !p.CanAnimationCancel {
+	if p.IsAnimationLocked {
 		p.IsPhysicsLocked = true
+	}
+	if p.IsAnimationLocked && !p.CanAnimationCancel {
 		return rtnVector
 	}
 	directions := GetControlsPressed(playerControls)
 	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
-		p.IsPhysicsLocked = false
 		return rtnVector
 	}
 

@@ -14,10 +14,6 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 		return handleDashRight(p)
 	} else if action == "EDGECLIMB" {
 
-	} else if action == "WALLSLIDE" {
-
-	} else if action == "FALL" {
-
 	}
 	return false
 }
