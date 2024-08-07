@@ -29,7 +29,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	//handle movement
 	playerVector, specialAction := GetMovementVector(directions)
 
-	p.IsMovingRight = IsMovingRight(playerVector)
+	p.IsMovingRight = IsMovingRight(p, playerVector)
 	p.IsIdle = IsIdle(playerVector, specialAction)
 	//Idle Detection
 
@@ -42,7 +42,6 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 			//if they can animation cancel, the animation is not over
 			//this prevents user from cancelling animation lock on accident
 			if p.IsAnimationLocked{
-				println("cancelling")
 				p.IsPhysicsLocked = true
 			} else {
 				p.IsPhysicsLocked = false
@@ -115,8 +114,14 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector, contro
 	return vector, specialAction
 }
 
-func IsMovingRight(vector controls.Vector) bool {
-	return vector.DeltaX >= 0
+func IsMovingRight(player *sprites.Player, vector controls.Vector) bool {
+	if !player.IsAnimationLocked{
+		return vector.DeltaX >= 0
+	}
+	if player.IsMovingRight{
+		return true
+	}
+	return false
 }
 
 func IsIdle(vector controls.Vector,specialAction controls.Direction) bool {
