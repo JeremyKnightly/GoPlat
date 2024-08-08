@@ -6,23 +6,39 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
+func GetXYCollisionBools(lvl *levels.Level, player sprites.Player, pVec controls.Vector) (bool, bool){
+	return true, true
+}
+
+func IsValidMoveRect(lvl *levels.Level, pRect Rect) bool {
+	collisionData := ExtractCollisionData(lvl)
+
+	for _,collision := range collisionData {
+		collidingX, collidingY :=CheckPlayerCollisionXY(pRect, collision)
+		if collidingX && collidingY {
+			return false
+		}
+	}
+	return true
+}
+
 func IsValidMove(lvl *levels.Level, player *sprites.Player, vector controls.Vector) bool {
 	collisionData := ExtractCollisionData(lvl)
 	
-	playerRect := getPlayerRect(player)
+	playerRect := GetPlayerRect(player)
 	playerRect.X += vector.DeltaX
 	playerRect.Y += vector.DeltaY
 
 	for _,collision := range collisionData {
-		colliding := checkPlayerCollision(playerRect, collision)
-		if colliding {
+		collidingX, collidingY := CheckPlayerCollisionXY(playerRect, collision)
+		if collidingX && collidingY {
 			return false
 		}
 	}
 	 return true
 }
 
-func getPlayerRect(p *sprites.Player) Rect {
+func GetPlayerRect(p *sprites.Player) Rect {
 	var playerRect Rect
 	playerRect.X = p.X + 8
 	playerRect.Y = p.Y + 8
@@ -39,26 +55,26 @@ func getPlayerRect(p *sprites.Player) Rect {
 }
 
 
-func checkPlayerCollision(pRect Rect, coll Rect) bool {
+func CheckPlayerCollisionXY(pRect Rect, coll Rect) (bool, bool) {
 	xCollision := false
 	yCollision := false
 
-	if checkXCollisionPlayerLeft(pRect, coll){
+	if CheckXCollisionPlayerLeft(pRect, coll){
 		xCollision = true
-	} else if checkXCollisionPlayerRight(pRect, coll){
+	} else if CheckXCollisionPlayerRight(pRect, coll){
 		xCollision = true
 	}
 
-	if checkYCollisionPlayerTop(pRect, coll){
+	if CheckYCollisionPlayerTop(pRect, coll){
 		yCollision = true
-	} else if checkYCollisionPlayerBottom(pRect, coll){
+	} else if CheckYCollisionPlayerBottom(pRect, coll){
 		yCollision = true
 	}
 
-	return xCollision && yCollision
+	return xCollision, yCollision
 }
 
-func checkXCollisionPlayerLeft(pRect Rect, coll Rect) bool {
+func CheckXCollisionPlayerLeft(pRect Rect, coll Rect) bool {
 	//player left, coll right
 	if (pRect.X > coll.X && pRect.X < coll.X + coll.Width) {
 		return true
@@ -69,7 +85,7 @@ func checkXCollisionPlayerLeft(pRect Rect, coll Rect) bool {
 	return false
 }
 
-func checkXCollisionPlayerRight(pRect Rect, coll Rect) bool {
+func CheckXCollisionPlayerRight(pRect Rect, coll Rect) bool {
 	//player right, coll left
 	if (pRect.X + pRect.Width > coll.X && pRect.X + pRect.Width < coll.X + coll.Width){
 		return true
@@ -79,7 +95,7 @@ func checkXCollisionPlayerRight(pRect Rect, coll Rect) bool {
 	return false
 }
 
-func checkYCollisionPlayerTop(pRect Rect, coll Rect) bool {
+func CheckYCollisionPlayerTop(pRect Rect, coll Rect) bool {
 	//player top, coll bottom
 	if (pRect.Y > coll.Y && pRect.Y < coll.Y + coll.Height) {
 		return true
@@ -89,7 +105,7 @@ func checkYCollisionPlayerTop(pRect Rect, coll Rect) bool {
 	return false
 }
 
-func checkYCollisionPlayerBottom(pRect Rect, coll Rect) bool {
+func CheckYCollisionPlayerBottom(pRect Rect, coll Rect) bool {
 	//player bottom, coll top
 	if (pRect.Y + pRect.Height > coll.Y && pRect.Y + pRect.Height < coll.Y + coll.Height){
 		return true

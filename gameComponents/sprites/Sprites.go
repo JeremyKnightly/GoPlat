@@ -33,5 +33,5 @@ type Player struct {
 	IsAirborn 		   bool
 	HasSecondJump      bool
 	IsWallSliding      bool
-
+	IsWallHanging	   bool
 }

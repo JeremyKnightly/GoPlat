@@ -1,14 +1,68 @@
 package movement
 
 import (
+	"GoPlat/engine/collision"
 	"GoPlat/engine/physics"
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
+	"fmt"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
+
+func HandleAnimationVectorCalculations(lvl *levels.Level, p *sprites.Player, frameVec controls.Vector) controls.Vector {
+	validMove := collision.IsValidMove(lvl, p, frameVec)
+	if validMove { return frameVec}
+
+	//if p.IsMovingRight {}
+	//while the animation vector is invalid, loop and 
+	//adjust vector until it is valid
+	collisionData := collision.ExtractCollisionData(lvl)
+	playerRect := collision.GetPlayerRect(p)
+
+	var tempRect collision.Rect
+	for !validMove {
+		tempRect = playerRect
+		if p.IsMovingRight {
+			tempRect.X += frameVec.DeltaX
+		} else {
+			tempRect.X += frameVec.DeltaX
+		}
+		tempRect.Y += frameVec.DeltaY
+
+		fmt.Printf("\n{%.2f,%.2f}\n", frameVec.DeltaX, frameVec.DeltaY)
+		for _, coll := range collisionData {
+			collisionLeft := collision.CheckXCollisionPlayerLeft(playerRect, coll)
+			collisionRight := collision.CheckXCollisionPlayerRight(playerRect, coll)
+			collisionTop := collision.CheckYCollisionPlayerTop(playerRect, coll)
+			collisionBottom := collision.CheckYCollisionPlayerBottom(playerRect, coll)
+			
+			if collisionLeft && collisionRight {//if Y collision
+				println("LRbumpY")
+				frameVec.BumpY()
+				break
+			} else if collisionTop && collisionBottom {//if X collision
+				frameVec.BumpX(p.IsMovingRight)
+				println("TBbumpX")
+				break
+			} else if collisionLeft || collisionRight {
+				frameVec.BumpX(p.IsMovingRight)
+				println("L/RbumpX")
+				break
+			} else if collisionTop || collisionBottom {
+				frameVec.BumpY()
+				println("T/BbumpY")
+				break
+			}
+		}
+	
+		validMove = collision.IsValidMove(lvl, p, frameVec)
+	}
+
+	return frameVec
+}
 
 func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
 	rtnVector := controls.Vector{

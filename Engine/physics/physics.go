@@ -22,19 +22,37 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	
 	if !nearWall {
 		handleFall(player, pVector)
+		return
+	}
+	handleWallLogic(player, lvl, wallPlayerLeft, pVector)
+}
+
+func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool, pVector *controls.Vector) {
+	if canWallHang(player, lvl, wallPlayerLeft) {
+		player.IsMovingRight = !wallPlayerLeft
+		player.CurrentAnimationIndex = 6
+	} else {
+		player.CurrentAnimationIndex = 7
+		player.IsMovingRight = wallPlayerLeft
+	}
+}
+
+
+func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool) bool {
+	playerRect := collision.GetPlayerRect(player)
+	
+	//takes a rectangle above players head and in 
+	//specified direction to see if there is a ledge
+	playerRect.Y -= (4 + playerRect.Height)
+	if wallPlayerLeft {
+		playerRect.X -= playerRect.Width/2
+	} else {
+		playerRect.X += playerRect.Width/2
 	}
 
-
-
-
-	if nearWall{
-		println("There is a wall to my")
-		if wallPlayerLeft {
-			print(" left")
-		} else {
-			print(" right")
-		}
-	}
+	validMove := collision.IsValidMoveRect(lvl, playerRect)
+	
+	return validMove
 }
 
 func playerOnGround(player *sprites.Player, onGround bool) bool {
@@ -55,5 +73,6 @@ func playerOnGround(player *sprites.Player, onGround bool) bool {
 func handleFall(player *sprites.Player, pVector *controls.Vector) {
 	player.CurrentAnimationIndex = 9
 	player.IsIdle = false
-	pVector.DeltaY += 1.1
+	//pVector.DeltaY += 1.1
+	pVector.DeltaY +=.2 //lowered DeltaY so I can test wall hang
 }

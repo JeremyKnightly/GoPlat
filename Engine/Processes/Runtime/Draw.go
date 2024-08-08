@@ -2,6 +2,7 @@ package runtime
 
 import (
 	"GoPlat/engine/collision"
+	"GoPlat/engine/movement"
 	"GoPlat/gameComponents/animations"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
@@ -82,14 +83,21 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 	currentFrame, frameVector, canCancel := currentAnimation.AnimateAction()
 	player.CanAnimationCancel = canCancel
 
-	newPosition := frameVector.PlayerMove(player.X, player.Y, player.IsMovingRight)
-	validMove := collision.IsValidMove(lvl, player, newPosition)
-	
-	if validMove {
-		player.X = newPosition.DeltaX
-		player.Y = newPosition.DeltaY
-		playerDrawOptions.GeoM.Translate(frameVector.DeltaX, frameVector.DeltaY)
+	if !player.IsMovingRight {
+		frameVector.DeltaX *= -1
 	}
+	finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
+	newPosition := finalVec.PlayerMove(player.X, player.Y, player.IsMovingRight)
+	
+	//if invalid move, draw frame as is and return
+	if !collision.IsValidMove(lvl, player, finalVec){
+		screen.DrawImage(currentFrame, &playerDrawOptions)
+		return
+	}
+
+	player.X = newPosition.DeltaX
+	player.Y = newPosition.DeltaY
+	playerDrawOptions.GeoM.Translate(finalVec.DeltaX, finalVec.DeltaY)	
 
 	if hasAnimationEffect{
 		effectFrame := currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]

@@ -7,10 +7,10 @@ import (
 
 func DetectWall(player *sprites.Player, lvl *levels.Level) (bool, bool) {
 	collisionData := ExtractCollisionData(lvl)
-	playerRect := getPlayerRect(player)
+	playerRect := GetPlayerRect(player)
 
 	for _, collision := range collisionData {
-		wallNearby, isLeft := checkWallNearby(playerRect, collision)
+		wallNearby, isLeft := CheckWallNearby(playerRect, collision)
 		if wallNearby {
 			return wallNearby, isLeft
 		}
@@ -21,10 +21,10 @@ func DetectWall(player *sprites.Player, lvl *levels.Level) (bool, bool) {
 
 func DetectGround(player *sprites.Player, lvl *levels.Level) bool {
 	collisionData := ExtractCollisionData(lvl)
-	playerRect := getPlayerRect(player)
+	playerRect := GetPlayerRect(player)
 
 	for _, collision := range collisionData {
-		groundNearby := checkGroundNearby(playerRect, collision)
+		groundNearby := CheckGroundNearby(playerRect, collision)
 		if groundNearby {
 			return true
 		}
@@ -33,28 +33,28 @@ func DetectGround(player *sprites.Player, lvl *levels.Level) bool {
 	return false
 }
 
-func checkGroundNearby(pRect Rect, coll Rect) bool {
+func CheckGroundNearby(pRect Rect, coll Rect) bool {
 	// no X collision means there is no collision on the same vertical plane
-	if !checkXCollisionPlayerLeft(pRect, coll) && !checkXCollisionPlayerRight(pRect, coll) {
+	if !CheckXCollisionPlayerLeft(pRect, coll) && !CheckXCollisionPlayerRight(pRect, coll) {
 		return false
 	}
 
 	pRect.Height += 2
-	return checkYCollisionPlayerBottom(pRect, coll)
+	return CheckYCollisionPlayerBottom(pRect, coll)
 }
 
-func checkWallNearby(pRect Rect, coll Rect) (bool, bool) {
+func CheckWallNearby(pRect Rect, coll Rect) (bool, bool) {
 	// no Y collision means there is no collision on the same horizontal plane
-	if !checkYCollisionPlayerTop(pRect, coll) && !checkYCollisionPlayerBottom(pRect, coll) {
+	if !CheckYCollisionPlayerTop(pRect, coll) && !CheckYCollisionPlayerBottom(pRect, coll) {
 		return false, false
 	}
 
 	//increase width and shift left for detection range
 	pRect.Width += 4
 	pRect.X -= 2
-	if checkXCollisionPlayerRight(pRect, coll) {
+	if CheckXCollisionPlayerRight(pRect, coll) {
 		return true, false
-	} else if checkXCollisionPlayerLeft(pRect, coll) {
+	} else if CheckXCollisionPlayerLeft(pRect, coll) {
 		return true, true
 	}
 
