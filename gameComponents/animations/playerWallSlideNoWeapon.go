@@ -64,21 +64,20 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 	}
 
 	frameVectors := []controls.Vector{
-		{0,.7},
-		{0,.7},
-		{0,.7},
 		{0,.6},
 		{0,.6},
-		{0,.5},
-		{0,.25},
-		{0,.25},
+		{0,.6},
+		{0,.6},
+		{0,.6},
+		{0,.6},
+		{0,.6},
+		{0,.6},
 	}
 
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
 		controls.JUMP,
-		controls.FALL,
 	}
 
 	wallSlide := &ActionAnimation{

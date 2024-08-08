@@ -50,10 +50,10 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{0,0},
-		{0,8},
-		{4,6},
-		{8,6},
-		{8,6},
+		{0,-.36},
+		{.9,-.38},
+		{.9,-.38},
+		{.9,-.38},
 		{0,0},
 	}
 
@@ -67,7 +67,7 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 60,
+			frameDuration:     time.Millisecond * 120,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 		},

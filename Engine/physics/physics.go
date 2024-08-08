@@ -17,6 +17,7 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	onGround := collision.DetectGround(player, lvl)
 	stopPhysicsCalcs := playerOnGround(player, onGround)
 	if stopPhysicsCalcs {return}
+	player.IsIdle = false
 
 	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)
 	
@@ -31,9 +32,12 @@ func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft b
 	if canWallHang(player, lvl, wallPlayerLeft) {
 		player.IsMovingRight = !wallPlayerLeft
 		player.CurrentAnimationIndex = 6
+		player.IsWallHanging = true
+		player.IsAnimationLocked = true
 	} else {
 		player.CurrentAnimationIndex = 7
 		player.IsMovingRight = wallPlayerLeft
+		player.IsWallSliding = true
 	}
 }
 
@@ -73,6 +77,5 @@ func playerOnGround(player *sprites.Player, onGround bool) bool {
 func handleFall(player *sprites.Player, pVector *controls.Vector) {
 	player.CurrentAnimationIndex = 9
 	player.IsIdle = false
-	//pVector.DeltaY += 1.1
-	pVector.DeltaY +=.2 //lowered DeltaY so I can test wall hang
+	pVector.DeltaY += 1
 }

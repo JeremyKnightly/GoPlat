@@ -66,13 +66,13 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 	frameVectors := []controls.Vector{
 		{0, 0},
 		{0, 0},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.25},
+		{.3, -.5},
+		{.3, -.5},
+		{.3, -.5},
+		{.3, -.5},
+		{.3, -.5},
+		{.3, -.5},
+		{.3, -.3},
 	}
 
 	cancelDirections := []controls.Direction{

@@ -7,33 +7,13 @@ import (
 )
 
 func GetControls() []controls.Control {
-	w := controls.Control{
-		Key: ebiten.KeyW,
-		Direction: controls.UP,
-	}
 	a := controls.Control{
 		Key: ebiten.KeyA,
-		Direction: controls.LEFT,
-	}
-	left := controls.Control{
-		Key: ebiten.KeyArrowLeft,
 		Direction: controls.LEFT,
 	}
 	d := controls.Control{
 		Key: ebiten.KeyD,
 		Direction: controls.RIGHT,
-	}
-	right := controls.Control{
-		Key: ebiten.KeyArrowRight,
-		Direction: controls.RIGHT,
-	}
-	s := controls.Control{
-		Key: ebiten.KeyS,
-		Direction: controls.DOWN,
-	}
-	x := controls.Control{
-		Key: ebiten.KeyX,
-		Direction: controls.FALL,
 	}
 	dashRight := controls.Control{
 		Key: ebiten.KeyE,
@@ -49,13 +29,8 @@ func GetControls() []controls.Control {
 	}
 
 	return []controls.Control{
-		w,
 		a,
-		left,
 		d,
-		right,
-		x,
-		s,
 		dashRight,
 		dashLeft,
 		space,

@@ -9,6 +9,10 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 	if action == "JUMP" {
 		p.IsAirborn = false
 		p.IsPhysicsLocked = true
+		if p.IsWallHanging{//trigger edgeclimb
+			p.IsWallHanging = false
+			return handleWallHang(p)
+		}
 		return handleJump(p)
 	} else if action == "DASHLEFT" {
 		p.IsAirborn = false
@@ -18,9 +22,6 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 		p.IsAirborn = false
 		p.IsPhysicsLocked = true
 		return handleDashRight(p)
-	} else if action == "EDGECLIMB" {
-		p.IsAirborn = false
-		p.IsPhysicsLocked = true
 	}
 	return false
 }
@@ -48,6 +49,7 @@ func handleJump(p *sprites.Player) bool {
 
 func handleDashRight(p *sprites.Player) bool {
 	if time.Since(p.DashLastUsed) >= p.DashCooldowntime {
+		p.IsMovingRight = true
 		p.CurrentAnimationIndex = 1
 		p.DashLastUsed = time.Now()
 		if p.IsAnimationLocked {
@@ -68,5 +70,11 @@ func handleDashLeft(p *sprites.Player) bool {
 		}
 		return true
 	} 
+	return false
+}
+
+func handleWallHang(p *sprites.Player) bool {
+	p.CurrentAnimationIndex = 4
+	p.IsAnimationLocked = true
 	return false
 }

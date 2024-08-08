@@ -6,7 +6,6 @@ import (
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
-	"fmt"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -16,7 +15,6 @@ func HandleAnimationVectorCalculations(lvl *levels.Level, p *sprites.Player, fra
 	validMove := collision.IsValidMove(lvl, p, frameVec)
 	if validMove { return frameVec}
 
-	//if p.IsMovingRight {}
 	//while the animation vector is invalid, loop and 
 	//adjust vector until it is valid
 	collisionData := collision.ExtractCollisionData(lvl)
@@ -32,7 +30,6 @@ func HandleAnimationVectorCalculations(lvl *levels.Level, p *sprites.Player, fra
 		}
 		tempRect.Y += frameVec.DeltaY
 
-		fmt.Printf("\n{%.2f,%.2f}\n", frameVec.DeltaX, frameVec.DeltaY)
 		for _, coll := range collisionData {
 			collisionLeft := collision.CheckXCollisionPlayerLeft(playerRect, coll)
 			collisionRight := collision.CheckXCollisionPlayerRight(playerRect, coll)
@@ -40,20 +37,16 @@ func HandleAnimationVectorCalculations(lvl *levels.Level, p *sprites.Player, fra
 			collisionBottom := collision.CheckYCollisionPlayerBottom(playerRect, coll)
 			
 			if collisionLeft && collisionRight {//if Y collision
-				println("LRbumpY")
 				frameVec.BumpY()
 				break
 			} else if collisionTop && collisionBottom {//if X collision
 				frameVec.BumpX(p.IsMovingRight)
-				println("TBbumpX")
 				break
 			} else if collisionLeft || collisionRight {
 				frameVec.BumpX(p.IsMovingRight)
-				println("L/RbumpX")
 				break
 			} else if collisionTop || collisionBottom {
 				frameVec.BumpY()
-				println("T/BbumpY")
 				break
 			}
 		}
@@ -70,7 +63,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		DeltaY: 0,
 	}
 	if p.IsAnimationLocked {
-		p.IsPhysicsLocked = true
+		AnimationLockWallOverride(p, lvl)
 	}
 	if p.IsAnimationLocked && !p.CanAnimationCancel {
 		return rtnVector
@@ -84,7 +77,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	playerVector, specialAction := GetMovementVector(directions)
 
 	p.IsMovingRight = IsMovingRight(p, playerVector)
-	p.IsIdle = IsIdle(playerVector, specialAction)
+	p.IsIdle = IsIdle(p, playerVector, specialAction)
 	//Idle Detection
 
 	var validMove bool
@@ -178,8 +171,8 @@ func IsMovingRight(player *sprites.Player, vector controls.Vector) bool {
 	return false
 }
 
-func IsIdle(vector controls.Vector,specialAction controls.Direction) bool {
-	if len(specialAction.Name) > 0 {
+func IsIdle(p *sprites.Player, vector controls.Vector,specialAction controls.Direction) bool {
+	if len(specialAction.Name) > 0 || p.IsWallHanging {
 		return false
 	} else if vector.DeltaX != 0 || vector.DeltaY != 0 {
 		return false
@@ -198,4 +191,19 @@ func IsAnimationCancelling (p *sprites.Player, input []controls.Direction) (bool
 		}
 	}
 	return false
+}
+
+func AnimationLockWallOverride(p *sprites.Player, lvl *levels.Level) {
+	nearWall, _ := collision.DetectWall(p, lvl)
+	nearGround := collision.DetectGround(p, lvl)
+	if !nearWall {
+		p.IsPhysicsLocked = true
+	} else {
+		//if it isn't a wall or hurt or death animation, cancel that animation
+		if (p.CurrentAnimationIndex < 4 || p.CurrentAnimationIndex > 8) ||
+		(nearGround && p.CurrentAnimationIndex == 7) {
+			p.ActionAnimations[p.CurrentAnimationIndex].CurrentFrameIndex = 0
+			p.IsAnimationLocked = false
+		} 
+	}
 }

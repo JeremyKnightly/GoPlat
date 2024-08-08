@@ -20,7 +20,7 @@ type ActionAnimation struct {
 	*Animation
 	AnimationComplete bool
 	WillAwaitInput    bool
-	stopAnimation     bool
+	StopAnimation     bool
 	FrameVectors []controls.Vector
 	AllowCancelAfterFrame uint16
 	LoopAnimation bool
@@ -54,29 +54,37 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image,controls.Vector, bool) 
 	now := time.Now()
 
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
-		if !a.stopAnimation {
+		if !a.StopAnimation {
 			a.CurrentFrameIndex++
 		}
 
 		if a.CurrentFrameIndex >= a.NumberOfFrames - 1 {
-			a.AnimationComplete = true
-			if a.WillAwaitInput {
-				a.CurrentFrameIndex = a.NumberOfFrames - 1
-				a.stopAnimation = true
-			} else {
-				a.CurrentFrameIndex = 0
-			}
+			a.endAnimationCycle()
 		}
-		if a.ResetAnimation {
-			a.CurrentFrameIndex = 0
-			a.ResetAnimation = false
-		}
+		if a.ResetAnimation {a.Reset()}
 		a.lastUpdate = now
 	}	
-	allowCancel := false
-	if a.CurrentFrameIndex > a.AllowCancelAfterFrame{
-		allowCancel = true
-	}
+	allowCancel := a.setAnimationCancel()
+
 
 	return a.Frames[a.CurrentFrameIndex], a.FrameVectors[a.CurrentFrameIndex], allowCancel
+}
+
+func (a *ActionAnimation) setAnimationCancel() bool {
+	return a.CurrentFrameIndex > a.AllowCancelAfterFrame
+}
+
+func (a *ActionAnimation) Reset() {
+	a.CurrentFrameIndex = 0
+	a.ResetAnimation = false
+}
+
+func (a *ActionAnimation) endAnimationCycle() {
+	if a.WillAwaitInput {
+		a.CurrentFrameIndex = a.NumberOfFrames - 1
+		a.StopAnimation = true
+	} else {
+		a.AnimationComplete = true
+		a.CurrentFrameIndex = 0
+	}
 }

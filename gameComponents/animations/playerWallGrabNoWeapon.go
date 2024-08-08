@@ -72,8 +72,7 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
-		controls.EDGECLIMB,
-		controls.FALL,
+		controls.JUMP,
 	}
 
 	wallGrab := &ActionAnimation{
@@ -90,6 +89,7 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect: false,
+		WillAwaitInput: true,
 	}
 
 	return wallGrab

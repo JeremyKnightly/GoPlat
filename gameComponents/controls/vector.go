@@ -67,9 +67,7 @@ func (vec *Vector) BumpX(movingRight bool) {
 	}
 	if !movingRight {
 		vec.DeltaX += .05
-		println("movingleft")
 	} else {
 		vec.DeltaX -= .05
 	}
-	println(vec.DeltaX)
 }

@@ -18,9 +18,6 @@ type Game struct {
 	levels   []*levels.Level
 	controls []controls.Control
 	currentLevel int
-	maxTilesX int
-	maxTilesY int
-	tileSize float64
 }
 
 func (g *Game) Update() error {
@@ -31,6 +28,7 @@ func (g *Game) Update() error {
 		g.Player.X += newVector.DeltaX
 		g.Player.Y += newVector.DeltaY
 	}
+
 
 	return nil
 }
@@ -52,16 +50,9 @@ func main() {
 	game.Player = startup.CreateDefaultPlayer()
 	game.levels = startup.CreateLevels()
 	game.controls = startup.GetControls()
-	game.maxTilesX = 20
-	game.maxTilesY = 15
-	game.tileSize = 16
 	game.currentLevel = 0
 
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
 	}
 }
-
-
-
-
