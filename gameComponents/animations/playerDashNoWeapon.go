@@ -63,10 +63,10 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{.6, 0},
-		{.8, 0},
-		{.8, 0},
-		{.8, 0},
-		{.8, 0},
+		{.7, 0},
+		{.7, 0},
+		{.7, 0},
+		{.7, 0},
 		{.7, 0},
 		{.6, 0},
 		{.5, 0},
@@ -86,7 +86,7 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 80,
+			frameDuration:     time.Millisecond * 70,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
 		},

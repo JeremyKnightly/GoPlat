@@ -16,7 +16,10 @@ import (
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
 	onGround := collision.DetectGround(player, lvl)
 	stopPhysicsCalcs := playerOnGround(player, onGround)
-	if stopPhysicsCalcs {return}
+	if stopPhysicsCalcs {
+		player.CanJump = true
+		return
+	}
 	player.IsIdle = false
 
 	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)

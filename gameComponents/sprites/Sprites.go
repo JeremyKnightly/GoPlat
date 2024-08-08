@@ -25,8 +25,7 @@ type Player struct {
 	*BioSprite
 	DashCooldowntime   time.Duration
 	DashLastUsed       time.Time
-	JumpCooldownTime   time.Duration
-	JumpLastUsed       time.Time
+	CanJump 		   bool
 	IsPhysicsLocked    bool
 	CanAnimationCancel bool
 	IsAnimationLocked  bool

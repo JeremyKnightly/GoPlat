@@ -1,7 +1,5 @@
 package controls
 
-import "math"
-
 type Vector struct {
 	DeltaX, DeltaY float64
 }
@@ -55,16 +53,16 @@ func (vec *Vector) PlayerMove(posX float64, posY float64, isMovingRight bool) Ve
 
 func (vec *Vector) BumpY() {
 	if vec.DeltaY > 0 {
-		vec.DeltaY -= .05 * vec.DeltaY
+		vec.DeltaY -= .03
 	} else if vec.DeltaY < 0 {
-		vec.DeltaY += .05 * vec.DeltaY
+		vec.DeltaY += .03 
 	}
 }
 
 func (vec *Vector) BumpX(movingRight bool) {
-	if math.Abs(vec.DeltaX) <= 0 {
-		return
-	}
+	//if math.Abs(vec.DeltaX) <= 0 {
+	//	return
+	//}
 	if !movingRight {
 		vec.DeltaX += .05
 	} else {

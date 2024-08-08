@@ -59,15 +59,15 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 	}
 
 	frameVectors := []controls.Vector{
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
-		{.25, -.35},
+		{.1, -.6},
+		{.1, -.6},
+		{.1, -.6},
+		{.1, -.6},
+		{.1, -.6},
+		{.1, -.6},
+		{.1, -.6},
+		{.1, -.1},
+		{.1, -.1},
 	}
 
 	cancelDirections := []controls.Direction{
