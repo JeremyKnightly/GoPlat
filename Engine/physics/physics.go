@@ -22,10 +22,10 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 		handleFall(player, pVector)
 		return
 	}
-	handleWallLogic(player, lvl, wallPlayerLeft, pVector)
+	handleWallLogic(player, lvl, wallPlayerLeft)
 }
 
-func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool, pVector *controls.Vector) {
+func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool) {
 	if canWallHang(player, lvl, wallPlayerLeft) {
 		player.IsMovingRight = !wallPlayerLeft
 		player.CurrentAnimationIndex = 6
