@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"GoPlat/engine/camera"
 	"GoPlat/engine/collision"
 	"GoPlat/engine/movement"
 	"GoPlat/gameComponents/animations"
@@ -11,7 +12,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func DrawLevel(level *levels.Level, screen *ebiten.Image) {
+func DrawLevel(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
 	mapDrawOptions := ebiten.DrawImageOptions{}
 	//loop over layers
 	tileSize := 16
@@ -34,6 +35,7 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image) {
 			srcY *= tileSize
 
 			mapDrawOptions.GeoM.Translate(float64(x), float64(y))
+			mapDrawOptions.GeoM.Translate(cam.X, cam.Y)
 
 			screen.DrawImage(level.TilemapImage.SubImage(image.Rect(srcX, srcY, srcX+16, srcY+16)).(*ebiten.Image),
 				&mapDrawOptions,
@@ -57,17 +59,17 @@ func stopCompletedAnimations(player *sprites.Player) {
 	currentAnimation.AnimationComplete = false
 }
 
-func DrawPlayer(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level) {
+func DrawPlayer(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level, cam *camera.Camera) {
 	playerDrawOptions := ebiten.DrawImageOptions{}
 
 	if player.IsIdle {
-		handleIdleDraw(player, screen, &playerDrawOptions)
+		handleIdleDraw(player, screen, &playerDrawOptions, cam)
 	} else {
-		handleActiveDraw(player, screen, lvl)
+		handleActiveDraw(player, screen, lvl, cam)
 	}
 }
 
-func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level) {
+func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.Level, cam *camera.Camera) {
 	playerDrawOptions := ebiten.DrawImageOptions{}
 	effectDrawOptions := ebiten.DrawImageOptions{}
 	stopCompletedAnimations(player)
@@ -79,6 +81,7 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 		prepSpriteWithEffect(player,&playerDrawOptions, &effectDrawOptions)
 	}
 
+
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 	currentFrame, frameVector, canCancel := currentAnimation.AnimateAction()
 	player.CanAnimationCancel = canCancel
@@ -88,7 +91,7 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 	}
 	finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
 	newPosition := finalVec.PlayerMove(player.X, player.Y, player.IsMovingRight)
-	
+	playerDrawOptions.GeoM.Translate(cam.X, cam.Y)
 	//if invalid move, draw frame as is and return
 	if !collision.IsValidMove(lvl, player, finalVec){
 		screen.DrawImage(currentFrame, &playerDrawOptions)
@@ -101,6 +104,7 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 
 	if hasAnimationEffect{
 		effectFrame := currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
+		effectDrawOptions.GeoM.Translate(cam.X, cam.Y)
 		screen.DrawImage(effectFrame, &effectDrawOptions)
 	}
 
@@ -147,8 +151,9 @@ func prepSpriteWithEffect(p *sprites.Player, options *ebiten.DrawImageOptions, e
 	effectOptions.GeoM.Translate(p.X, p.Y)
 }
 
-func handleIdleDraw(player *sprites.Player, screen *ebiten.Image, options *ebiten.DrawImageOptions) {
+func handleIdleDraw(player *sprites.Player, screen *ebiten.Image, options *ebiten.DrawImageOptions, cam *camera.Camera) {
 	prepSpriteNoEffect(player, options)
 	currentFrame := player.IdleAnimation.Animate()
+	options.GeoM.Translate(cam.X, cam.Y)
 	screen.DrawImage(currentFrame, options)
 }
