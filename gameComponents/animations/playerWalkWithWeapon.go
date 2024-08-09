@@ -59,14 +59,38 @@ func GeneratePlayerWalkWithWeapon() *ActionAnimation {
 		walkPng8,
 	}
 	frameVectors := []controls.Vector{
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
 	}
 
 	playerWalk := &ActionAnimation{

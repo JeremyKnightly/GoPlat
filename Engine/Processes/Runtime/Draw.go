@@ -143,10 +143,9 @@ func prepSpriteWithEffect(p *sprites.Player, options *ebiten.DrawImageOptions, e
 		frameWidth := getAnimationMaxFrameWidth(p)
 		adjustDrawOptionsForLeftMove(effectOptions,effectWidth + frameWidth)
 		adjustDrawOptionsForLeftMove(options,frameWidth)
-		effectOptions.GeoM.Translate(-effect.Offset, 0)
-	} else {
-		effectOptions.GeoM.Translate(effect.Offset, 0)
-	}
+		//effectOptions.GeoM.Translate(-effect.Offset, 0)
+	} 
+
 	options.GeoM.Translate(p.X, p.Y)
 	effectOptions.GeoM.Translate(p.X, p.Y)
 }

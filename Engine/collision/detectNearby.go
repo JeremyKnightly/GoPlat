@@ -33,6 +33,19 @@ func DetectGround(player *sprites.Player, lvl *levels.Level) bool {
 	return false
 }
 
+func DetectGroundRect(rect Rect, lvl *levels.Level) bool {
+	collisionData := ExtractCollisionData(lvl)
+
+	for _, collision := range collisionData {
+		groundNearby := CheckGroundNearby(rect, collision)
+		if groundNearby {
+			return true
+		}
+	}
+
+	return false
+}
+
 func CheckGroundNearby(pRect Rect, coll Rect) bool {
 	// no X collision means there is no collision on the same vertical plane
 	if !CheckXCollisionPlayerLeft(pRect, coll) && !CheckXCollisionPlayerRight(pRect, coll) {

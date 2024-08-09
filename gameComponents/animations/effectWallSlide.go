@@ -14,6 +14,11 @@ func GenerateEffectWallSlide() *Effect {
 	if err != nil {
 		log.Fatal(err)
 	}
+	
+	blank := fullPng.SubImage(
+		image.Rect(0, 0, 16, 16),
+	).(*ebiten.Image)
+
 	png1 := fullPng.SubImage(
 		image.Rect(16, 16, 48, 48),
 	).(*ebiten.Image)
@@ -51,8 +56,11 @@ func GenerateEffectWallSlide() *Effect {
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
+		blank,
+		blank,
 		png1,
 		png2,
+		blank,
 		png3,
 		png4,
 		png5,
@@ -60,6 +68,8 @@ func GenerateEffectWallSlide() *Effect {
 		png7,
 		png8,
 		png9,
+		blank,
+		blank,
 	}
 
 	effect := &Effect{

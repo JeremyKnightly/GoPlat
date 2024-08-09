@@ -59,14 +59,38 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 	}
 
 	frameVectors := []controls.Vector{
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
-		{0,0},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
 	}
 
 	cancelDirections := []controls.Direction{

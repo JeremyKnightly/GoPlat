@@ -47,9 +47,9 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 		image.Rect(464, 16, 496, 48),
 	).(*ebiten.Image)
 
-	png9 := fullPng.SubImage(
+	/*png9 := fullPng.SubImage(
 		image.Rect(464, 16, 496, 48),
-	).(*ebiten.Image)
+	).(*ebiten.Image)*/
 
 	frames := []*ebiten.Image{
 		png1,
@@ -58,20 +58,73 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 		png4,
 		png5,
 		png6,
+		png4,
+		png5,
+		png6,
+		png4,
+		png5,
+		png6,
 		png7,
 		png8,
-		png9,
 	}
 
 	frameVectors := []controls.Vector{
-		{0,.6},
-		{0,.6},
-		{0,.6},
-		{0,.6},
-		{0,.6},
-		{0,.6},
-		{0,.6},
-		{0,.6},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0.6,
+		},
 	}
 
 	cancelDirections := []controls.Direction{

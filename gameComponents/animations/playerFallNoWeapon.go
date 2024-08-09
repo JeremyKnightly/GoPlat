@@ -15,15 +15,7 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 	if err != nil {
 		log.Fatal(err)
 	}
-/*
-	jumpPng10 := fullJumpPng.SubImage(
-		image.Rect(592, 16, 624, 48),
-	).(*ebiten.Image)
 
-	jumpPng11 := fullJumpPng.SubImage(
-		image.Rect(656, 16, 688, 48),
-	).(*ebiten.Image)
-*/
 	jumpPng12 := fullJumpPng.SubImage(
 		image.Rect(720, 16, 752, 48),
 	).(*ebiten.Image)
@@ -53,11 +45,26 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 	}
 
 	frameVectors := []controls.Vector{
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
 	}
 
 	cancelDirections := []controls.Direction{

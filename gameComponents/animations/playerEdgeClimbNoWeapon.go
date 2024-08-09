@@ -49,12 +49,30 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 	}
 
 	frameVectors := []controls.Vector{
-		{0,0},
-		{0,-.36},
-		{.3,-.38},
-		{.3,-.38},
-		{.3,-.38},
-		{0,0},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .55, 
+			DeltaY: -.48,
+		},
+		{
+			DeltaX: .55, 
+			DeltaY: -.48,
+		},
+		{
+			DeltaX: .55, 
+			DeltaY: -.48,
+		},
+		{
+			DeltaX: .0, 
+			DeltaY:  0,
+		},
 	}
 
 	cancelDirections := []controls.Direction{

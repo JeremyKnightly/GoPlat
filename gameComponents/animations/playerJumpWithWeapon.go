@@ -89,25 +89,83 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 		jumpPngReset,
 	}
 	frameVectors := []controls.Vector{
-		{0, 0},
-		{0, 0},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.4},
-		{.3, -.25},
-		{.3, .25},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{.3, .4},
-		{0, 0},
-		{0, 0},
-		{0, 0},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: -.25,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .25,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .4,
+		},
+		{
+			DeltaX: .3, 
+			DeltaY: .4,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0, 
+			DeltaY: 0,
+		},
+
 	}
 
 	cancelDirections := []controls.Direction{

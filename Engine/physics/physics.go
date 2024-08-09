@@ -7,15 +7,9 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
-//need position data.
-//Need to find out if player is on the ground.
-//Also need to find out if player is against a wall
-//wall sliding is airborn + on wall
-
-
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
 	onGround := collision.DetectGround(player, lvl)
-	stopPhysicsCalcs := playerOnGround(player, onGround)
+	stopPhysicsCalcs := adjustedAirbornStatus(player, onGround)
 	if stopPhysicsCalcs {
 		player.CanJump = true
 		return
@@ -58,11 +52,12 @@ func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool)
 	}
 
 	validMove := collision.IsValidMoveRect(lvl, playerRect)
+	nearGround := collision.DetectGroundRect(playerRect, lvl)
 	
-	return validMove
+	return validMove && nearGround
 }
 
-func playerOnGround(player *sprites.Player, onGround bool) bool {
+func adjustedAirbornStatus(player *sprites.Player, onGround bool) bool {
 	if player.IsAirborn {
 		if onGround {
 			player.IsAirborn = false
