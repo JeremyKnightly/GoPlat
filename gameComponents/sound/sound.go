@@ -10,10 +10,20 @@ var (
 	player       *audio.Player
 )
 
-func init () {
+func init() {
 	//audioContext = audio.NewContext(44100)
 	audioContext = audio.NewContext(11100)
 }
 
-func loadSound (filepath string) {
-}
+/*
+func loadSound(filepath string) {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return fmt.Printf("Could not open sound file: %w", err)
+	}s
+	defer file.Close()
+
+	decodedAudio, err := wav.DecodeWithSampleRate(audioContext, file)
+
+
+}*/
