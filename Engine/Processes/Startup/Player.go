@@ -9,9 +9,9 @@ func CreateDefaultPlayer() *sprites.Player {
 	player := &sprites.Player{
 		BioSprite: &sprites.BioSprite{
 			Sprite: &sprites.Sprite{
-				Image: nil,
-				X:     50,
-				Y:     50,
+				ImageToDraw: nil,
+				X:           50,
+				Y:           50,
 			},
 			ActionAnimations:      GetPlayerActionAnimations(),
 			IsMovingRight:         true,
