@@ -50,12 +50,14 @@ func (a *Animation) Animate() *ebiten.Image {
 	return a.Frames[a.CurrentFrameIndex]
 }
 
-func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool) {
+func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool, bool) {
 	now := time.Now()
 
+	changedIndex := false
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
 		if !a.StopAnimation {
 			a.CurrentFrameIndex++
+			changedIndex = true
 		}
 
 		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
@@ -68,7 +70,7 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool)
 	}
 	allowCancel := a.setAnimationCancel()
 
-	return a.Frames[a.CurrentFrameIndex], a.FrameVectors[a.CurrentFrameIndex], allowCancel
+	return a.Frames[a.CurrentFrameIndex], a.FrameVectors[a.CurrentFrameIndex], allowCancel, changedIndex
 }
 
 func (a *ActionAnimation) setAnimationCancel() bool {

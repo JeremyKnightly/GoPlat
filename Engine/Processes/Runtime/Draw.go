@@ -4,7 +4,6 @@ import (
 	"GoPlat/Engine/camera"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
-	"fmt"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
