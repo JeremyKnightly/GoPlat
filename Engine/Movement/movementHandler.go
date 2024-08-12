@@ -75,9 +75,9 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	}
 
 	//handle movement
-	playerVector, specialAction := GetMovementVector(directions)
+	playerVelocity, playerAcceleration, specialAction := GetMovementVector(directions)
 
-	p.IsMovingRight = IsMovingRight(p, playerVector)
+	p.IsMovingRight = IsMovingRight(p)
 	p.IsIdle = IsIdle(p, playerVector, specialAction)
 	//Idle Detection
 
