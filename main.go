@@ -15,7 +15,8 @@ type Game struct {
 	Player                              *sprites.Player
 	levels                              []*levels.Level
 	controls                            []controls.Control
-	currentLevel                        int
+	currentLevel                        *levels.Level
+	currentLevelIndex                   int
 	camera                              *camera.Camera
 	tileSize, screenWidth, screenHeight float64
 }
@@ -32,7 +33,7 @@ func main() {
 	game.Player = startup.CreateDefaultPlayer()
 	game.levels = startup.CreateLevels()
 	game.controls = startup.GetControls()
-	game.currentLevel = 0
+	game.currentLevelIndex = 0
 	game.tileSize = 16
 	game.screenHeight = 240
 	game.screenWidth = 320
