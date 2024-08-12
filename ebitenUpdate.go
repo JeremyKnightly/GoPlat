@@ -26,13 +26,13 @@ func (g *Game) setPlayerPositionWithInput() {
 
 	validVector := collision.IsValidMove(g.currentLevel, g.Player, inputVector)
 	if validVector {
-		g.Player.X += inputVector.DeltaX
-		g.Player.Y += inputVector.DeltaY
+		g.Player.Physics.Position.X += inputVector.DeltaX
+		g.Player.Physics.Position.Y += inputVector.DeltaY
 	}
 }
 
 func (g *Game) setCameraPosition() {
-	g.camera.FollowTarget(g.Player.X+g.tileSize/2, g.Player.Y+g.tileSize/2, g.screenWidth, g.screenHeight)
+	g.camera.FollowTarget(g.Player.Physics.Position.X+g.tileSize/2, g.Player.Physics.Position.Y+g.tileSize/2, g.screenWidth, g.screenHeight)
 	g.camera.Constrain(g.currentLevel.Layers[0].Height,
 		g.currentLevel.Layers[0].Width,
 		g.screenWidth,
@@ -64,7 +64,7 @@ func prepSpriteNoEffect(player *sprites.Player) {
 			getAnimationMaxFrameWidth(player),
 		)
 	}
-	player.Frame.ImageOptions.GeoM.Translate(player.X, player.Y)
+	player.Frame.ImageOptions.GeoM.Translate(player.Physics.Position.X, player.Physics.Position.Y)
 }
 
 func prepSpriteWithEffect(p *sprites.Player) {
@@ -76,8 +76,8 @@ func prepSpriteWithEffect(p *sprites.Player) {
 		adjustDrawOptionsForLeftMove(&p.Frame.ImageOptions, frameWidth)
 	}
 
-	p.Frame.ImageOptions.GeoM.Translate(p.X, p.Y)
-	p.Frame.EffectOptions.GeoM.Translate(p.X, p.Y)
+	p.Frame.ImageOptions.GeoM.Translate(p.Physics.Position.X, p.Physics.Position.Y)
+	p.Frame.EffectOptions.GeoM.Translate(p.Physics.Position.X, p.Physics.Position.Y)
 }
 
 func getAnimationMaxFrameWidth(player *sprites.Player) float64 {
@@ -146,7 +146,7 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 	}
 
 	finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
-	newPosition := finalVec.PlayerMove(player.X, player.Y)
+	newPosition := finalVec.PlayerMove(player.Physics.Position.X, player.Physics.Position.Y)
 
 	translatePlayerDrawOptions(player, cam.X, cam.Y)
 	//if invalid move, return frame as is
@@ -154,8 +154,8 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 		return
 	}
 
-	player.X = newPosition.DeltaX
-	player.Y = newPosition.DeltaY
+	player.Physics.Position.X = newPosition.DeltaX
+	player.Physics.Position.Y = newPosition.DeltaY
 	translatePlayerDrawOptions(player, finalVec.DeltaX, finalVec.DeltaY)
 
 }

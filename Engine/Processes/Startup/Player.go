@@ -1,6 +1,7 @@
 package startup
 
 import (
+	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/sprites"
 	"time"
 
@@ -11,14 +12,21 @@ func CreateDefaultPlayer() *sprites.Player {
 	player := &sprites.Player{
 		BioSprite: &sprites.BioSprite{
 			Sprite: &sprites.Sprite{
-				X: 50,
-				Y: 100,
+				Physics: &controls.PhysicsObj{
+					Position: controls.Vector2{
+						X: 50.0,
+						Y: 100.0,
+					},
+					Mass: 100,
+				},
+
 				Frame: &sprites.Frame{
 					ImageOptions:  ebiten.DrawImageOptions{},
 					EffectOptions: ebiten.DrawImageOptions{},
 					HasEffect:     false,
 				},
 			},
+
 			ActionAnimations:      GetPlayerActionAnimations(),
 			IsMovingRight:         true,
 			IdleAnimation:         GetPlayerIdleAnimation(),

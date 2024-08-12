@@ -42,8 +42,8 @@ func IsValidMove(lvl *levels.Level, player *sprites.Player, vector controls.Vect
 
 func GetPlayerRect(p *sprites.Player) Rect {
 	var playerRect Rect
-	playerRect.X = p.X + 8
-	playerRect.Y = p.Y + 8
+	playerRect.X = p.Physics.Position.X + 8
+	playerRect.Y = p.Physics.Position.Y + 8
 
 	if p.IsIdle {
 		playerRect.Width = p.IdleAnimation.MaxFrameWidth - 16

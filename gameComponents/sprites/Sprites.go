@@ -2,15 +2,16 @@ package sprites
 
 import (
 	"GoPlat/gameComponents/animations"
+	"GoPlat/gameComponents/controls"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Sprite struct {
-	Image *ebiten.Image
-	Frame *Frame
-	X, Y  float64
+	Image   *ebiten.Image
+	Frame   *Frame
+	Physics *controls.PhysicsObj
 }
 
 type Frame struct {

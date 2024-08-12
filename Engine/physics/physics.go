@@ -7,6 +7,29 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
+/*-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */
+
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
 	onGround := collision.DetectGround(player, lvl)
 	stopPhysicsCalcs := adjustedAirbornStatus(player, onGround)
@@ -17,7 +40,7 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	player.IsIdle = false
 
 	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)
-	
+
 	if !nearWall {
 		handleFall(player, pVector)
 		return
@@ -38,22 +61,21 @@ func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft b
 	}
 }
 
-
 func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool) bool {
 	playerRect := collision.GetPlayerRect(player)
-	
-	//takes a rectangle above players head and in 
+
+	//takes a rectangle above players head and in
 	//specified direction to see if there is a ledge
 	playerRect.Y -= (4 + playerRect.Height)
 	if wallPlayerLeft {
-		playerRect.X -= playerRect.Width/2
+		playerRect.X -= playerRect.Width / 2
 	} else {
-		playerRect.X += playerRect.Width/2
+		playerRect.X += playerRect.Width / 2
 	}
 
 	validMove := collision.IsValidMoveRect(lvl, playerRect)
 	nearGround := collision.DetectGroundRect(playerRect, lvl)
-	
+
 	return validMove && nearGround
 }
 
@@ -64,7 +86,7 @@ func adjustedAirbornStatus(player *sprites.Player, onGround bool) bool {
 			return true
 		}
 	} else {
-		if onGround { 
+		if onGround {
 			return true
 		}
 		player.IsAirborn = true
