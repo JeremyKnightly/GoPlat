@@ -5,63 +5,69 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
-        "Tilesets",
-        "."
     ],
     "fileStates": {
-        "Dungeon.tsx": {
-            "dynamicWrapping": true,
-            "scaleInDock": 1
+        "": {
+            "scaleInDock": 2
+        },
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 2
         },
         "LevelOne.JSON": {
-            "scale": 2,
-            "selectedLayer": 2,
+            "expandedObjectLayers": [
+                5,
+                4
+            ],
+            "scale": 3,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 201.25,
-                "y": 125.5
+                "x": 136,
+                "y": 177.49999999999997
+            }
+        },
+        "LevelOne.tmj": {
+            "scale": 0.43224999999999997,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 222.0936957779063,
+                "y": 1150.9543088490454
             }
         },
         "Tilesets/Dungeon Tile Set.tsx": {
-            "dynamicWrapping": false
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Tilesets/Dungeon.tsx": {
-            "dynamicWrapping": false,
-            "scaleInDock": 1,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "test.json": {
             "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 183.75,
-                "y": 150
-            }
-        },
-        "test.tmj": {
-            "scale": 0.33,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 974.2424242424242,
-                "y": 272.72727272727275
+                "x": 255.5,
+                "y": 193.25
             }
         }
     },
-    "last.externalTilesetPath": "C:/Users/Jeremy D Chevalier/Downloads",
-    "last.imagePath": "C:/Users/Jeremy D Chevalier/Downloads",
+    "last.exportedFilePath": "G:/GoDev/GoPlat/Assets/Maps",
+    "last.externalTilesetPath": "G:/GoDev/GoPlat/Assets/Maps/Tilesets",
+    "last.imagePath": "G:/GoDev/GoPlat/Assets/Maps/Tilesets",
     "map.height": 100,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
-        "test.tmj",
-        "test.json"
     ],
     "project": "Maps.tiled-project",
     "recentFiles": [
         "test.json",
-        "test.tmj",
-        "Tilesets/Dungeon.tsx"
+        "Tilesets/Dungeon.tsx",
+        "LevelOne.tmj",
+        "LevelOne.JSON",
+        "Tilesets/Dungeon Tile Set.tsx"
     ],
     "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",

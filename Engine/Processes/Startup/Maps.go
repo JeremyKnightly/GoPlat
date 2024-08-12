@@ -7,7 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func CreateLevels() ([]*levels.Level) {
+func CreateLevels() []*levels.Level {
 	levelOneMap, err := levels.NewTilemapScene("Assets/Maps/LevelOne.json")
 	if err != nil {
 		log.Fatal(err)
