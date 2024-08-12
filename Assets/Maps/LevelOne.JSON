@@ -108,6 +108,12 @@
          "locked":true,
          "name":"Background",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"FirstDraw",
+                 "type":"bool",
+                 "value":true
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":50,
@@ -219,6 +225,12 @@
          "id":3,
          "name":"Walls",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"FirstDraw",
+                 "type":"bool",
+                 "value":true
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":50,
@@ -267,6 +279,12 @@
                  "height":16,
                  "id":7,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"CausesDeath",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -413,7 +431,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":32,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.0",

@@ -17,8 +17,15 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
 	//loop over layers
 	tileSize := 16
 	for _, layer := range level.Layers {
+		if !layer.FirstDraw {
+			continue
+		}
+
 		for index, id := range layer.Data {
 			if id == 0 {
+				continue
+			}
+			if id > 100000 {
 				continue
 			}
 
@@ -49,8 +56,10 @@ func DrawLevel(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
 
 func stopCompletedAnimations(player *sprites.Player) {
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
-	if !currentAnimation.AnimationComplete {return}
-	
+	if !currentAnimation.AnimationComplete {
+		return
+	}
+
 	//if I shouldn't loop, set index to walk
 	if !currentAnimation.LoopAnimation {
 		player.CurrentAnimationIndex = 0
@@ -78,9 +87,8 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 	if !hasAnimationEffect {
 		prepSpriteNoEffect(player, &playerDrawOptions)
 	} else {
-		prepSpriteWithEffect(player,&playerDrawOptions, &effectDrawOptions)
+		prepSpriteWithEffect(player, &playerDrawOptions, &effectDrawOptions)
 	}
-
 
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 	currentFrame, frameVector, canCancel := currentAnimation.AnimateAction()
@@ -93,16 +101,16 @@ func handleActiveDraw(player *sprites.Player, screen *ebiten.Image, lvl *levels.
 	newPosition := finalVec.PlayerMove(player.X, player.Y, player.IsMovingRight)
 	playerDrawOptions.GeoM.Translate(cam.X, cam.Y)
 	//if invalid move, draw frame as is and return
-	if !collision.IsValidMove(lvl, player, finalVec){
+	if !collision.IsValidMove(lvl, player, finalVec) {
 		screen.DrawImage(currentFrame, &playerDrawOptions)
 		return
 	}
 
 	player.X = newPosition.DeltaX
 	player.Y = newPosition.DeltaY
-	playerDrawOptions.GeoM.Translate(finalVec.DeltaX, finalVec.DeltaY)	
+	playerDrawOptions.GeoM.Translate(finalVec.DeltaX, finalVec.DeltaY)
 
-	if hasAnimationEffect{
+	if hasAnimationEffect {
 		effectFrame := currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
 		effectDrawOptions.GeoM.Translate(cam.X, cam.Y)
 		screen.DrawImage(effectFrame, &effectDrawOptions)
@@ -124,14 +132,14 @@ func getEffectMaxFrameWidth(effect *animations.Effect) float64 {
 }
 
 func adjustDrawOptionsForLeftMove(options *ebiten.DrawImageOptions, maxWidth float64) {
-	options.GeoM.Scale(-1,1)
+	options.GeoM.Scale(-1, 1)
 	options.GeoM.Translate(maxWidth, 0)
-} 
+}
 
 func prepSpriteNoEffect(p *sprites.Player, options *ebiten.DrawImageOptions) {
 	if !p.IsMovingRight {
 		frameWidth := getAnimationMaxFrameWidth(p)
-		adjustDrawOptionsForLeftMove(options,frameWidth)
+		adjustDrawOptionsForLeftMove(options, frameWidth)
 	}
 	options.GeoM.Translate(p.X, p.Y)
 }
@@ -141,10 +149,10 @@ func prepSpriteWithEffect(p *sprites.Player, options *ebiten.DrawImageOptions, e
 	if !p.IsMovingRight {
 		effectWidth := getEffectMaxFrameWidth(&effect)
 		frameWidth := getAnimationMaxFrameWidth(p)
-		adjustDrawOptionsForLeftMove(effectOptions,effectWidth + frameWidth)
-		adjustDrawOptionsForLeftMove(options,frameWidth)
+		adjustDrawOptionsForLeftMove(effectOptions, effectWidth+frameWidth)
+		adjustDrawOptionsForLeftMove(options, frameWidth)
 		//effectOptions.GeoM.Translate(-effect.Offset, 0)
-	} 
+	}
 
 	options.GeoM.Translate(p.X, p.Y)
 	effectOptions.GeoM.Translate(p.X, p.Y)
