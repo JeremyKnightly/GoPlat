@@ -98,72 +98,32 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .3,
-			DeltaY: -.4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: -.4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: -.4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: -.4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: -.4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: -.4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: -.25,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .25,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .4,
-		},
-		{
-			DeltaX: .3,
-			DeltaY: .4,
+			DeltaX: 0,
+			DeltaY: -1.95,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 0,
+			DeltaY: -1.85,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 0,
+			DeltaY: -1.8,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 0,
+			DeltaY: -1.65,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.45,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.35,
 		},
 	}
 
