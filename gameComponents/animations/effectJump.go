@@ -28,7 +28,7 @@ func GenerateEffectJump() *Effect {
 	).(*ebiten.Image)
 
 	blank := fullJumpPng.SubImage(
-		image.Rect(16, 16, 20, 20),
+		image.Rect(0, 0, 8, 8),
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
@@ -40,20 +40,20 @@ func GenerateEffectJump() *Effect {
 		blank,
 		blank,
 		blank,
+		blank,
 	}
 
 	effect := &Effect{
-				Animation: &Animation{
+		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		Offset: 0,
 	}
-
 
 	return effect
 }

@@ -47,7 +47,7 @@ func (vec *Vector) InvertY(posX float64, posY float64) Vector {
 	return newVec
 }
 
-func (vec *Vector) PlayerMove(posX float64, posY float64, isMovingRight bool) Vector {
+func (vec *Vector) PlayerMove(posX float64, posY float64) Vector {
 	return vec.Add(posX, posY)
 }
 
@@ -55,7 +55,7 @@ func (vec *Vector) BumpY() {
 	if vec.DeltaY > 0 {
 		vec.DeltaY -= .03
 	} else if vec.DeltaY < 0 {
-		vec.DeltaY += .03 
+		vec.DeltaY += .03
 	}
 }
 

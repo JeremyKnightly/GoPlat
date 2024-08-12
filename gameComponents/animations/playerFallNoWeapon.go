@@ -16,9 +16,9 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 		log.Fatal(err)
 	}
 
-	jumpPng12 := fullJumpPng.SubImage(
+	/*jumpPng12 := fullJumpPng.SubImage(
 		image.Rect(720, 16, 752, 48),
-	).(*ebiten.Image)
+	).(*ebiten.Image)*/
 
 	jumpPng13 := fullJumpPng.SubImage(
 		image.Rect(784, 16, 816, 48),
@@ -37,7 +37,7 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 	).(*ebiten.Image)
 
 	frames := []*ebiten.Image{
-		jumpPng12,
+		//jumpPng12,
 		jumpPng13,
 		jumpPng14,
 		jumpPng15,
@@ -46,23 +46,23 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 	}
@@ -80,14 +80,14 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 			CurrentFrameIndex: 0,
 			frameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   0,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: false,
-		LoopAnimation: true,
+		HasEffect:               false,
+		LoopAnimation:           true,
 	}
 
 	return playerFall

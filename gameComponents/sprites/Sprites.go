@@ -17,8 +17,8 @@ type Frame struct {
 	ImageToDraw       *ebiten.Image
 	EffectImageToDraw *ebiten.Image
 	HasEffect         bool
-	ImageOptions      *ebiten.DrawImageOptions
-	EffectOptions     *ebiten.DrawImageOptions
+	ImageOptions      ebiten.DrawImageOptions
+	EffectOptions     ebiten.DrawImageOptions
 }
 
 type BioSprite struct {

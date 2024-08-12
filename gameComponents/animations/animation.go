@@ -8,26 +8,26 @@ import (
 )
 
 type Animation struct {
-	Frames            []*ebiten.Image
-	NumberOfFrames    uint16
-	CurrentFrameIndex uint16
-	frameDuration     time.Duration
-	lastUpdate        time.Time
-	MaxFrameWidth, MaxFrameHeight     float64
+	Frames                        []*ebiten.Image
+	NumberOfFrames                uint16
+	CurrentFrameIndex             uint16
+	frameDuration                 time.Duration
+	lastUpdate                    time.Time
+	MaxFrameWidth, MaxFrameHeight float64
 }
 
 type ActionAnimation struct {
 	*Animation
-	AnimationComplete bool
-	WillAwaitInput    bool
-	StopAnimation     bool
-	FrameVectors []controls.Vector
-	AllowCancelAfterFrame uint16
-	LoopAnimation bool
+	AnimationComplete       bool
+	WillAwaitInput          bool
+	StopAnimation           bool
+	FrameVectors            []controls.Vector
+	AllowCancelAfterFrame   uint16
+	LoopAnimation           bool
 	AllowCancelOnDirections []controls.Direction
-	ResetAnimation bool
-	HasEffect bool
-	Effect Effect
+	ResetAnimation          bool
+	HasEffect               bool
+	Effect                  Effect
 }
 
 type Effect struct {
@@ -41,7 +41,7 @@ func (a *Animation) Animate() *ebiten.Image {
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
 		a.CurrentFrameIndex++
 
-		if a.CurrentFrameIndex >= a.NumberOfFrames - 1 {
+		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
 			a.CurrentFrameIndex = 0
 		}
 		a.lastUpdate = now
@@ -50,7 +50,7 @@ func (a *Animation) Animate() *ebiten.Image {
 	return a.Frames[a.CurrentFrameIndex]
 }
 
-func (a *ActionAnimation) AnimateAction() (*ebiten.Image,controls.Vector, bool) {
+func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool) {
 	now := time.Now()
 
 	if now.Sub(a.lastUpdate) >= a.frameDuration {
@@ -58,14 +58,15 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image,controls.Vector, bool) 
 			a.CurrentFrameIndex++
 		}
 
-		if a.CurrentFrameIndex >= a.NumberOfFrames - 1 {
+		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
 			a.endAnimationCycle()
 		}
-		if a.ResetAnimation {a.Reset()}
+		if a.ResetAnimation {
+			a.Reset()
+		}
 		a.lastUpdate = now
-	}	
+	}
 	allowCancel := a.setAnimationCancel()
-
 
 	return a.Frames[a.CurrentFrameIndex], a.FrameVectors[a.CurrentFrameIndex], allowCancel
 }

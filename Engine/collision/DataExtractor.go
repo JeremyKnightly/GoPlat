@@ -9,10 +9,6 @@ func ExtractCollisionData(level *levels.Level) []Rect {
 
 	for _, layer := range level.ObjectLayers {
 		for _, rect := range layer.Objects {
-			//properties := []levels.Property{}
-			/*for _, prop := range rect.Properties{
-				properties = append(properties, prop)
-			}*/
 			newRect := Rect{
 				X:          rect.X,
 				Y:          rect.Y,

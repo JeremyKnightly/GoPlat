@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoPlat/engine/camera"
+	camera "GoPlat/Engine/camera"
 	startup "GoPlat/engine/processes/startup"
 	controls "GoPlat/gameComponents/controls"
 	levels "GoPlat/gameComponents/levels"

@@ -3,6 +3,8 @@ package startup
 import (
 	"GoPlat/gameComponents/sprites"
 	"time"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func CreateDefaultPlayer() *sprites.Player {
@@ -10,7 +12,12 @@ func CreateDefaultPlayer() *sprites.Player {
 		BioSprite: &sprites.BioSprite{
 			Sprite: &sprites.Sprite{
 				X: 50,
-				Y: 50,
+				Y: 100,
+				Frame: &sprites.Frame{
+					ImageOptions:  ebiten.DrawImageOptions{},
+					EffectOptions: ebiten.DrawImageOptions{},
+					HasEffect:     false,
+				},
 			},
 			ActionAnimations:      GetPlayerActionAnimations(),
 			IsMovingRight:         true,
