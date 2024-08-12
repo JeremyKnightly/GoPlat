@@ -17,7 +17,7 @@ func CreateDefaultPlayer() *sprites.Player {
 						X: 50.0,
 						Y: 100.0,
 					},
-					Mass: 100,
+					Mass: 1,
 				},
 
 				Frame: &sprites.Frame{
@@ -39,7 +39,7 @@ func CreateDefaultPlayer() *sprites.Player {
 		HasSecondJump:      true,
 		IsWallSliding:      false,
 		IsAnimationLocked:  false,
-		IsPhysicsLocked:    false,
+		IsGravityLocked:    false,
 		CanAnimationCancel: false,
 		IsAirborn:          false,
 	}

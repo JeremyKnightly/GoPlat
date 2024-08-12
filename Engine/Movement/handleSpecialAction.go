@@ -7,17 +7,17 @@ import (
 
 func HandleSpecialAction(p *sprites.Player, action string) bool {
 	if action == "JUMP" {
-		p.IsPhysicsLocked = true
-		if p.IsWallHanging{//trigger edgeclimb
+		p.IsGravityLocked = true
+		if p.IsWallHanging { //trigger edgeclimb
 			p.IsWallHanging = false
 			return handleWallHang(p)
 		}
 		return handleJump(p)
 	} else if action == "DASHLEFT" {
-		p.IsPhysicsLocked = true
+		p.IsGravityLocked = true
 		return handleDashLeft(p)
 	} else if action == "DASHRIGHT" {
-		p.IsPhysicsLocked = true
+		p.IsGravityLocked = true
 		return handleDashRight(p)
 	}
 	return false
@@ -33,14 +33,14 @@ func handleJump(p *sprites.Player) bool {
 		p.CanJump = false
 		p.CurrentAnimationIndex = 2
 		return true
-	} else if p.HasSecondJump && p.IsAirborn{
+	} else if p.HasSecondJump && p.IsAirborn {
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
 		p.CurrentAnimationIndex = 3
 		p.HasSecondJump = false
 		return true
-	} 
+	}
 	return false
 }
 
@@ -66,7 +66,7 @@ func handleDashLeft(p *sprites.Player) bool {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
 		return true
-	} 
+	}
 	return false
 }
 

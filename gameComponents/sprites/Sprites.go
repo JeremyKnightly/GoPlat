@@ -36,7 +36,7 @@ type Player struct {
 	DashCooldowntime   time.Duration
 	DashLastUsed       time.Time
 	CanJump            bool
-	IsPhysicsLocked    bool
+	IsGravityLocked    bool
 	CanAnimationCancel bool
 	IsAnimationLocked  bool
 	IsAirborn          bool

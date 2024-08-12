@@ -7,29 +7,6 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
-/*-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- */
-
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
 	onGround := collision.DetectGround(player, lvl)
 	stopPhysicsCalcs := adjustedAirbornStatus(player, onGround)

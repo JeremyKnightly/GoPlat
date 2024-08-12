@@ -26,7 +26,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 }
 
 func main() {
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(6400, 4800)
 	ebiten.SetWindowTitle("GoPlat!")
 
 	var game Game
@@ -35,8 +35,8 @@ func main() {
 	game.controls = startup.GetControls()
 	game.currentLevelIndex = 0
 	game.tileSize = 16
-	game.screenHeight = 240
-	game.screenWidth = 320
+	game.screenHeight = 2400
+	game.screenWidth = 3200
 	game.camera = camera.NewCamera(0, 0)
 
 	if err := ebiten.RunGame(&game); err != nil {

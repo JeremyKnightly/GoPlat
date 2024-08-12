@@ -58,41 +58,6 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 		png8,
 	}
 
-	frameVectors := []controls.Vector{
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 0,
-			DeltaY: 0,
-		},
-	}
-
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
@@ -109,7 +74,6 @@ func GeneratePlayerWallGrabNoWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
-		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               false,

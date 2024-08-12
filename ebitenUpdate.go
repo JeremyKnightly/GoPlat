@@ -7,6 +7,7 @@ import (
 	"GoPlat/gameComponents/animations"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
+	"fmt"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -15,8 +16,14 @@ func (g *Game) Update() error {
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
 	g.setPlayerPositionWithInput()
+	for !collision.IsValidMove(g.currentLevel, g.Player, g.Player.Physics.Velocity) {
+		collision.ResolveCollisions(g.currentLevel, g.Player)
+	}
 	g.setCameraPosition()
+	g.Player.Physics.UpdatePhysics(1 / ebiten.ActualFPS())
 	g.setPlayerFrame()
+
+	fmt.Printf("Player at (%v,%v)", g.Player.Physics.Position.X, g.Player.Physics.Position.Y)
 
 	return nil
 }
@@ -26,8 +33,8 @@ func (g *Game) setPlayerPositionWithInput() {
 
 	validVector := collision.IsValidMove(g.currentLevel, g.Player, inputVector)
 	if validVector {
-		g.Player.Physics.Position.X += inputVector.DeltaX
-		g.Player.Physics.Position.Y += inputVector.DeltaY
+		g.Player.Physics.Velocity.X = inputVector.X
+		g.Player.Physics.Velocity.Y = inputVector.Y
 	}
 }
 
@@ -129,10 +136,7 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 
-	frameDurationInSeconds := currentAnimation.FrameDuration.Seconds()
-	currentAnimation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualFPS()
-
-	currentFrame, frameVector, canCancel, _ := currentAnimation.AnimateAction()
+	currentFrame, canCancel := currentAnimation.AnimateAction()
 	player.Frame.HasEffect = currentAnimation.HasEffect
 	player.Frame.ImageToDraw = currentFrame
 	player.CanAnimationCancel = canCancel
@@ -141,22 +145,22 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 		player.Frame.EffectImageToDraw = currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
 	}
 
-	if !player.IsMovingRight {
+	/*if !player.IsMovingRight {
 		frameVector.DeltaX *= -1
-	}
+	}*/
 
-	finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
-	newPosition := finalVec.PlayerMove(player.Physics.Position.X, player.Physics.Position.Y)
+	//finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
+	//newPosition := finalVec.PlayerMove(player.Physics.Position.X, player.Physics.Position.Y)
 
 	translatePlayerDrawOptions(player, cam.X, cam.Y)
 	//if invalid move, return frame as is
-	if !collision.IsValidMove(lvl, player, finalVec) {
+	/*if !collision.IsValidMove(lvl, player, finalVec) {
 		return
-	}
+	}*/
 
-	player.Physics.Position.X = newPosition.DeltaX
-	player.Physics.Position.Y = newPosition.DeltaY
-	translatePlayerDrawOptions(player, finalVec.DeltaX, finalVec.DeltaY)
+	//player.Physics.Position.X = newPosition.DeltaX
+	//player.Physics.Position.Y = newPosition.DeltaY
+	//translatePlayerDrawOptions(player, player.Physics.Position.X, player.Physics.Position.Y)
 
 }
 

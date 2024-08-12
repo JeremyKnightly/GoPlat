@@ -1,6 +1,8 @@
 package controls
 
-const gravity = 9.81
+import "fmt"
+
+const gravity = 9.81 / 6
 
 type Vector2 struct {
 	X, Y float64
@@ -22,5 +24,8 @@ func (obj *PhysicsObj) UpdatePhysics(deltaTime float64) {
 	obj.Position.X += obj.Velocity.X * deltaTime
 	obj.Position.Y += obj.Velocity.Y * deltaTime
 
+	fmt.Printf("velocity:%v,%v\n", obj.Velocity.X, obj.Velocity.Y)
+	fmt.Printf("position:%v,%v\n", obj.Position.X, obj.Position.Y)
+	fmt.Printf("acceleration:%v,%v\n", obj.Acceleration.X, obj.Acceleration.Y)
 	obj.Acceleration = Vector2{}
 }
