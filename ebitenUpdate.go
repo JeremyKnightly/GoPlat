@@ -128,7 +128,11 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 	prepActiveSprite(player)
 
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
-	currentFrame, frameVector, canCancel, indexChanged := currentAnimation.AnimateAction()
+
+	frameDurationInSeconds := currentAnimation.FrameDuration.Seconds()
+	currentAnimation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualFPS()
+
+	currentFrame, frameVector, canCancel, _ := currentAnimation.AnimateAction()
 	player.Frame.HasEffect = currentAnimation.HasEffect
 	player.Frame.ImageToDraw = currentFrame
 	player.CanAnimationCancel = canCancel
@@ -140,10 +144,7 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 	if !player.IsMovingRight {
 		frameVector.DeltaX *= -1
 	}
-	if !indexChanged {
-		translatePlayerDrawOptions(player, cam.X, cam.Y)
-		return
-	}
+
 	finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
 	newPosition := finalVec.PlayerMove(player.X, player.Y)
 

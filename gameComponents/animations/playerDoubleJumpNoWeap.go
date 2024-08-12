@@ -61,35 +61,35 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 	frameVectors := []controls.Vector{
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.25,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.25,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.25,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.25,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.15,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.15,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.6,
+			DeltaY: -2.15,
 		},
 		{
 			DeltaX: .1,
-			DeltaY: -.1,
+			DeltaY: -1.15,
 		},
 	}
 

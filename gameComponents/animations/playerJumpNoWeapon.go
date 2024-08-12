@@ -74,31 +74,31 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		},
 		{
 			DeltaX: 0,
-			DeltaY: -0.55,
+			DeltaY: -1,
 		},
 		{
-			DeltaX: .25,
-			DeltaY: -.6,
+			DeltaX: .5,
+			DeltaY: -1.5,
 		},
 		{
-			DeltaX: .25,
-			DeltaY: -.6,
+			DeltaX: .5,
+			DeltaY: -1.5,
 		},
 		{
-			DeltaX: .25,
-			DeltaY: -.55,
+			DeltaX: .5,
+			DeltaY: -1.5,
 		},
 		{
-			DeltaX: .25,
-			DeltaY: -.55,
+			DeltaX: .5,
+			DeltaY: -1.5,
 		},
 		{
-			DeltaX: .25,
-			DeltaY: -.55,
+			DeltaX: .5,
+			DeltaY: -1.5,
 		},
 		{
-			DeltaX: .25,
-			DeltaY: -.35,
+			DeltaX: .5,
+			DeltaY: -1,
 		},
 	}
 
@@ -113,7 +113,7 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			FrameDuration:     time.Millisecond * 100,
+			FrameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},

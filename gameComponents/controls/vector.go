@@ -67,14 +67,14 @@ func (vec *Vector) BumpX(movingRight bool) {
 	}
 }
 
-func (vec *Vector) ScaleByTPS(TicksThisFrame, TicksPerFrame int) Vector {
+func (vec *Vector) ScaleByTPS(TicksThisFrame, TicksPerFrame float64) Vector {
 	rtnVec := GetBlankVector()
 	if TicksPerFrame == 0 {
 		return rtnVec
 	}
 	multiplier := TicksThisFrame / TicksPerFrame
-	rtnVec.DeltaX = vec.DeltaX * float64(multiplier)
-	rtnVec.DeltaY = vec.DeltaY * float64(multiplier)
+	rtnVec.DeltaX = vec.DeltaX * multiplier
+	rtnVec.DeltaY = vec.DeltaY * multiplier
 
 	return rtnVec
 }

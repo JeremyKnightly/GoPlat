@@ -60,35 +60,46 @@ func GeneratePlayerDashWithWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: .6,
+			DeltaX: 1.5,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .9,
+			DeltaX: 1.75,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .9,
+			DeltaX: 1.75,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .9,
+			DeltaX: 1.75,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .8,
+			DeltaX: 1.75,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .4,
+			DeltaX: 1.75,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .3,
+			DeltaX: 1.5,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .2,
+			DeltaX: 1.25,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: .75,
+			DeltaY: 0,
+		}, {
+			DeltaX: .65,
 			DeltaY: 0,
 		},
 	}

@@ -12,8 +12,8 @@ type Animation struct {
 	NumberOfFrames                uint16
 	CurrentFrameIndex             uint16
 	FrameDuration                 time.Duration
-	TicksPerFrame                 int
-	TicksThisFrame                int
+	TicksPerFrame                 float64
+	TicksThisFrame                float64
 	lastUpdate                    time.Time
 	MaxFrameWidth, MaxFrameHeight float64
 }
