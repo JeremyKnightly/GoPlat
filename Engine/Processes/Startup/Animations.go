@@ -3,6 +3,8 @@ package startup
 import (
 	"GoPlat/gameComponents/animations"
 	"log"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func GetPlayerActionAnimations() []*animations.ActionAnimation {
@@ -34,6 +36,11 @@ func GetPlayerActionAnimations() []*animations.ActionAnimation {
 
 	if len(animations) == 0 {
 		log.Fatal("FATAL ERROR: COULD NOT GENERATE PLAYER ACTIONS!")
+	}
+
+	for _, animation := range animations {
+		frameDurationInSeconds := animation.FrameDuration.Seconds()
+		animation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualTPS()
 	}
 
 	return animations

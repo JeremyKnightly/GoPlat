@@ -11,7 +11,8 @@ type Animation struct {
 	Frames                        []*ebiten.Image
 	NumberOfFrames                uint16
 	CurrentFrameIndex             uint16
-	frameDuration                 time.Duration
+	FrameDuration                 time.Duration
+	TicksPerFrame                 float64
 	lastUpdate                    time.Time
 	MaxFrameWidth, MaxFrameHeight float64
 }
@@ -38,7 +39,7 @@ type Effect struct {
 func (a *Animation) Animate() *ebiten.Image {
 	now := time.Now()
 
-	if now.Sub(a.lastUpdate) >= a.frameDuration {
+	if now.Sub(a.lastUpdate) >= a.FrameDuration {
 		a.CurrentFrameIndex++
 
 		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
@@ -54,7 +55,7 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool,
 	now := time.Now()
 
 	changedIndex := false
-	if now.Sub(a.lastUpdate) >= a.frameDuration {
+	if now.Sub(a.lastUpdate) >= a.FrameDuration {
 		if !a.StopAnimation {
 			a.CurrentFrameIndex++
 			changedIndex = true
