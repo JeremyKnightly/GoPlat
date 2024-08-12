@@ -7,6 +7,7 @@ import (
 )
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	runtime.DrawLevel(g.levels[g.currentLevel], screen, g.camera)
+	runtime.DrawLevelFirstDraw(g.levels[g.currentLevel], screen, g.camera)
 	runtime.DrawPlayer(g.Player, screen, g.levels[g.currentLevel], g.camera)
+	runtime.DrawLevelSecondDraw(g.levels[g.currentLevel], screen, g.camera)
 }
