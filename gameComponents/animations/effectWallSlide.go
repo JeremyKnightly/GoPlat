@@ -14,7 +14,7 @@ func GenerateEffectWallSlide() *Effect {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	blank := fullPng.SubImage(
 		image.Rect(0, 0, 16, 16),
 	).(*ebiten.Image)
@@ -73,17 +73,16 @@ func GenerateEffectWallSlide() *Effect {
 	}
 
 	effect := &Effect{
-		Animation: 	&Animation{
+		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 60,
+			FrameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		Offset: 0,
 	}
-
 
 	return effect
 }

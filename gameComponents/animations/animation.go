@@ -12,7 +12,8 @@ type Animation struct {
 	NumberOfFrames                uint16
 	CurrentFrameIndex             uint16
 	FrameDuration                 time.Duration
-	TicksPerFrame                 float64
+	TicksPerFrame                 int
+	TicksThisFrame                int
 	lastUpdate                    time.Time
 	MaxFrameWidth, MaxFrameHeight float64
 }
@@ -38,9 +39,11 @@ type Effect struct {
 
 func (a *Animation) Animate() *ebiten.Image {
 	now := time.Now()
+	a.TicksThisFrame++
 
 	if now.Sub(a.lastUpdate) >= a.FrameDuration {
 		a.CurrentFrameIndex++
+		a.TicksThisFrame = 1
 
 		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
 			a.CurrentFrameIndex = 0
@@ -53,11 +56,13 @@ func (a *Animation) Animate() *ebiten.Image {
 
 func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool, bool) {
 	now := time.Now()
+	a.TicksThisFrame++
 
 	changedIndex := false
 	if now.Sub(a.lastUpdate) >= a.FrameDuration {
 		if !a.StopAnimation {
 			a.CurrentFrameIndex++
+			a.TicksThisFrame = 1
 			changedIndex = true
 		}
 
@@ -70,8 +75,9 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool,
 		a.lastUpdate = now
 	}
 	allowCancel := a.setAnimationCancel()
+	returnVector := a.FrameVectors[a.CurrentFrameIndex].ScaleByTPS(a.TicksThisFrame, a.TicksPerFrame)
 
-	return a.Frames[a.CurrentFrameIndex], a.FrameVectors[a.CurrentFrameIndex], allowCancel, changedIndex
+	return a.Frames[a.CurrentFrameIndex], returnVector, allowCancel, changedIndex
 }
 
 func (a *ActionAnimation) setAnimationCancel() bool {

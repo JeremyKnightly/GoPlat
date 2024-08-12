@@ -60,12 +60,21 @@ func (vec *Vector) BumpY() {
 }
 
 func (vec *Vector) BumpX(movingRight bool) {
-	//if math.Abs(vec.DeltaX) <= 0 {
-	//	return
-	//}
 	if !movingRight {
 		vec.DeltaX += .05
 	} else {
 		vec.DeltaX -= .05
 	}
+}
+
+func (vec *Vector) ScaleByTPS(TicksThisFrame, TicksPerFrame int) Vector {
+	rtnVec := GetBlankVector()
+	if TicksPerFrame == 0 {
+		return rtnVec
+	}
+	multiplier := TicksThisFrame / TicksPerFrame
+	rtnVec.DeltaX = vec.DeltaX * float64(multiplier)
+	rtnVec.DeltaY = vec.DeltaY * float64(multiplier)
+
+	return rtnVec
 }

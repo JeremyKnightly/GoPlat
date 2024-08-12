@@ -17,7 +17,7 @@ func GenerateEffectDblJump() *Effect {
 	png1 := fullPng.SubImage(
 		image.Rect(24, 16, 24, 48),
 	).(*ebiten.Image)
-	
+
 	png2 := fullPng.SubImage(
 		image.Rect(16, 16, 48, 48),
 	).(*ebiten.Image)
@@ -58,17 +58,16 @@ func GenerateEffectDblJump() *Effect {
 	}
 
 	effect := &Effect{
-				Animation: &Animation{
+		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 60,
+			FrameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		Offset: 0,
 	}
-
 
 	return effect
 }

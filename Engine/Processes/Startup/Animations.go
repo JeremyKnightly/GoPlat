@@ -40,7 +40,7 @@ func GetPlayerActionAnimations() []*animations.ActionAnimation {
 
 	for _, animation := range animations {
 		frameDurationInSeconds := animation.FrameDuration.Seconds()
-		animation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualTPS()
+		animation.TicksPerFrame = int(frameDurationInSeconds * ebiten.ActualTPS())
 	}
 
 	return animations

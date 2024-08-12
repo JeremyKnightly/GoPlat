@@ -17,7 +17,7 @@ func GenerateEffectDash() *Effect {
 	dashBlank := fullPng.SubImage(
 		image.Rect(24, 16, 24, 48),
 	).(*ebiten.Image)
-	
+
 	dash1 := fullPng.SubImage(
 		image.Rect(0, 16, 32, 48),
 	).(*ebiten.Image)
@@ -56,19 +56,18 @@ func GenerateEffectDash() *Effect {
 		dash6,
 	}
 
-	effect := 
+	effect :=
 		&Effect{
-		Animation: &Animation{
-			Frames:            frames,
-			NumberOfFrames:    uint16(len(frames)),
-			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 80,
-			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
-		},
-		Offset: -16,
+			Animation: &Animation{
+				Frames:            frames,
+				NumberOfFrames:    uint16(len(frames)),
+				CurrentFrameIndex: 0,
+				FrameDuration:     time.Millisecond * 80,
+				MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
+				MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
+			},
+			Offset: -16,
 		}
-
 
 	return effect
 }

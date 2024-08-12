@@ -63,53 +63,53 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: .6, 
+			DeltaX: .6,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .7, 
+			DeltaX: .7,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .7, 
+			DeltaX: .7,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .7, 
+			DeltaX: .7,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .7, 
+			DeltaX: .7,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .7, 
+			DeltaX: .7,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .6, 
+			DeltaX: .6,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .5, 
+			DeltaX: .5,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .4, 
+			DeltaX: .4,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: .3, 
+			DeltaX: .3,
 			DeltaY: 0,
-		},		{
-			DeltaX: .25, 
+		}, {
+			DeltaX: .25,
 			DeltaY: 0,
 		},
 	}
 
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
-		controls.DASHLEFT, 
+		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 
@@ -118,16 +118,16 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 70,
+			FrameDuration:     time.Millisecond * 70,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
-		AnimationComplete: false,
-		FrameVectors: frameVectors,
-		AllowCancelAfterFrame: 2,
+		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
+		AllowCancelAfterFrame:   2,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: true,
-		Effect: *GenerateEffectDash(),
+		HasEffect:               true,
+		Effect:                  *GenerateEffectDash(),
 	}
 
 	return playerRun

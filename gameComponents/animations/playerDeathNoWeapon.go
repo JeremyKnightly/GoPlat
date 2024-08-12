@@ -65,60 +65,59 @@ func GeneratePlayerDeathNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
-			DeltaY: 0,
-		},		
-		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 	}
 
-	cancelDirections := []controls.Direction{
-	}
+	cancelDirections := []controls.Direction{}
 
 	death := &ActionAnimation{
 		Animation: &Animation{
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 60,
+			FrameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   7,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: false,
+		HasEffect:               false,
 	}
 
 	return death

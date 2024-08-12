@@ -50,27 +50,27 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0,
 		},
 	}
@@ -85,16 +85,16 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 40,
+			FrameDuration:     time.Millisecond * 40,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: true,
-		Effect: *GenerateEffectHurt(),
+		HasEffect:               true,
+		Effect:                  *GenerateEffectHurt(),
 	}
 
 	return hurt

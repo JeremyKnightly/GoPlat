@@ -60,35 +60,35 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.6,
 		},
 		{
-			DeltaX: .1, 
+			DeltaX: .1,
 			DeltaY: -.1,
 		},
 	}
@@ -103,16 +103,16 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 60,
+			FrameDuration:     time.Millisecond * 60,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: true,
-		Effect: *GenerateEffectDblJump(),
+		HasEffect:               true,
+		Effect:                  *GenerateEffectDblJump(),
 	}
 
 	return playerDblJump

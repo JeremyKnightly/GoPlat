@@ -70,59 +70,59 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 		{
-			DeltaX: 0, 
+			DeltaX: 0,
 			DeltaY: 0.6,
 		},
 	}
@@ -138,16 +138,16 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			frameDuration:     time.Millisecond * 100,
+			FrameDuration:     time.Millisecond * 100,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
-			MaxFrameHeight: float64(frames[0].Bounds().Dy()),
+			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   1,
 		AllowCancelOnDirections: cancelDirections,
-		HasEffect: true,
-		Effect: *GenerateEffectWallSlide(),
+		HasEffect:               true,
+		Effect:                  *GenerateEffectWallSlide(),
 	}
 
 	return wallSlide
