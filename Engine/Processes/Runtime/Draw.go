@@ -9,27 +9,27 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+const tileSize = 16
+
 func DrawLevelFirstDraw(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
-	tileSize := 16
 	for idx, layer := range level.Layers {
 		if !layer.FirstDraw {
 			continue
 		}
-		DrawLayer(level, idx, screen, cam, tileSize)
+		DrawLayer(level, idx, screen, cam)
 	}
 }
 
 func DrawLevelSecondDraw(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
-	tileSize := 16
 	for idx, layer := range level.Layers {
 		if layer.FirstDraw {
 			continue
 		}
-		DrawLayer(level, idx, screen, cam, tileSize)
+		DrawLayer(level, idx, screen, cam)
 	}
 }
 
-func DrawLayer(level *levels.Level, layerIdx int, screen *ebiten.Image, cam *camera.Camera, tileSize int) {
+func DrawLayer(level *levels.Level, layerIdx int, screen *ebiten.Image, cam *camera.Camera) {
 	mapDrawOptions := ebiten.DrawImageOptions{}
 	layer := level.Layers[layerIdx]
 	for index, id := range layer.Data {

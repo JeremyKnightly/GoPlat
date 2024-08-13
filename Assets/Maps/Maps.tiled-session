@@ -5,62 +5,55 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        "Tilesets",
+        "."
     ],
     "fileStates": {
-        "": {
-            "scaleInDock": 2
-        },
-        ":/automap-tiles.tsx": {
-            "scaleInDock": 2
+        "Dungeon.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
         },
         "LevelOne.JSON": {
-            "expandedObjectLayers": [
-                5,
-                4
-            ],
-            "scale": 3,
+            "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 155,
-                "y": 158.49999999999997
-            }
-        },
-        "LevelOne.tmj": {
-            "scale": 0.43224999999999997,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 222.0936957779063,
-                "y": 1150.9543088490454
+                "x": 155.75,
+                "y": 125.5
             }
         },
         "LevelTwo.json": {
-            "expandedObjectLayers": [
-                7
-            ],
-            "scale": 3,
-            "selectedLayer": 2,
+            "scale": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 168.33333333333331,
-                "y": 154.49999999999997
+                "x": 256.25,
+                "y": 179.5
             }
         },
         "LevelTwo.json#Dungeon Tile Set": {
             "scaleInDock": 1
         },
         "Tilesets/Dungeon Tile Set.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1
+            "dynamicWrapping": false
         },
         "Tilesets/Dungeon.tsx": {
-            "scaleInDock": 1.5,
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "test.json": {
             "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 255.5,
-                "y": 193.25
+                "x": 183.75,
+                "y": 150
+            }
+        },
+        "test.tmj": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 974.2424242424242,
+                "y": 272.72727272727275
             }
         }
     },
@@ -74,15 +67,15 @@
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
+        "test.tmj",
+        "test.json"
     ],
     "project": "Maps.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "test.json",
         "Tilesets/Dungeon.tsx",
-        "LevelOne.tmj",
-        "LevelOne.JSON",
-        "Tilesets/Dungeon Tile Set.tsx"
+        "test.json",
+        "test.tmj"
     ],
     "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",
