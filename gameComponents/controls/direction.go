@@ -35,6 +35,6 @@ var (
 	WALLSLIDE = Direction{
 		Name:   "WALLSLIDE",
 		ForceX: 0,
-		ForceY: -500,
+		ForceY: -50,
 	}
 )

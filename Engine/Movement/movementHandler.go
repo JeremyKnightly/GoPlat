@@ -9,28 +9,32 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) {
+func shouldCancelPlayerInput(p *sprites.Player, lvl *levels.Level, directions []controls.Direction) bool {
 	if p.IsAnimationLocked {
 		AnimationLockWallOverride(p, lvl)
 	}
 	if p.IsAnimationLocked && !p.CanAnimationCancel {
-		return
+		return true
 	}
-	directions := GetControlsPressed(playerControls)
 	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
+		return true
+	}
+	return false
+}
+func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) {
+	directions := GetControlsPressed(playerControls)
+	cancel := shouldCancelPlayerInput(p, lvl, directions)
+	if cancel {
 		return
 	}
 
 	//handle movement
-	netInputForces, specialAction := GetNetForces_Input(directions)
-
+	netInputForces, specialActionTriggered := GetNetForces_Input(directions)
 	p.IsMovingRight = IsMovingRight(p, netInputForces)
-	p.IsIdle = IsIdle(p, netInputForces, specialAction)
-	//Idle Detection
+	p.IsIdle = IsIdle(p, netInputForces, specialActionTriggered)
 
-	var validMove bool
-	if len(specialAction.Name) > 0 {
-		validMove = HandleSpecialAction(p, specialAction.Name)
+	if len(specialActionTriggered.Name) > 0 {
+		validMove := HandleSpecialAction(p, specialActionTriggered.Name)
 		if validMove {
 			p.IsAnimationLocked = true
 		} else {
@@ -134,12 +138,12 @@ func AnimationLockWallOverride(p *sprites.Player, lvl *levels.Level) {
 	nearGround := collision.DetectGround(p, lvl)
 	if !nearWall {
 		p.IsGravityLocked = true
-	} else {
-		//if it isn't a wall or hurt or death animation, cancel that animation
-		if (p.CurrentAnimationIndex < 4 || p.CurrentAnimationIndex > 8) ||
-			(nearGround && p.CurrentAnimationIndex == 7) {
-			p.ActionAnimations[p.CurrentAnimationIndex].CurrentFrameIndex = 0
-			p.IsAnimationLocked = false
-		}
+		return
+	}
+	//if it isn't a wall or hurt or death animation, cancel that animation
+	if (p.CurrentAnimationIndex < 4 || p.CurrentAnimationIndex > 8) ||
+		(nearGround && p.CurrentAnimationIndex == 7) {
+		p.ActionAnimations[p.CurrentAnimationIndex].CurrentFrameIndex = 0
+		p.IsAnimationLocked = false
 	}
 }

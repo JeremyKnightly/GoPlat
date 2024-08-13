@@ -8,7 +8,6 @@ import (
 
 func HandleSpecialAction(p *sprites.Player, action string) bool {
 	if action == "JUMP" {
-		p.IsGravityLocked = true
 		if p.IsWallHanging { //trigger edgeclimb
 			p.IsWallHanging = false
 			return handleWallHang(p)
@@ -27,6 +26,7 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 func handleJump(p *sprites.Player) bool {
 	//checks if cooldown has reset or if player can double jump
 	if p.CanJump {
+		println("Jump")
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
@@ -37,6 +37,7 @@ func handleJump(p *sprites.Player) bool {
 		p.Physics.NetForce.X += controls.JUMP.ForceX
 		return true
 	} else if p.HasSecondJump && p.IsAirborn {
+		println("dblJump")
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
