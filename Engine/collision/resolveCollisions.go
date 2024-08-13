@@ -4,6 +4,7 @@ import (
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
+	"fmt"
 	"math"
 )
 
@@ -17,9 +18,12 @@ func ResolveCollisions(lvl *levels.Level, player *sprites.Player) {
 			correctorVector, horizontalCollision := resolveCollision(pRect, collision)
 			if horizontalCollision {
 				player.Physics.Velocity.X = 0
+				fmt.Printf("ShiftX: %v", correctorVector.X)
 			} else {
 				player.Physics.Velocity.Y = 0
+				player.CanJump = true
 			}
+
 			player.Physics.Position.X += correctorVector.X
 			player.Physics.Position.Y += correctorVector.Y
 			pRect = GetPlayerRect(player)
@@ -39,7 +43,7 @@ func resolveCollision(pRect Rect, collision Rect) (controls.Vector2, bool) {
 	var correctorVector controls.Vector2
 	var horizontalCollision bool
 	//shortest overlap is quickest way to resolve collision
-	if overlapX < overlapY {
+	if overlapX/pRect.Width < overlapY/pRect.Height {
 		horizontalCollision = true
 		if pRect.X < collision.X {
 			correctorVector.X -= overlapX

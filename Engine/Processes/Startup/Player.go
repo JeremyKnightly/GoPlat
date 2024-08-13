@@ -15,7 +15,7 @@ func CreateDefaultPlayer() *sprites.Player {
 				Physics: &controls.PhysicsObj{
 					Position: controls.Vector2{
 						X: 50.0,
-						Y: 100.0,
+						Y: 200.0,
 					},
 					Velocity: controls.Vector2{
 						X: 0,
@@ -25,25 +25,19 @@ func CreateDefaultPlayer() *sprites.Player {
 						X: 0,
 						Y: 0,
 					},
-					Mass: 150.0,
+					Mass: .012,
 				},
-
 				Frame: &sprites.Frame{
 					ImageOptions:  ebiten.DrawImageOptions{},
 					EffectOptions: ebiten.DrawImageOptions{},
 					HasEffect:     false,
 				},
 			},
-
 			ActionAnimations:      GetPlayerActionAnimations(),
 			IsMovingRight:         true,
 			IdleAnimation:         GetPlayerIdleAnimation(),
 			IsIdle:                true,
 			CurrentAnimationIndex: 0,
-		},
-		MaxVelocity: controls.Vector2{
-			X: 100,
-			Y: 15,
 		},
 		DashCooldowntime:   time.Millisecond * 3000,
 		DashLastUsed:       time.Date(1994, time.April, 4, 2, 0, 0, 0, time.Now().Local().Location()),

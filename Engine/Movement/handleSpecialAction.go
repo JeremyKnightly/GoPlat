@@ -33,7 +33,8 @@ func handleJump(p *sprites.Player) bool {
 		p.HasSecondJump = true
 		p.CanJump = false
 		p.CurrentAnimationIndex = 2
-		p.Physics.Acceleration.Y += controls.JUMP.AccY
+		p.Physics.NetForce.Y += controls.JUMP.ForceY
+		p.Physics.NetForce.X += controls.JUMP.ForceX
 		return true
 	} else if p.HasSecondJump && p.IsAirborn {
 		if p.IsAnimationLocked {
@@ -41,7 +42,8 @@ func handleJump(p *sprites.Player) bool {
 		}
 		p.CurrentAnimationIndex = 3
 		p.HasSecondJump = false
-		p.Physics.Acceleration.Y += controls.JUMP.AccY
+		p.Physics.NetForce.Y += controls.JUMP.ForceY
+		p.Physics.NetForce.X += controls.JUMP.ForceX
 		return true
 	}
 	return false
@@ -55,7 +57,8 @@ func handleDashRight(p *sprites.Player) bool {
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
-		p.Physics.Acceleration.X += controls.DASHLEFT.AccX
+		p.Physics.NetForce.Y += controls.DASHLEFT.ForceY
+		p.Physics.NetForce.X += controls.DASHLEFT.ForceX
 		return true
 	}
 	return false
@@ -69,7 +72,8 @@ func handleDashLeft(p *sprites.Player) bool {
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
-		p.Physics.Acceleration.X += controls.DASHLEFT.AccX
+		p.Physics.NetForce.Y += controls.DASHRIGHT.ForceY
+		p.Physics.NetForce.X += controls.DASHRIGHT.ForceX
 		return true
 	}
 	return false

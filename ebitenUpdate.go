@@ -16,9 +16,11 @@ func (g *Game) Update() error {
 
 	movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
 	g.Player.Physics.UpdatePhysics(1 / ebiten.ActualFPS())
+	//println(g.Player.Physics.Velocity.X, "  ", g.Player.Physics.Velocity.Y, "\n")
 	for !collision.IsValidMove(g.currentLevel, g.Player) {
 		collision.ResolveCollisions(g.currentLevel, g.Player)
 	}
+	//println(g.Player.Physics.Position.X, " , ", g.Player.Physics.Position.Y)
 	g.setCameraPosition()
 	g.setPlayerFrame()
 

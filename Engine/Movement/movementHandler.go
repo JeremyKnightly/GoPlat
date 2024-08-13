@@ -5,8 +5,6 @@ import (
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
-	"fmt"
-	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -24,10 +22,10 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	}
 
 	//handle movement
-	playerVelocity, specialAction := GetMovementVector(directions)
+	netInputForces, specialAction := GetNetForces_Input(directions)
 
-	p.IsMovingRight = IsMovingRight(p, playerVelocity)
-	p.IsIdle = IsIdle(p, playerVelocity, specialAction)
+	p.IsMovingRight = IsMovingRight(p, netInputForces)
+	p.IsIdle = IsIdle(p, netInputForces, specialAction)
 	//Idle Detection
 
 	var validMove bool
@@ -50,13 +48,8 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		p.IsGravityLocked = false
 		p.CurrentAnimationIndex = 0
 	}
-	fmt.Printf("player vel (%v,%v)\n", playerVelocity.X, playerVelocity.Y)
-	if math.Abs(p.Physics.Velocity.X+playerVelocity.X) < p.MaxVelocity.X {
-		p.Physics.Velocity.X += playerVelocity.X
-	}
-	if math.Abs(p.Physics.Velocity.Y+playerVelocity.Y) < p.MaxVelocity.Y {
-		p.Physics.Velocity.Y = playerVelocity.Y
-	}
+	p.Physics.NetForce.X = netInputForces.X
+	p.Physics.NetForce.Y = netInputForces.Y
 }
 
 func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
@@ -83,20 +76,17 @@ func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
 	return directions
 }
 
-func GetMovementVector(directions []controls.Direction) (controls.Vector2, controls.Direction) {
+func GetNetForces_Input(directions []controls.Direction) (controls.Vector2, controls.Direction) {
 	specialDirections := []controls.Direction{
 		controls.JUMP,
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
-	var velocity controls.Vector2
+	var netForce controls.Vector2
 	var specialAction controls.Direction
 	for _, direction := range directions {
-		if math.Abs(direction.VelX) > math.Abs(velocity.X) {
-			velocity.X = direction.VelX
-		} else if math.Abs(direction.VelY) > math.Abs(velocity.Y) {
-			velocity.Y = direction.VelY
-		}
+		netForce.X += direction.ForceX
+		netForce.Y += direction.ForceY
 		for _, special := range specialDirections {
 			if direction == special {
 				specialAction = direction
@@ -104,7 +94,7 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector2, contr
 		}
 	}
 
-	return velocity, specialAction
+	return netForce, specialAction
 }
 
 func IsMovingRight(player *sprites.Player, vector controls.Vector2) bool {
