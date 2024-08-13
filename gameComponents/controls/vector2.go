@@ -1,8 +1,11 @@
 package controls
 
-import "fmt"
+import (
+	"math"
+)
 
-const gravity = 9.81 / 6
+const Gravity = 9.81 * 2
+const FrictionCoefficient = .85
 
 type Vector2 struct {
 	X, Y float64
@@ -16,16 +19,24 @@ type PhysicsObj struct {
 }
 
 func (obj *PhysicsObj) UpdatePhysics(deltaTime float64) {
-	obj.Acceleration.Y += gravity
+	if deltaTime <= 0 {
+		deltaTime = 1 / 60
+	}
+	obj.Acceleration.Y += Gravity
 
-	obj.Velocity.X += obj.Acceleration.X * deltaTime
-	obj.Velocity.Y += obj.Acceleration.Y * deltaTime
+	deltaVelX := obj.Acceleration.X * deltaTime
+	deltaVelY := obj.Acceleration.Y * deltaTime
+	if math.IsNaN(deltaVelX) || math.IsNaN(deltaVelY) ||
+		math.IsInf(deltaVelX, 0) || math.IsInf(deltaVelY, 0) {
+		return
+	}
+	println(obj.Velocity.X)
+	obj.Velocity.X += deltaVelX
+	obj.Velocity.Y += deltaVelY
+	obj.Velocity.X *= FrictionCoefficient
 
 	obj.Position.X += obj.Velocity.X * deltaTime
 	obj.Position.Y += obj.Velocity.Y * deltaTime
 
-	fmt.Printf("velocity:%v,%v\n", obj.Velocity.X, obj.Velocity.Y)
-	fmt.Printf("position:%v,%v\n", obj.Position.X, obj.Position.Y)
-	fmt.Printf("acceleration:%v,%v\n", obj.Acceleration.X, obj.Acceleration.Y)
 	obj.Acceleration = Vector2{}
 }

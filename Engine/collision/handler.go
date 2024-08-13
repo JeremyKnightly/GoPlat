@@ -1,17 +1,14 @@
 package collision
 
 import (
-	controls "GoPlat/gameComponents/controls"
 	levels "GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
 )
 
-func IsValidMove(lvl *levels.Level, player *sprites.Player, velocity controls.Vector2) bool {
+func IsValidMove(lvl *levels.Level, player *sprites.Player) bool {
 	collisionData := ExtractCollisionData(lvl)
 
 	playerRect := GetPlayerRect(player)
-	playerRect.X += velocity.X
-	playerRect.Y += velocity.Y
 
 	for _, collision := range collisionData {
 		collidingX, collidingY := CheckPlayerCollisionXY(playerRect, collision)
@@ -22,20 +19,6 @@ func IsValidMove(lvl *levels.Level, player *sprites.Player, velocity controls.Ve
 	}
 	return true
 }
-
-/*
-func IsValidMoveRect(lvl *levels.Level, pRect Rect) bool {
-	collisionData := ExtractCollisionData(lvl)
-
-	for _, collision := range collisionData {
-		collidingX, collidingY := CheckPlayerCollisionXY(pRect, collision)
-		if collidingX && collidingY {
-			return false
-		}
-
-	}
-	return true
-}*/
 
 func GetPlayerRect(p *sprites.Player) Rect {
 	var playerRect Rect

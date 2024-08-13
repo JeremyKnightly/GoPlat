@@ -17,7 +17,15 @@ func CreateDefaultPlayer() *sprites.Player {
 						X: 50.0,
 						Y: 100.0,
 					},
-					Mass: 1,
+					Velocity: controls.Vector2{
+						X: 0,
+						Y: 0,
+					},
+					Acceleration: controls.Vector2{
+						X: 0,
+						Y: 0,
+					},
+					Mass: 150.0,
 				},
 
 				Frame: &sprites.Frame{
@@ -32,6 +40,10 @@ func CreateDefaultPlayer() *sprites.Player {
 			IdleAnimation:         GetPlayerIdleAnimation(),
 			IsIdle:                true,
 			CurrentAnimationIndex: 0,
+		},
+		MaxVelocity: controls.Vector2{
+			X: 100,
+			Y: 15,
 		},
 		DashCooldowntime:   time.Millisecond * 3000,
 		DashLastUsed:       time.Date(1994, time.April, 4, 2, 0, 0, 0, time.Now().Local().Location()),

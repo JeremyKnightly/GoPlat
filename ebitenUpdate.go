@@ -2,12 +2,11 @@ package main
 
 import (
 	"GoPlat/Engine/camera"
-	"GoPlat/engine/collision"
+	"GoPlat/Engine/collision"
 	movement "GoPlat/engine/movement"
 	"GoPlat/gameComponents/animations"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
-	"fmt"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -15,27 +14,15 @@ import (
 func (g *Game) Update() error {
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
-	g.setPlayerPositionWithInput()
-	for !collision.IsValidMove(g.currentLevel, g.Player, g.Player.Physics.Velocity) {
+	movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
+	g.Player.Physics.UpdatePhysics(1 / ebiten.ActualFPS())
+	for !collision.IsValidMove(g.currentLevel, g.Player) {
 		collision.ResolveCollisions(g.currentLevel, g.Player)
 	}
 	g.setCameraPosition()
-	g.Player.Physics.UpdatePhysics(1 / ebiten.ActualFPS())
 	g.setPlayerFrame()
 
-	fmt.Printf("Player at (%v,%v)", g.Player.Physics.Position.X, g.Player.Physics.Position.Y)
-
 	return nil
-}
-
-func (g *Game) setPlayerPositionWithInput() {
-	inputVector := movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
-
-	validVector := collision.IsValidMove(g.currentLevel, g.Player, inputVector)
-	if validVector {
-		g.Player.Physics.Velocity.X = inputVector.X
-		g.Player.Physics.Velocity.Y = inputVector.Y
-	}
 }
 
 func (g *Game) setCameraPosition() {
@@ -144,24 +131,7 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 	if player.Frame.HasEffect && !currentAnimation.AnimationComplete {
 		player.Frame.EffectImageToDraw = currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
 	}
-
-	/*if !player.IsMovingRight {
-		frameVector.DeltaX *= -1
-	}*/
-
-	//finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
-	//newPosition := finalVec.PlayerMove(player.Physics.Position.X, player.Physics.Position.Y)
-
 	translatePlayerDrawOptions(player, cam.X, cam.Y)
-	//if invalid move, return frame as is
-	/*if !collision.IsValidMove(lvl, player, finalVec) {
-		return
-	}*/
-
-	//player.Physics.Position.X = newPosition.DeltaX
-	//player.Physics.Position.Y = newPosition.DeltaY
-	//translatePlayerDrawOptions(player, player.Physics.Position.X, player.Physics.Position.Y)
-
 }
 
 func translatePlayerDrawOptions(p *sprites.Player, DeltaX float64, DeltaY float64) {

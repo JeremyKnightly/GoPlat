@@ -72,7 +72,6 @@ func NewTilemapScene(filepath string) (*TilemapScene, error) {
 		}
 
 		layerTypeName := layerType["type"].(string)
-		//layerProperties := layerType["properties"].(PropertySlice)
 		switch layerTypeName {
 		default:
 			fmt.Printf("Layer type %s unknown\n", layerTypeName)
@@ -101,7 +100,5 @@ func NewTilemapScene(filepath string) (*TilemapScene, error) {
 			tileMapReturn.ObjectLayers = append(tileMapReturn.ObjectLayers, tempLayer)
 		}
 	}
-	//fmt.Printf("num Layers: %v\n", len(tileMapReturn.Layers))
-	//fmt.Printf("num ObjLayers: %v\n", len(tileMapReturn.ObjectLayers))
 	return &tileMapReturn, nil
 }

@@ -1,6 +1,7 @@
 package movement
 
 import (
+	"GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/sprites"
 	"time"
 )
@@ -32,6 +33,7 @@ func handleJump(p *sprites.Player) bool {
 		p.HasSecondJump = true
 		p.CanJump = false
 		p.CurrentAnimationIndex = 2
+		p.Physics.Acceleration.Y += controls.JUMP.AccY
 		return true
 	} else if p.HasSecondJump && p.IsAirborn {
 		if p.IsAnimationLocked {
@@ -39,6 +41,7 @@ func handleJump(p *sprites.Player) bool {
 		}
 		p.CurrentAnimationIndex = 3
 		p.HasSecondJump = false
+		p.Physics.Acceleration.Y += controls.JUMP.AccY
 		return true
 	}
 	return false
@@ -52,6 +55,7 @@ func handleDashRight(p *sprites.Player) bool {
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
+		p.Physics.Acceleration.X += controls.DASHLEFT.AccX
 		return true
 	}
 	return false
@@ -65,6 +69,7 @@ func handleDashLeft(p *sprites.Player) bool {
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}
+		p.Physics.Acceleration.X += controls.DASHLEFT.AccX
 		return true
 	}
 	return false

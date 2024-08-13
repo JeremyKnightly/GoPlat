@@ -35,6 +35,7 @@ type Player struct {
 	*BioSprite
 	DashCooldowntime   time.Duration
 	DashLastUsed       time.Time
+	MaxVelocity        controls.Vector2
 	CanJump            bool
 	IsGravityLocked    bool
 	CanAnimationCancel bool

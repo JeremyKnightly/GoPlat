@@ -1,84 +1,33 @@
 package movement
 
 import (
-	"GoPlat/engine/collision"
+	"GoPlat/Engine/collision"
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
+	"fmt"
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-/*func HandleAnimationVectorCalculations(lvl *levels.Level, p *sprites.Player, frameVec controls.Vector) controls.Vector {
-	validMove := collision.IsValidMove(lvl, p, frameVec)
-	if validMove {
-		return frameVec
-	}
-
-	//while the animation vector is invalid, loop and
-	//adjust vector until it is valid
-	collisionData := collision.ExtractCollisionData(lvl)
-	playerRect := collision.GetPlayerRect(p)
-
-	var tempRect collision.Rect
-	for !validMove {
-		tempRect = playerRect
-		if p.IsMovingRight {
-			tempRect.X += frameVec.DeltaX
-		} else {
-			tempRect.X += frameVec.DeltaX
-		}
-		tempRect.Y += frameVec.DeltaY
-
-		for _, coll := range collisionData {
-			collisionLeft := collision.CheckXCollisionPlayerLeft(playerRect, coll)
-			collisionRight := collision.CheckXCollisionPlayerRight(playerRect, coll)
-			collisionTop := collision.CheckYCollisionPlayerTop(playerRect, coll)
-			collisionBottom := collision.CheckYCollisionPlayerBottom(playerRect, coll)
-
-			if collisionLeft && collisionRight { //if Y collision
-				frameVec.BumpY()
-				break
-			} else if collisionTop && collisionBottom { //if X collision
-				frameVec.BumpX(p.IsMovingRight)
-				break
-			} else if collisionLeft || collisionRight {
-				frameVec.BumpX(p.IsMovingRight)
-				break
-			} else if collisionTop || collisionBottom {
-				frameVec.BumpY()
-				break
-			}
-		}
-
-		validMove = collision.IsValidMove(lvl, p, frameVec)
-	}
-
-	return frameVec
-}*/
-
-func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector2 {
-	rtnVector := controls.Vector2{
-		X: 0,
-		Y: 0,
-	}
+func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) {
 	if p.IsAnimationLocked {
 		AnimationLockWallOverride(p, lvl)
 	}
 	if p.IsAnimationLocked && !p.CanAnimationCancel {
-		return rtnVector
+		return
 	}
 	directions := GetControlsPressed(playerControls)
 	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
-		return rtnVector
+		return
 	}
 
 	//handle movement
-	playerVelocity, playerAcceleration, specialAction := GetMovementVector(directions)
+	playerVelocity, specialAction := GetMovementVector(directions)
 
-	p.IsMovingRight = IsMovingRight(p)
-	p.IsIdle = IsIdle(p, playerVector, specialAction)
+	p.IsMovingRight = IsMovingRight(p, playerVelocity)
+	p.IsIdle = IsIdle(p, playerVelocity, specialAction)
 	//Idle Detection
 
 	var validMove bool
@@ -95,21 +44,19 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 				p.IsGravityLocked = false
 				//physics.HandlePhysics(p, lvl, &rtnVector)
 			}
-			return rtnVector
+			return
 		}
 	} else {
 		p.IsGravityLocked = false
 		p.CurrentAnimationIndex = 0
 	}
-
-	/*if !p.IsGravityLocked {
-		physics.HandlePhysics(p, lvl, &playerVector)
-	}*/
-
-	rtnVector.X = playerVector.X
-	rtnVector.Y = playerVector.Y
-
-	return rtnVector
+	fmt.Printf("player vel (%v,%v)\n", playerVelocity.X, playerVelocity.Y)
+	if math.Abs(p.Physics.Velocity.X+playerVelocity.X) < p.MaxVelocity.X {
+		p.Physics.Velocity.X += playerVelocity.X
+	}
+	if math.Abs(p.Physics.Velocity.Y+playerVelocity.Y) < p.MaxVelocity.Y {
+		p.Physics.Velocity.Y = playerVelocity.Y
+	}
 }
 
 func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
@@ -136,14 +83,13 @@ func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
 	return directions
 }
 
-func GetMovementVector(directions []controls.Direction) (controls.Vector2, controls.Vector2, controls.Direction) {
+func GetMovementVector(directions []controls.Direction) (controls.Vector2, controls.Direction) {
 	specialDirections := []controls.Direction{
 		controls.JUMP,
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
 	}
 	var velocity controls.Vector2
-	var acceleration controls.Vector2
 	var specialAction controls.Direction
 	for _, direction := range directions {
 		if math.Abs(direction.VelX) > math.Abs(velocity.X) {
@@ -156,11 +102,9 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector2, contr
 				specialAction = direction
 			}
 		}
-		acceleration.X += direction.AccX
-		acceleration.Y += direction.AccY
 	}
 
-	return velocity, acceleration, specialAction
+	return velocity, specialAction
 }
 
 func IsMovingRight(player *sprites.Player, vector controls.Vector2) bool {
@@ -173,10 +117,11 @@ func IsMovingRight(player *sprites.Player, vector controls.Vector2) bool {
 	return false
 }
 
-func IsIdle(p *sprites.Player, vector controls.Vector2, specialAction controls.Direction) bool {
+func IsIdle(p *sprites.Player, velocity controls.Vector2, specialAction controls.Direction) bool {
 	if len(specialAction.Name) > 0 || p.IsWallHanging {
 		return false
-	} else if vector.X != 0 || vector.Y != 0 {
+	}
+	if velocity.X != 0 || velocity.Y != 0 {
 		return false
 	}
 
