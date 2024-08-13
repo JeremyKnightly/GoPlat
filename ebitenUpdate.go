@@ -130,7 +130,7 @@ func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, 
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 
 	frameDurationInSeconds := currentAnimation.FrameDuration.Seconds()
-	currentAnimation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualFPS()
+	currentAnimation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualTPS()
 
 	currentFrame, frameVector, canCancel, _ := currentAnimation.AnimateAction()
 	player.Frame.HasEffect = currentAnimation.HasEffect
