@@ -36,6 +36,7 @@ func DrawLayer(level *levels.Level, layerIdx int, screen *ebiten.Image, cam *cam
 		if id == 0 {
 			continue
 		}
+		tilesInRow := level.TilemapImage.Bounds().Dx() / tileSize
 
 		x := index % int(layer.Width)
 		y := index / int(layer.Width)
@@ -43,8 +44,8 @@ func DrawLayer(level *levels.Level, layerIdx int, screen *ebiten.Image, cam *cam
 		x *= tileSize
 		y *= tileSize
 
-		srcX := (id - 1) % 15
-		srcY := (id - 1) / 15
+		srcX := (id - 1) % tilesInRow
+		srcY := (id - 1) / tilesInRow
 
 		srcX *= tileSize
 		srcY *= tileSize
@@ -52,7 +53,8 @@ func DrawLayer(level *levels.Level, layerIdx int, screen *ebiten.Image, cam *cam
 		mapDrawOptions.GeoM.Translate(float64(x), float64(y))
 		mapDrawOptions.GeoM.Translate(cam.X, cam.Y)
 
-		screen.DrawImage(level.TilemapImage.SubImage(image.Rect(srcX, srcY, srcX+16, srcY+16)).(*ebiten.Image),
+		//tilesInRow := spriteSheet.Bounds().Dx() / layer.TileSize
+		screen.DrawImage(level.TilemapImage.SubImage(image.Rect(srcX, srcY, srcX+tileSize, srcY+tileSize)).(*ebiten.Image),
 			&mapDrawOptions,
 		)
 

@@ -25,6 +25,7 @@ type TilemapLayer struct {
 	Data       []int   `json:"data"`
 	Width      float64 `json: "width"`
 	Height     float64 `json:"height"`
+	Visible    bool    `json:"visible"`
 	FirstDraw  bool
 	Properties []Property `json:"properties"`
 }
@@ -101,7 +102,5 @@ func NewTilemapScene(filepath string) (*TilemapScene, error) {
 			tileMapReturn.ObjectLayers = append(tileMapReturn.ObjectLayers, tempLayer)
 		}
 	}
-	//fmt.Printf("num Layers: %v\n", len(tileMapReturn.Layers))
-	//fmt.Printf("num ObjLayers: %v\n", len(tileMapReturn.ObjectLayers))
 	return &tileMapReturn, nil
 }

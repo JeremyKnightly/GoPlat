@@ -11,8 +11,8 @@ func CreateDefaultPlayer() *sprites.Player {
 	player := &sprites.Player{
 		BioSprite: &sprites.BioSprite{
 			Sprite: &sprites.Sprite{
-				X: 50,
-				Y: 100,
+				X: 16,
+				Y: 90,
 				Frame: &sprites.Frame{
 					ImageOptions:  ebiten.DrawImageOptions{},
 					EffectOptions: ebiten.DrawImageOptions{},

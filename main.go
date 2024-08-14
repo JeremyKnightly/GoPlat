@@ -33,10 +33,10 @@ func main() {
 	game.Player = startup.CreateDefaultPlayer()
 	game.levels = startup.CreateLevels()
 	game.controls = startup.GetControls()
-	game.currentLevelIndex = 1
+	game.currentLevelIndex = 0
 	game.tileSize = 16
-	game.screenHeight = 1240
-	game.screenWidth = 1320
+	game.screenHeight = 240
+	game.screenWidth = 320
 	game.camera = camera.NewCamera(0, 0)
 
 	if err := ebiten.RunGame(&game); err != nil {
