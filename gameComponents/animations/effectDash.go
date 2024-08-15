@@ -66,7 +66,7 @@ func GenerateEffectDash() *Effect {
 				MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 				MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 			},
-			Offset: -16,
+			OffsetX: -16,
 		}
 
 	return effect

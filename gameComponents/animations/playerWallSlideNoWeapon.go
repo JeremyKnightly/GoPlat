@@ -71,59 +71,59 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 	frameVectors := []controls.Vector{
 		{
 			DeltaX: 0,
-			DeltaY: 2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.4,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.4,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.4,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.4,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.4,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.2,
+			DeltaY: 1.55,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: 1.2,
+			DeltaY: 1.55,
 		},
 	}
 

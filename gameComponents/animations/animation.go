@@ -34,7 +34,9 @@ type ActionAnimation struct {
 
 type Effect struct {
 	*Animation
-	Offset float64
+	OffsetX         float64
+	OffsetOneWay    bool
+	OffsetRightOnly bool
 }
 
 func (a *Animation) Animate() *ebiten.Image {

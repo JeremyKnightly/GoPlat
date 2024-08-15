@@ -11,52 +11,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func HandleAnimationVectorCalculations(lvl *levels.Level, p *sprites.Player, frameVec controls.Vector) controls.Vector {
-	validMove := collision.IsValidMove(lvl, p, frameVec)
-	if validMove { return frameVec}
-
-	//while the animation vector is invalid, loop and 
-	//adjust vector until it is valid
-	collisionData := collision.ExtractCollisionData(lvl)
-	playerRect := collision.GetPlayerRect(p)
-
-	var tempRect collision.Rect
-	for !validMove {
-		tempRect = playerRect
-		if p.IsMovingRight {
-			tempRect.X += frameVec.DeltaX
-		} else {
-			tempRect.X += frameVec.DeltaX
-		}
-		tempRect.Y += frameVec.DeltaY
-
-		for _, coll := range collisionData {
-			collisionLeft := collision.CheckXCollisionPlayerLeft(playerRect, coll)
-			collisionRight := collision.CheckXCollisionPlayerRight(playerRect, coll)
-			collisionTop := collision.CheckYCollisionPlayerTop(playerRect, coll)
-			collisionBottom := collision.CheckYCollisionPlayerBottom(playerRect, coll)
-			
-			if collisionLeft && collisionRight {//if Y collision
-				frameVec.BumpY()
-				break
-			} else if collisionTop && collisionBottom {//if X collision
-				frameVec.BumpX(p.IsMovingRight)
-				break
-			} else if collisionLeft || collisionRight {
-				frameVec.BumpX(p.IsMovingRight)
-				break
-			} else if collisionTop || collisionBottom {
-				frameVec.BumpY()
-				break
-			}
-		}
-	
-		validMove = collision.IsValidMove(lvl, p, frameVec)
-	}
-
-	return frameVec
-}
-
 func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
 	rtnVector := controls.Vector{
 		DeltaX: 0,
@@ -88,7 +42,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		} else {
 			//if they can animation cancel, the animation is not over
 			//this prevents user from cancelling animation lock on accident
-			if p.IsAnimationLocked{
+			if p.IsAnimationLocked {
 				p.IsPhysicsLocked = true
 			} else {
 				p.IsPhysicsLocked = false
@@ -111,8 +65,6 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	return rtnVector
 }
 
-
-
 func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
 	var directions []controls.Direction
 	for _, control := range controlSlice {
@@ -123,12 +75,9 @@ func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
 					controlActivated = false
 				}
 			}
-		} else if ebiten.IsKeyPressed(control.Key) {
-			controlActivated = true
 		} else {
-			controlActivated = false
+			controlActivated = ebiten.IsKeyPressed(control.Key)
 		}
-
 		if controlActivated {
 			directions = append(directions, control.Direction)
 		}
@@ -145,13 +94,13 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector, contro
 	}
 	var vector controls.Vector
 	var specialAction controls.Direction
-	for _,direction := range directions { 
+	for _, direction := range directions {
 		if math.Abs(direction.DeltaX) > math.Abs(vector.DeltaX) {
 			vector.DeltaX = direction.DeltaX
 		} else if math.Abs(direction.DeltaY) > math.Abs(vector.DeltaY) {
 			vector.DeltaY = direction.DeltaY
 		}
-		for _,special := range specialDirections {
+		for _, special := range specialDirections {
 			if direction == special {
 				specialAction = direction
 			}
@@ -162,16 +111,13 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector, contro
 }
 
 func IsMovingRight(player *sprites.Player, vector controls.Vector) bool {
-	if !player.IsAnimationLocked{
+	if !player.IsAnimationLocked {
 		return vector.DeltaX >= 0
 	}
-	if player.IsMovingRight{
-		return true
-	}
-	return false
+	return player.IsMovingRight
 }
 
-func IsIdle(p *sprites.Player, vector controls.Vector,specialAction controls.Direction) bool {
+func IsIdle(p *sprites.Player, vector controls.Vector, specialAction controls.Direction) bool {
 	if len(specialAction.Name) > 0 || p.IsWallHanging {
 		return false
 	} else if vector.DeltaX != 0 || vector.DeltaY != 0 {
@@ -181,10 +127,9 @@ func IsIdle(p *sprites.Player, vector controls.Vector,specialAction controls.Dir
 	return true
 }
 
-func IsAnimationCancelling (p *sprites.Player, input []controls.Direction) (bool) {
-	for _,direction := range input {
-		for _,cancelDirection := range 
-		p.ActionAnimations[p.CurrentAnimationIndex].AllowCancelOnDirections {
+func IsAnimationCancelling(p *sprites.Player, input []controls.Direction) bool {
+	for _, direction := range input {
+		for _, cancelDirection := range p.ActionAnimations[p.CurrentAnimationIndex].AllowCancelOnDirections {
 			if direction == cancelDirection {
 				return true
 			}
@@ -194,16 +139,16 @@ func IsAnimationCancelling (p *sprites.Player, input []controls.Direction) (bool
 }
 
 func AnimationLockWallOverride(p *sprites.Player, lvl *levels.Level) {
-	nearWall, _ := collision.DetectWall(p, lvl)
+	nearWall, _, _ := collision.DetectWall(p, lvl)
 	nearGround := collision.DetectGround(p, lvl)
 	if !nearWall {
 		p.IsPhysicsLocked = true
 	} else {
 		//if it isn't a wall or hurt or death animation, cancel that animation
-		if (p.CurrentAnimationIndex < 4 || p.CurrentAnimationIndex > 8) ||
-		(nearGround && p.CurrentAnimationIndex == 7) {
+		if (p.CurrentAnimationIndex < 1 || p.CurrentAnimationIndex > 8) ||
+			(nearGround && p.CurrentAnimationIndex == 7) {
 			p.ActionAnimations[p.CurrentAnimationIndex].CurrentFrameIndex = 0
 			p.IsAnimationLocked = false
-		} 
+		}
 	}
 }

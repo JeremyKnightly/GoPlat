@@ -5,18 +5,18 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
-func DetectWall(player *sprites.Player, lvl *levels.Level) (bool, bool) {
+func DetectWall(player *sprites.Player, lvl *levels.Level) (bool, bool, bool) {
 	collisionData := ExtractCollisionData(lvl)
 	playerRect := GetPlayerRect(player)
 
 	for _, collision := range collisionData {
 		wallNearby, isLeft := CheckWallNearby(playerRect, collision)
 		if wallNearby {
-			return wallNearby, isLeft
+			return wallNearby, isLeft, collision.Height >= playerRect.Height
 		}
 	}
 
-	return false, false
+	return false, false, false
 }
 
 func DetectGround(player *sprites.Player, lvl *levels.Level) bool {
@@ -52,7 +52,7 @@ func CheckGroundNearby(pRect Rect, coll Rect) bool {
 		return false
 	}
 
-	pRect.Height += 2
+	pRect.Height += 1
 	return CheckYCollisionPlayerBottom(pRect, coll)
 }
 
@@ -63,8 +63,8 @@ func CheckWallNearby(pRect Rect, coll Rect) (bool, bool) {
 	}
 
 	//increase width and shift left for detection range
-	pRect.Width += 4
-	pRect.X -= 2
+	pRect.Width += 2
+	pRect.X -= 1
 	if CheckXCollisionPlayerRight(pRect, coll) {
 		return true, false
 	} else if CheckXCollisionPlayerLeft(pRect, coll) {

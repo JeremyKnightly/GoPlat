@@ -14,11 +14,14 @@ type Sprite struct {
 }
 
 type Frame struct {
-	ImageToDraw       *ebiten.Image
-	EffectImageToDraw *ebiten.Image
-	HasEffect         bool
-	ImageOptions      ebiten.DrawImageOptions
-	EffectOptions     ebiten.DrawImageOptions
+	ImageToDraw        *ebiten.Image
+	EffectImageToDraw  *ebiten.Image
+	HasEffect          bool
+	ImageOptions       ebiten.DrawImageOptions
+	EffectOptions      ebiten.DrawImageOptions
+	EffectOffset       float64
+	EffectOffsetOneWay bool
+	EffectOffsetRight  bool
 }
 
 type BioSprite struct {

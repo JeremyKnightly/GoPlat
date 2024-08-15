@@ -2,7 +2,6 @@ package startup
 
 import (
 	levels "GoPlat/gameComponents/levels"
-	"fmt"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -30,7 +29,6 @@ func CreateLevels() []*levels.Level {
 	levels := []*levels.Level{
 		levelOne,
 	}
-	fmt.Print(levelOne.TilemapScene.Layers[0].Width)
 
 	return levels
 }

@@ -4,11 +4,8 @@ import (
 	controls "GoPlat/gameComponents/controls"
 	levels "GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
+	"math"
 )
-
-func GetXYCollisionBools(lvl *levels.Level, player sprites.Player, pVec controls.Vector) (bool, bool) {
-	return true, true
-}
 
 func IsValidMoveRect(lvl *levels.Level, pRect Rect) bool {
 	collisionData := ExtractCollisionData(lvl)
@@ -23,21 +20,51 @@ func IsValidMoveRect(lvl *levels.Level, pRect Rect) bool {
 	return true
 }
 
-func IsValidMove(lvl *levels.Level, player *sprites.Player, vector controls.Vector) bool {
+func EnsureValidMove(lvl *levels.Level, player *sprites.Player, vector controls.Vector) {
 	collisionData := ExtractCollisionData(lvl)
 
 	playerRect := GetPlayerRect(player)
 	playerRect.X += vector.DeltaX
 	playerRect.Y += vector.DeltaY
+	player.X += vector.DeltaX
+	player.Y += vector.DeltaY
 
 	for _, collision := range collisionData {
-		collidingX, collidingY := CheckPlayerCollisionXY(playerRect, collision)
-		if collidingX && collidingY {
-			return false
-		}
-
+		doCollision(&playerRect, &collision, player)
 	}
-	return true
+}
+
+func doCollision(pRect, coll *Rect, player *sprites.Player) {
+	minPoint := math.Min(pRect.X, coll.X)
+	maxPoint := math.Max(pRect.X+pRect.Width, coll.X+coll.Width)
+	overlapX := (pRect.Width + coll.Width) - (maxPoint - minPoint)
+
+	minPoint = math.Min(pRect.Y, coll.Y)
+	maxPoint = math.Max(pRect.Y+pRect.Height, coll.Y+coll.Height)
+	overlapY := (pRect.Height + coll.Height) - (maxPoint - minPoint)
+
+	if overlapX <= 0 || overlapY <= 0 {
+		return
+	}
+	isXOverlap := overlapX/pRect.Width < overlapY/pRect.Height
+
+	if isXOverlap {
+		if player.X < coll.X {
+			player.X -= overlapX
+			pRect.X -= overlapX
+		} else {
+			player.X += overlapX
+			pRect.X += overlapX
+		}
+	} else {
+		if player.Y < coll.Y {
+			player.Y -= overlapY
+			pRect.Y -= overlapY
+		} else {
+			player.Y += overlapY
+			pRect.Y += overlapY
+		}
+	}
 }
 
 func GetPlayerRect(p *sprites.Player) Rect {

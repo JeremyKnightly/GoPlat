@@ -16,44 +16,49 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	}
 	player.IsIdle = false
 
-	nearWall, wallPlayerLeft := collision.DetectWall(player, lvl)
-	
-	if !nearWall {
-		handleFall(player, pVector)
-		return
+	nearWall, wallPlayerLeft, canSlide := collision.DetectWall(player, lvl)
+
+	if nearWall {
+		eventHandled := handleWallLogic(player, lvl, wallPlayerLeft, canSlide)
+		if eventHandled {
+			return
+		}
 	}
-	handleWallLogic(player, lvl, wallPlayerLeft)
+
+	handleFall(player, pVector)
 }
 
-func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool) {
+func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft, canWallSlide bool) bool {
 	if canWallHang(player, lvl, wallPlayerLeft) {
 		player.IsMovingRight = !wallPlayerLeft
 		player.CurrentAnimationIndex = 6
 		player.IsWallHanging = true
 		player.IsAnimationLocked = true
-	} else {
+	} else if canWallSlide {
 		player.CurrentAnimationIndex = 7
 		player.IsMovingRight = wallPlayerLeft
 		player.IsWallSliding = true
+	} else {
+		return false
 	}
+	return true
 }
-
 
 func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool) bool {
 	playerRect := collision.GetPlayerRect(player)
-	
-	//takes a rectangle above players head and in 
+
+	//takes a rectangle above players head and in
 	//specified direction to see if there is a ledge
 	playerRect.Y -= (4 + playerRect.Height)
 	if wallPlayerLeft {
-		playerRect.X -= playerRect.Width/2
+		playerRect.X -= playerRect.Width / 2
 	} else {
-		playerRect.X += playerRect.Width/2
+		playerRect.X += playerRect.Width / 2
 	}
 
 	validMove := collision.IsValidMoveRect(lvl, playerRect)
 	nearGround := collision.DetectGroundRect(playerRect, lvl)
-	
+
 	return validMove && nearGround
 }
 
@@ -64,7 +69,7 @@ func adjustedAirbornStatus(player *sprites.Player, onGround bool) bool {
 			return true
 		}
 	} else {
-		if onGround { 
+		if onGround {
 			return true
 		}
 		player.IsAirborn = true
@@ -75,5 +80,5 @@ func adjustedAirbornStatus(player *sprites.Player, onGround bool) bool {
 func handleFall(player *sprites.Player, pVector *controls.Vector) {
 	player.CurrentAnimationIndex = 9
 	player.IsIdle = false
-	pVector.DeltaY += 1
+	pVector.DeltaY += 1.1
 }
