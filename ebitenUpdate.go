@@ -39,7 +39,7 @@ func (g *Game) setPlayerFrame() {
 
 	g.Player.Frame.ImageOptions = ebiten.DrawImageOptions{}
 	g.Player.Frame.EffectOptions = ebiten.DrawImageOptions{}
-	if g.Player.IsIdle {
+	if g.Player.IsIdle && !g.Player.IsDead {
 		setPlayerIdleFrameAndPosition(g.Player)
 	} else {
 		setPlayerActiveFrame(g.Player, g.currentLevel)
@@ -90,6 +90,10 @@ func stopCompletedAnimations(player *sprites.Player) {
 		return
 	}
 
+	//if player dead
+	if player.CurrentAnimationIndex == 8 {
+		player.Resurrect()
+	}
 	//if I shouldn't loop, set index to walk
 	if !currentAnimation.LoopAnimation {
 		player.CurrentAnimationIndex = 0

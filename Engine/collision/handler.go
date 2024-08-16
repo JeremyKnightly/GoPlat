@@ -44,10 +44,14 @@ func doCollision(pRect, coll *Rect, player *sprites.Player) {
 	overlapY := (pRect.Height + coll.Height) - (maxPoint - minPoint)
 
 	if overlapX <= 0 || overlapY <= 0 {
-		return
+		return //all non-collisions end here
 	}
-	isXOverlap := overlapX/pRect.Width < overlapY/pRect.Height
 
+	if coll.HasSpecialProps() {
+		coll.HandleProps(player)
+	}
+
+	isXOverlap := overlapX/pRect.Width < overlapY/pRect.Height
 	if isXOverlap {
 		if player.X < coll.X {
 			player.X -= overlapX

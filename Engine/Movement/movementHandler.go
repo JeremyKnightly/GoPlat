@@ -16,10 +16,11 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		DeltaX: 0,
 		DeltaY: 0,
 	}
+
 	if p.IsAnimationLocked {
 		AnimationLockWallOverride(p, lvl)
 	}
-	if p.IsAnimationLocked && !p.CanAnimationCancel {
+	if (p.IsAnimationLocked && !p.CanAnimationCancel) || p.IsDead {
 		return rtnVector
 	}
 	directions := GetControlsPressed(playerControls)

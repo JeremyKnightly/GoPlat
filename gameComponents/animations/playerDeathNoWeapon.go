@@ -109,7 +109,7 @@ func GeneratePlayerDeathNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			FrameDuration:     time.Millisecond * 60,
+			FrameDuration:     time.Millisecond * 250,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
@@ -118,6 +118,7 @@ func GeneratePlayerDeathNoWeapon() *ActionAnimation {
 		AllowCancelAfterFrame:   7,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               false,
+		LoopAnimation:           false,
 	}
 
 	return death

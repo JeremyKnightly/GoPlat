@@ -80,5 +80,5 @@ func adjustedAirbornStatus(player *sprites.Player, onGround bool) bool {
 func handleFall(player *sprites.Player, pVector *controls.Vector) {
 	player.CurrentAnimationIndex = 9
 	player.IsIdle = false
-	pVector.DeltaY += 1.1
+	pVector.DeltaY += 1.4
 }
