@@ -58,6 +58,19 @@
                 "y": 63.33333333333334
             }
         },
+        "The_Descent_LevelOne.json": {
+            "expandedObjectLayers": [
+                5,
+                7,
+                12
+            ],
+            "scale": 3,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 127.16666666666664,
+                "y": 460
+            }
+        },
         "The_Descent_LevelOne.tmj": {
             "expandedGroupLayers": [
                 8,
@@ -124,8 +137,9 @@
         "test.json"
     ],
     "project": "Maps.tiled-project",
-    "property.type": "bool",
+    "property.type": "int",
     "recentFiles": [
+        "test.json",
         "test.tmj",
         "Tilesets/Dungeon Tile Set.tsx",
         "LevelOne.JSON",
@@ -134,8 +148,7 @@
         "Tilesets/DungeonTiles.tsx",
         "Rules.tmj",
         "The_Descent_Playground.tmj",
-        "Tilesets/Dungeon.tsx",
-        "test.json"
+        "Tilesets/Dungeon.tsx"
     ],
     "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",

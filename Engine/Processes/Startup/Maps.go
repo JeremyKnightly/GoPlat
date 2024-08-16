@@ -12,10 +12,10 @@ func CreateLevels() []*levels.Level {
 	if err != nil {
 		log.Fatal(err)
 	}
-	/*levelTwoMap, err := levels.NewTilemapScene("Assets/Maps/LevelTwo.JSON")
+	levelTwoMap, err := levels.NewTilemapScene("Assets/Maps/LevelTwo.JSON")
 	if err != nil {
 		log.Fatal(err)
-	}*/
+	}
 	dungeonTiles, _, err := ebitenutil.NewImageFromFile("Assets/Maps/Tilesets/Dungeon Tile Set.png")
 	if err != nil {
 		log.Fatal(err)
@@ -25,9 +25,14 @@ func CreateLevels() []*levels.Level {
 		TilemapScene: levelOneMap,
 		TilemapImage: dungeonTiles,
 	}
+	levelTwo := &levels.Level{
+		TilemapScene: levelTwoMap,
+		TilemapImage: dungeonTiles,
+	}
 
 	levels := []*levels.Level{
 		levelOne,
+		levelTwo,
 	}
 
 	return levels

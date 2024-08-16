@@ -1,23 +1,26 @@
 package sprites
 
-import "time"
+import (
+	"GoPlat/gameComponents/levels"
+	"time"
+)
 
 type Player struct {
 	*BioSprite
-	DashCooldowntime   time.Duration
-	DashLastUsed       time.Time
-	CanJump            bool
-	IsPhysicsLocked    bool
-	CanAnimationCancel bool
-	IsAnimationLocked  bool
-	IsAirborn          bool
-	HasSecondJump      bool
-	IsWallSliding      bool
-	IsWallHanging      bool
+	DashCooldowntime       time.Duration
+	DashLastUsed           time.Time
+	CanJump                bool
+	IsPhysicsLocked        bool
+	CanAnimationCancel     bool
+	IsAnimationLocked      bool
+	IsAirborn              bool
+	HasSecondJump          bool
+	IsWallSliding          bool
+	IsWallHanging          bool
+	CurrentCheckpointIndex int
 }
 
 func (p *Player) Kill() {
-	println("dead")
 	p.IsDead = true
 	p.CurrentAnimationIndex = 8
 	p.CanAnimationCancel = false
@@ -26,8 +29,13 @@ func (p *Player) Kill() {
 	p.IsPhysicsLocked = false
 }
 
-func (p *Player) Resurrect() {
+func (p *Player) Resurrect(lvl *levels.Level) {
 	p.IsDead = false
-	p.X = 50
-	p.Y = 50
+	checkpointX, checkpointY := lvl.GetCheckpointXY(p.CurrentCheckpointIndex)
+	p.X = checkpointX
+	p.Y = checkpointY
+}
+
+func (p *Player) SetNewCheckpoint(newIdx int) {
+	p.CurrentCheckpointIndex = newIdx
 }

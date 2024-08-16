@@ -11,6 +11,9 @@ import (
 )
 
 func (g *Game) Update() error {
+	if g.Player.CurrentCheckpointIndex == 9999 {
+		g.currentLevelIndex++
+	}
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
 	g.setPlayerPositionWithInput()
@@ -42,7 +45,7 @@ func (g *Game) setPlayerFrame() {
 	if g.Player.IsIdle && !g.Player.IsDead {
 		setPlayerIdleFrameAndPosition(g.Player)
 	} else {
-		setPlayerActiveFrame(g.Player, g.currentLevel)
+		g.setPlayerActiveFrame(g.Player, g.currentLevel)
 	}
 	translatePlayerDrawOptions(g.Player, g.Player.X+g.camera.X, g.Player.Y+g.camera.Y)
 }
@@ -84,7 +87,7 @@ func adjustDrawOptionsForLeftMove(options *ebiten.DrawImageOptions, maxWidth flo
 	options.GeoM.Translate(maxWidth, 0)
 }
 
-func stopCompletedAnimations(player *sprites.Player) {
+func (g *Game) stopCompletedAnimations(player *sprites.Player) {
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 	if !currentAnimation.AnimationComplete {
 		return
@@ -92,7 +95,7 @@ func stopCompletedAnimations(player *sprites.Player) {
 
 	//if player dead
 	if player.CurrentAnimationIndex == 8 {
-		player.Resurrect()
+		player.Resurrect(g.levels[g.currentLevelIndex])
 	}
 	//if I shouldn't loop, set index to walk
 	if !currentAnimation.LoopAnimation {
@@ -118,8 +121,8 @@ func prepActiveSprite(player *sprites.Player) {
 	}
 }
 
-func setPlayerActiveFrame(player *sprites.Player, lvl *levels.Level) {
-	stopCompletedAnimations(player)
+func (g *Game) setPlayerActiveFrame(player *sprites.Player, lvl *levels.Level) {
+	g.stopCompletedAnimations(player)
 	prepActiveSprite(player)
 
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]

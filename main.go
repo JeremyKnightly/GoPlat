@@ -38,7 +38,6 @@ func main() {
 }
 
 func (game *Game) SetGameProperties() {
-	game.Player = startup.CreateDefaultPlayer()
 	game.levels = startup.CreateLevels()
 	game.controls = startup.GetControls()
 	game.currentLevelIndex = 0
@@ -46,4 +45,5 @@ func (game *Game) SetGameProperties() {
 	game.screenHeight = 210
 	game.screenWidth = 280
 	game.camera = camera.NewCamera(0, 0)
+	game.Player = startup.CreateDefaultPlayer(game.levels[game.currentLevelIndex])
 }

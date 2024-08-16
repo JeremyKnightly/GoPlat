@@ -12,7 +12,7 @@ type Rect struct {
 
 func (r *Rect) HasSpecialProps() bool {
 	for _, property := range r.Properties {
-		if property.Name == "Special" {
+		if property.Name == "Special" || property.Name == "Checkpoint" {
 			return true
 		}
 	}
@@ -31,9 +31,21 @@ func (r *Rect) HasProp(propName string) bool {
 }
 
 func (r *Rect) HandleProps(p *sprites.Player) {
+	isCheckpoint := false
+	checkpointIdx := 0
 	for _, property := range r.Properties {
 		if property.Name == "KillPlayer" && property.Value == true {
 			p.Kill()
 		}
+		if property.Name == "Checkpoint" {
+			isCheckpoint = true
+		}
+		if property.Name == "CheckPointIndex" {
+			checkpointIdx = int(property.Value.(float64))
+		}
+	}
+
+	if isCheckpoint {
+		p.SetNewCheckpoint(checkpointIdx)
 	}
 }

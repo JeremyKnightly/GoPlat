@@ -49,6 +49,7 @@ func doCollision(pRect, coll *Rect, player *sprites.Player) {
 
 	if coll.HasSpecialProps() {
 		coll.HandleProps(player)
+		return
 	}
 
 	isXOverlap := overlapX/pRect.Width < overlapY/pRect.Height
