@@ -63,46 +63,46 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
+			DeltaX: 2.5,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.5,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.2,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.8,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.8,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.6,
+			DeltaY: 0,
+		},
+		{
 			DeltaX: 1.5,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 1.75,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.75,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.75,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.75,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.75,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.5,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.25,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: .75,
+			DeltaX: .1,
 			DeltaY: 0,
 		}, {
-			DeltaX: .65,
+			DeltaX: .8,
 			DeltaY: 0,
 		},
 	}
@@ -118,7 +118,7 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			FrameDuration:     time.Millisecond * 50,
+			FrameDuration:     time.Millisecond * 45,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},

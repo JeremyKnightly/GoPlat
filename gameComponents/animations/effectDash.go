@@ -62,7 +62,7 @@ func GenerateEffectDash() *Effect {
 				Frames:            frames,
 				NumberOfFrames:    uint16(len(frames)),
 				CurrentFrameIndex: 0,
-				FrameDuration:     time.Millisecond * 80,
+				FrameDuration:     time.Millisecond * 45,
 				MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 				MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 			},
