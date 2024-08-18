@@ -30,9 +30,9 @@
         },
         "LevelTwo.json": {
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 111.5,
+                "x": 152.75,
                 "y": 110.5
             }
         },
