@@ -31,6 +31,7 @@ func CreateDefaultPlayer(lvl *levels.Level) *sprites.Player {
 		DashLastUsed:           time.Date(1994, time.April, 4, 2, 0, 0, 0, time.Now().Local().Location()),
 		CanJump:                true,
 		HasSecondJump:          true,
+		CanDash:                true,
 		IsWallSliding:          false,
 		IsAnimationLocked:      false,
 		IsPhysicsLocked:        false,

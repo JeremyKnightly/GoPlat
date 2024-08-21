@@ -13,6 +13,10 @@ import (
 func (g *Game) Update() error {
 	if g.Player.CurrentCheckpointIndex == 9999 {
 		g.currentLevelIndex++
+		g.Player.CurrentCheckpointIndex = 0
+		x, y := g.levels[g.currentLevelIndex].GetCheckpointXY(g.Player.CurrentCheckpointIndex)
+		g.Player.X = x
+		g.Player.Y = y
 	}
 	g.currentLevel = g.levels[g.currentLevelIndex]
 

@@ -11,6 +11,7 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	onGround := collision.DetectGround(player, lvl)
 	stopPhysicsCalcs := adjustedAirbornStatus(player, onGround)
 	if stopPhysicsCalcs {
+		player.CanDash = true
 		player.CanJump = true
 		return
 	}
@@ -19,6 +20,7 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	nearWall, wallPlayerLeft, canSlide := collision.DetectWall(player, lvl)
 
 	if nearWall {
+		player.CanJump = true
 		eventHandled := handleWallLogic(player, lvl, wallPlayerLeft, canSlide)
 		if eventHandled {
 			return

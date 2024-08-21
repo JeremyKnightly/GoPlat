@@ -60,15 +60,13 @@
         },
         "The_Descent_LevelOne.json": {
             "expandedObjectLayers": [
-                5,
-                7,
                 12
             ],
             "scale": 3,
-            "selectedLayer": 8,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 127.16666666666664,
-                "y": 460
+                "x": 525.5,
+                "y": 125
             }
         },
         "The_Descent_LevelOne.tmj": {
@@ -82,6 +80,26 @@
             "viewCenter": {
                 "x": 184.25,
                 "y": 480
+            }
+        },
+        "The_Descent_LevelTwo.json": {
+            "expandedObjectLayers": [
+                6,
+                7
+            ],
+            "scale": 2,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 420.75,
+                "y": 486.5
+            }
+        },
+        "The_Descent_LevelTwo.tmj": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 137.83333333333334,
+                "y": 318
             }
         },
         "The_Descent_Playground.tmj": {
@@ -126,12 +144,12 @@
     "last.exportedFilePath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps",
     "last.externalTilesetPath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps/Tilesets",
     "last.imagePath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps/Tilesets",
-    "map.height": 10,
+    "map.height": 70,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 10,
+    "map.width": 60,
     "openFiles": [
         "test.tmj",
         "test.json"
@@ -139,11 +157,12 @@
     "project": "Maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
+        "LevelTwo.json",
+        "The_Descent_LevelTwo.tmj",
         "test.json",
         "test.tmj",
         "Tilesets/Dungeon Tile Set.tsx",
         "LevelOne.JSON",
-        "LevelTwo.json",
         "LevelTwo.tmj",
         "Tilesets/DungeonTiles.tsx",
         "Rules.tmj",

@@ -12,7 +12,7 @@ func CreateLevels() []*levels.Level {
 	if err != nil {
 		log.Fatal(err)
 	}
-	levelTwoMap, err := levels.NewTilemapScene("Assets/Maps/LevelTwo.JSON")
+	levelTwoMap, err := levels.NewTilemapScene("Assets/Maps/The_Descent_LevelTwo.JSON")
 	if err != nil {
 		log.Fatal(err)
 	}

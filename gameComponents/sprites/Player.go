@@ -15,6 +15,7 @@ type Player struct {
 	IsAnimationLocked      bool
 	IsAirborn              bool
 	HasSecondJump          bool
+	CanDash                bool
 	IsWallSliding          bool
 	IsWallHanging          bool
 	CurrentCheckpointIndex int
@@ -27,6 +28,7 @@ func (p *Player) Kill() {
 	p.IsWallHanging = false
 	p.IsWallSliding = false
 	p.IsPhysicsLocked = false
+	p.CanDash = true
 }
 
 func (p *Player) Resurrect(lvl *levels.Level) {
