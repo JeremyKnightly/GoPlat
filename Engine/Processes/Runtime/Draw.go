@@ -4,9 +4,11 @@ import (
 	"GoPlat/Engine/camera"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
+	"fmt"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 const tileSize = 16
@@ -67,4 +69,8 @@ func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
 	if player.Frame.HasEffect {
 		screen.DrawImage(player.Frame.EffectImageToDraw, &player.Frame.EffectOptions)
 	}
+}
+
+func DrawPlayerDeathCount(numDeaths int, screen *ebiten.Image) {
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("Deaths: %v", numDeaths))
 }

@@ -11,12 +11,12 @@ import (
 )
 
 func (g *Game) Update() error {
+	err := g.SoundManager.GetStation("SFX").PlaySound("Hurt")
+	if err != nil {
+		println("error finding sound")
+	}
 	if g.Player.CurrentCheckpointIndex == 9999 {
-		g.currentLevelIndex++
-		g.Player.CurrentCheckpointIndex = 0
-		x, y := g.levels[g.currentLevelIndex].GetCheckpointXY(g.Player.CurrentCheckpointIndex)
-		g.Player.X = x
-		g.Player.Y = y
+		g.GoNextLevel()
 	}
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
@@ -25,6 +25,17 @@ func (g *Game) Update() error {
 	g.setPlayerFrame()
 
 	return nil
+}
+
+func (g *Game) GoNextLevel() {
+	g.currentLevelIndex++
+	if g.currentLevelIndex > len(g.levels) {
+		g.currentLevelIndex = 0
+	}
+	g.Player.CurrentCheckpointIndex = 0
+	x, y := g.levels[g.currentLevelIndex].GetCheckpointXY(g.Player.CurrentCheckpointIndex)
+	g.Player.X = x
+	g.Player.Y = y
 }
 
 func (g *Game) setPlayerPositionWithInput() {

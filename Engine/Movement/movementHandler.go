@@ -31,10 +31,6 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	//handle movement
 	playerVector, specialAction := GetMovementVector(directions)
 
-	p.IsMovingRight = IsMovingRight(p, playerVector)
-	p.IsIdle = IsIdle(p, playerVector, specialAction)
-	//Idle Detection
-
 	var validMove bool
 	if len(specialAction.Name) > 0 {
 		validMove = HandleSpecialAction(p, specialAction.Name)
@@ -52,6 +48,8 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 			return rtnVector
 		}
 	} else {
+		p.IsMovingRight = IsMovingRight(p, playerVector)
+		p.IsIdle = IsIdle(p, playerVector, specialAction)
 		p.IsPhysicsLocked = false
 		p.CurrentAnimationIndex = 0
 	}

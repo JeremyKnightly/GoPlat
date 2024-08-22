@@ -5,6 +5,7 @@ import (
 	startup "GoPlat/engine/processes/startup"
 	controls "GoPlat/gameComponents/controls"
 	levels "GoPlat/gameComponents/levels"
+	sound "GoPlat/gameComponents/sounds"
 	sprites "GoPlat/gameComponents/sprites"
 	"log"
 
@@ -12,6 +13,7 @@ import (
 )
 
 type Game struct {
+	SoundManager                        *sound.SoundManager
 	Player                              *sprites.Player
 	levels                              []*levels.Level
 	controls                            []controls.Control
@@ -46,4 +48,5 @@ func (game *Game) SetGameProperties() {
 	game.screenWidth = 280
 	game.camera = camera.NewCamera(0, 0)
 	game.Player = startup.CreateDefaultPlayer(game.levels[game.currentLevelIndex])
+	game.SoundManager = startup.GetAllSounds()
 }

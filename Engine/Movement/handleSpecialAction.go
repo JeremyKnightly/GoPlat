@@ -2,7 +2,6 @@ package movement
 
 import (
 	"GoPlat/gameComponents/sprites"
-	"time"
 )
 
 func HandleSpecialAction(p *sprites.Player, action string) bool {
@@ -17,12 +16,9 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 			p.CanDash = true
 		}
 		return valid
-	} else if action == "DASHLEFT" {
+	} else if action == "DASHLEFT" || action == "DASHRIGHT" {
 		p.IsPhysicsLocked = true
-		return handleDashLeft(p)
-	} else if action == "DASHRIGHT" {
-		p.IsPhysicsLocked = true
-		return handleDashRight(p)
+		return handleDash(p, action == "DASHRIGHT")
 	}
 	return false
 }
@@ -48,26 +44,11 @@ func handleJump(p *sprites.Player) bool {
 	return false
 }
 
-func handleDashRight(p *sprites.Player) bool {
-	if time.Since(p.DashLastUsed) >= p.DashCooldowntime && p.CanDash {
+func handleDash(p *sprites.Player, movingRight bool) bool {
+	if p.CanDash {
 		p.CanDash = false
-		p.IsMovingRight = true
+		p.IsMovingRight = movingRight
 		p.CurrentAnimationIndex = 1
-		p.DashLastUsed = time.Now()
-		if p.IsAnimationLocked {
-			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
-		}
-		return true
-	}
-	return false
-}
-
-func handleDashLeft(p *sprites.Player) bool {
-	if time.Since(p.DashLastUsed) >= p.DashCooldowntime && p.CanDash {
-		p.CanDash = false
-		p.IsMovingRight = false
-		p.CurrentAnimationIndex = 1
-		p.DashLastUsed = time.Now()
 		if p.IsAnimationLocked {
 			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
 		}

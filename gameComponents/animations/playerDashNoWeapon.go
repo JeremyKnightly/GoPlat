@@ -79,11 +79,15 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 2.3,
+			DeltaX: 2.5,
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 2.1,
+			DeltaX: 2.5,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.2,
 			DeltaY: 0,
 		},
 		{
@@ -91,11 +95,7 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 1.7,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 1.6,
+			DeltaX: 1.9,
 			DeltaY: 0,
 		},
 		{
