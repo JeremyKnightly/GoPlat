@@ -27,18 +27,33 @@ func (ss *SoundStation) GetBGM() {
 func (ss *SoundStation) GetSFX() {
 	ss.StationName = "SFX"
 
-	err := ss.LoadSound("Assets/Audio/Footfalls/Footstep1.wav", "wav", "Footstep", .2)
+	err := ss.LoadSound("Assets/Audio/Final/SFX/Footstep1.wav", "wav", "Footstep1", .1)
 	if err != nil {
 		panic(err)
 	}
 
-	err1 := ss.LoadSound("Assets/Audio/Footfalls/sfx_Hurt.wav", "wav", "Hurt", .6)
-	if err1 != nil {
-		panic(err1)
+	err = ss.LoadSound("Assets/Audio/Final/SFX/Footstep2.wav", "wav", "Footstep2", .1)
+	if err != nil {
+		panic(err)
 	}
 
-	err2 := ss.LoadSound("Assets/Audio/Footfalls/sfx_Death.wav", "wav", "Death", .8)
-	if err1 != nil {
-		panic(err2)
+	err = ss.LoadSound("Assets/Audio/Final/SFX/Hurt.wav", "wav", "Hurt", .6)
+	if err != nil {
+		panic(err)
+	}
+
+	err = ss.LoadSound("Assets/Audio/Final/SFX/Death.wav", "wav", "Death", .8)
+	if err != nil {
+		panic(err)
+	}
+
+	err = ss.LoadSound("Assets/Audio/Final/SFX/WallSlide.wav", "wav", "WallSlide", .8)
+	if err != nil {
+		panic(err)
+	}
+
+	err = ss.LoadSound("Assets/Audio/Final/SFX/Jump.wav", "wav", "Jump", .3)
+	if err != nil {
+		panic(err)
 	}
 }
