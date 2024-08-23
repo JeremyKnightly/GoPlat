@@ -25,15 +25,23 @@ func (g *Game) playSFX() {
 	}
 }
 
+func (g *Game) loopBGM(trackNum int) {
+	bgmPlayer, err := g.SoundManager.GetStation("BGM").GetSoundPlayerByNum(trackNum)
+	if err != nil {
+		panic(err)
+	}
+	bgmPlayer.ResetOnTrackComplete()
+}
+
 func (g *Game) handleWalkSFX() {
 	if g.Player.IsAirborn {
 		return
 	}
-	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayer("Footstep1")
+	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayerByName("Footstep1")
 	if err != nil {
 		println("Could not getSoundPlayer", err)
 	}
-	audioPlayer2, err1 := g.SoundManager.GetStation("SFX").GetSoundPlayer("Footstep2")
+	audioPlayer2, err1 := g.SoundManager.GetStation("SFX").GetSoundPlayerByName("Footstep2")
 	if err1 != nil {
 		println("Could not getSoundPlayer", err1)
 	}
@@ -66,7 +74,7 @@ func (g *Game) handleWalkSFX() {
 }
 
 func (g *Game) handleDeathSFX() {
-	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayer("Death")
+	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayerByName("Death")
 	if err != nil {
 		println("Could not getSoundPlayer", err)
 	}
@@ -87,7 +95,7 @@ func (g *Game) handleDeathSFX() {
 }
 
 func (g *Game) handleHurtSFX() {
-	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayer("Death")
+	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayerByName("Hurt")
 	if err != nil {
 		println("Could not getSoundPlayer", err)
 	}
@@ -108,7 +116,7 @@ func (g *Game) handleHurtSFX() {
 }
 
 func (g *Game) handleWallSlideSFX() {
-	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayer("WallSlide")
+	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayerByName("WallSlide")
 	if err != nil {
 		println("Could not getSoundPlayer", err)
 	}
@@ -129,7 +137,7 @@ func (g *Game) handleWallSlideSFX() {
 }
 
 func (g *Game) handleJumpSFX() {
-	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayer("Jump")
+	audioPlayer, err := g.SoundManager.GetStation("SFX").GetSoundPlayerByName("Jump")
 	if err != nil {
 		println("Could not getSoundPlayer", err)
 	}

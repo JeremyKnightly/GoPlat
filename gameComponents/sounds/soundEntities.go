@@ -80,3 +80,15 @@ func (ap *AudioPlayer) SetVolume(volume float64) error {
 	ap.player.SetVolume(volume)
 	return nil
 }
+
+func (ap *AudioPlayer) ResetOnTrackComplete() error {
+	if ap.player == nil {
+		return fmt.Errorf("player is not initialized")
+	}
+	if !ap.player.IsPlaying() {
+		ap.Rewind()
+		ap.Play()
+	}
+
+	return nil
+}

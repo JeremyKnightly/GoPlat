@@ -20,6 +20,7 @@ func (g *Game) Update() error {
 	g.setCameraPosition()
 	g.setPlayerFrame()
 	g.playSFX()
+	g.loopBGM(g.currentBGMIdx)
 
 	return nil
 }

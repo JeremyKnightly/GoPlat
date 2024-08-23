@@ -18,6 +18,7 @@ type Game struct {
 	levels                              []*levels.Level
 	controls                            []controls.Control
 	currentLevel                        *levels.Level
+	currentBGMIdx                       int
 	currentLevelIndex                   int
 	camera                              *camera.Camera
 	tileSize, screenWidth, screenHeight float64
@@ -46,6 +47,7 @@ func (game *Game) SetGameProperties() {
 	game.tileSize = 16
 	game.screenHeight = 210
 	game.screenWidth = 280
+	game.currentBGMIdx = 0
 	game.camera = camera.NewCamera(0, 0)
 	game.Player = startup.CreateDefaultPlayer(game.levels[game.currentLevelIndex])
 	game.SoundManager = startup.GetAllSounds()
