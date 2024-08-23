@@ -1,6 +1,8 @@
 package sound
 
 import (
+	"fmt"
+
 	"github.com/hajimehoshi/ebiten/v2/audio"
 )
 
@@ -13,8 +15,9 @@ type SoundStation struct {
 }
 
 type AudioPlayer struct {
-	player    *audio.Player
-	TrackName string
+	player         *audio.Player
+	TrackName      string
+	RecentlyPlayed bool
 }
 
 type SoundManager struct {
@@ -44,4 +47,36 @@ func (sm *SoundManager) GetStation(stationName string) *SoundStation {
 
 func NewSoundManager() *SoundManager {
 	return &SoundManager{}
+}
+
+func (ap *AudioPlayer) Play() error {
+	if ap.player == nil {
+		return fmt.Errorf("player is not initialized")
+	}
+	ap.player.Play()
+	return nil
+}
+
+func (ap *AudioPlayer) Rewind() error {
+	if ap.player == nil {
+		return fmt.Errorf("player is not initialized")
+	}
+	ap.player.Rewind()
+	return nil
+}
+
+func (ap *AudioPlayer) Pause() error {
+	if ap.player == nil {
+		return fmt.Errorf("player is not initialized")
+	}
+	ap.player.Pause()
+	return nil
+}
+
+func (ap *AudioPlayer) SetVolume(volume float64) error {
+	if ap.player == nil {
+		return fmt.Errorf("player is not initialized")
+	}
+	ap.player.SetVolume(volume)
+	return nil
 }

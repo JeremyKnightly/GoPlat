@@ -11,10 +11,6 @@ import (
 )
 
 func (g *Game) Update() error {
-	err := g.SoundManager.GetStation("SFX").PlaySound("Hurt")
-	if err != nil {
-		println("error finding sound")
-	}
 	if g.Player.CurrentCheckpointIndex == 9999 {
 		g.GoNextLevel()
 	}
@@ -23,6 +19,7 @@ func (g *Game) Update() error {
 	g.setPlayerPositionWithInput()
 	g.setCameraPosition()
 	g.setPlayerFrame()
+	g.playSFX()
 
 	return nil
 }

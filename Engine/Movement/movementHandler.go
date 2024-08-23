@@ -36,6 +36,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		validMove = HandleSpecialAction(p, specialAction.Name)
 		if validMove {
 			p.IsAnimationLocked = true
+			p.IsIdle = false
 		} else {
 			//if they can animation cancel, the animation is not over
 			//this prevents user from cancelling animation lock on accident
@@ -45,8 +46,8 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 				p.IsPhysicsLocked = false
 				physics.HandlePhysics(p, lvl, &rtnVector)
 			}
-			return rtnVector
 		}
+		return rtnVector
 	} else {
 		p.IsMovingRight = IsMovingRight(p, playerVector)
 		p.IsIdle = IsIdle(p, playerVector, specialAction)
@@ -120,6 +121,8 @@ func IsIdle(p *sprites.Player, vector controls.Vector, specialAction controls.Di
 	if len(specialAction.Name) > 0 || p.IsWallHanging {
 		return false
 	} else if vector.DeltaX != 0 || vector.DeltaY != 0 {
+		return false
+	} else if p.IsAirborn {
 		return false
 	}
 

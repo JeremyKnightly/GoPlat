@@ -1,20 +1,17 @@
 package sound
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func (ss *SoundStation) PlaySound(trackName string) error {
+func (ss *SoundStation) GetSoundPlayer(trackName string) (*AudioPlayer, error) {
 	playIdx := 0
-	soundFound := false
 	for idx, audioPlayer := range ss.players {
 		if audioPlayer.TrackName == trackName {
 			playIdx = idx
-			soundFound = true
-			break
+			return ss.players[playIdx], nil
 		}
 	}
-	if !soundFound {
-		return fmt.Errorf("sound '%s' not found", trackName)
-	}
-	ss.players[playIdx].player.Play()
-	return nil
+	println("track not found")
+	return &AudioPlayer{}, fmt.Errorf("sound '%s' not found", trackName)
 }

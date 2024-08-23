@@ -1,13 +1,14 @@
 package sound
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2/audio/mp3"
 	"github.com/hajimehoshi/ebiten/v2/audio/wav"
 )
 
-func (ss *SoundStation) LoadSound(filepath, fileType, trackName string) error {
+func (ss *SoundStation) LoadSound(filepath, fileType, trackName string, volume float64) error {
 	if ss.audioContext == nil {
 		println("nil context")
 	}
@@ -29,6 +30,10 @@ func (ss *SoundStation) LoadSound(filepath, fileType, trackName string) error {
 		if err != nil {
 			return err
 		}
+		if player == nil {
+			fmt.Println("audioPlayer nil")
+		}
+		player.SetVolume(volume)
 		ss.players = append(ss.players, &AudioPlayer{
 			player:    player,
 			TrackName: trackName,
@@ -42,6 +47,10 @@ func (ss *SoundStation) LoadSound(filepath, fileType, trackName string) error {
 		if err != nil {
 			return err
 		}
+		if player == nil {
+			fmt.Println("audioPlayer nil")
+		}
+		player.SetVolume(volume)
 		ss.players = append(ss.players, &AudioPlayer{
 			player:    player,
 			TrackName: trackName,
