@@ -33,7 +33,18 @@ func main() {
 	ebiten.SetWindowTitle("GoPlat!")
 
 	var game Game
+<<<<<<< HEAD
 	game.SetGameProperties()
+=======
+	game.Player = startup.CreateDefaultPlayer()
+	game.levels = startup.CreateLevels()
+	game.controls = startup.GetControls()
+	game.currentLevelIndex = 0
+	game.tileSize = 16
+	game.screenHeight = 240
+	game.screenWidth = 320
+	game.camera = camera.NewCamera(0, 0)
+>>>>>>> 16f3c53bd428513a1c986c0fe9c23443b6469d9c
 
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)

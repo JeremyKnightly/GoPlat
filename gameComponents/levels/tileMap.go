@@ -76,7 +76,6 @@ func NewTilemapScene(filepath string) (*TilemapScene, error) {
 		}
 
 		layerTypeName := layerType["type"].(string)
-		//layerProperties := layerType["properties"].(PropertySlice)
 		switch layerTypeName {
 		default:
 			fmt.Printf("Layer type %s unknown\n", layerTypeName)

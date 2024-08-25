@@ -1,7 +1,12 @@
 package main
 
 import (
+<<<<<<< HEAD
 	"GoPlat/engine/collision"
+=======
+	"GoPlat/Engine/camera"
+	"GoPlat/Engine/collision"
+>>>>>>> 16f3c53bd428513a1c986c0fe9c23443b6469d9c
 	movement "GoPlat/engine/movement"
 	"GoPlat/gameComponents/animations"
 	levels "GoPlat/gameComponents/levels"
@@ -16,15 +21,28 @@ func (g *Game) Update() error {
 	}
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
+<<<<<<< HEAD
 	g.setPlayerPositionWithInput()
 	g.setCameraPosition()
 	g.setPlayerFrame()
 	g.playSFX()
 	g.loopBGM(g.currentBGMIdx)
+=======
+	movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
+	g.Player.Physics.UpdatePhysics(1 / ebiten.ActualFPS())
+	//println(g.Player.Physics.Velocity.X, "  ", g.Player.Physics.Velocity.Y, "\n")
+	for !collision.IsValidMove(g.currentLevel, g.Player) {
+		collision.ResolveCollisions(g.currentLevel, g.Player)
+	}
+	//println(g.Player.Physics.Position.X, " , ", g.Player.Physics.Position.Y)
+	g.setCameraPosition()
+	g.setPlayerFrame()
+>>>>>>> 16f3c53bd428513a1c986c0fe9c23443b6469d9c
 
 	return nil
 }
 
+<<<<<<< HEAD
 func (g *Game) GoNextLevel() {
 	g.currentLevelIndex++
 	if g.currentLevelIndex > len(g.levels) {
@@ -42,6 +60,8 @@ func (g *Game) setPlayerPositionWithInput() {
 	collision.EnsureValidMove(g.currentLevel, g.Player, inputVector)
 }
 
+=======
+>>>>>>> 16f3c53bd428513a1c986c0fe9c23443b6469d9c
 func (g *Game) setCameraPosition() {
 	g.camera.FollowTarget(g.Player.X+g.tileSize/2, g.Player.Y+g.tileSize/2, g.screenWidth, g.screenHeight)
 	g.camera.Constrain(g.currentLevel.Layers[0].Height*g.tileSize,
@@ -154,6 +174,7 @@ func (g *Game) setPlayerActiveFrame(player *sprites.Player, lvl *levels.Level) {
 	if player.Frame.HasEffect && !currentAnimation.AnimationComplete {
 		player.Frame.EffectImageToDraw = currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
 	}
+<<<<<<< HEAD
 
 	if !player.IsMovingRight {
 		frameVector.DeltaX *= -1
@@ -161,6 +182,9 @@ func (g *Game) setPlayerActiveFrame(player *sprites.Player, lvl *levels.Level) {
 	}
 
 	collision.EnsureValidMove(lvl, player, frameVector)
+=======
+	translatePlayerDrawOptions(player, cam.X, cam.Y)
+>>>>>>> 16f3c53bd428513a1c986c0fe9c23443b6469d9c
 }
 
 func translatePlayerDrawOptions(p *sprites.Player, DeltaX float64, DeltaY float64) {
