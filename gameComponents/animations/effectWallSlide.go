@@ -81,7 +81,9 @@ func GenerateEffectWallSlide() *Effect {
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
-		Offset: 0,
+		OffsetX:         16,
+		OffsetOneWay:    true,
+		OffsetRightOnly: false,
 	}
 
 	return effect

@@ -13,16 +13,15 @@ func NewCamera(x, y float64) *Camera {
 	}
 }
 
-func (c *Camera) FollowTarget(targetX, targetY, screenWidth, screenHeight float64) {
-	c.X = -targetX + screenWidth/2
-	c.Y = -targetY + screenHeight/2
+func (c *Camera) FollowTarget(playerX, playerY, screenWidth, screenHeight float64) {
+	c.X = -playerX + screenWidth/2
+	c.Y = -playerY + screenHeight/2
 }
 
 func (c *Camera) Constrain(tilemapHeightPixels, tilemapWidthPixels, screenWidth, screenHeight float64) {
 	c.X = math.Min(c.X, 0.0)
 	c.Y = math.Min(c.Y, 0.0)
 
-	c.X = math.Max(c.X, tilemapWidthPixels-screenWidth)
-	c.Y = math.Max(c.Y, tilemapHeightPixels-screenHeight)
-
+	c.X = math.Max(c.X, screenWidth-tilemapWidthPixels)
+	c.Y = math.Max(c.Y, screenHeight-tilemapHeightPixels)
 }

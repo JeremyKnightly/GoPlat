@@ -25,18 +25,21 @@ type TilemapLayer struct {
 	Data       []int   `json:"data"`
 	Width      float64 `json: "width"`
 	Height     float64 `json:"height"`
+	Visible    bool    `json:"visible"`
 	FirstDraw  bool
 	Properties []Property `json:"properties"`
 }
 
 type ObjectLayer struct {
-	Objects []struct {
-		X          float64    `json:"x"`
-		Y          float64    `json:"y"`
-		Width      float64    `json:"width"`
-		Height     float64    `json:"height"`
-		Properties []Property `json:"properties"`
-	} `json:"objects"`
+	Objects []Object `json:"objects"`
+}
+
+type Object struct {
+	X          float64    `json:"x"`
+	Y          float64    `json:"y"`
+	Width      float64    `json:"width"`
+	Height     float64    `json:"height"`
+	Properties []Property `json:"properties"`
 }
 
 type Property struct {
@@ -48,6 +51,7 @@ type Property struct {
 type TilemapScene struct {
 	Layers       []TilemapLayer `json:"layers"`
 	ObjectLayers []ObjectLayer  `json:"layers"`
+	Checkpoints  []*Checkpoint
 }
 
 func NewTilemapScene(filepath string) (*TilemapScene, error) {
@@ -98,10 +102,47 @@ func NewTilemapScene(filepath string) (*TilemapScene, error) {
 			if err != nil {
 				return nil, err
 			}
+
+			tempLayer.extractCheckpoints(&tileMapReturn)
+
 			tileMapReturn.ObjectLayers = append(tileMapReturn.ObjectLayers, tempLayer)
+
 		}
 	}
-	//fmt.Printf("num Layers: %v\n", len(tileMapReturn.Layers))
-	//fmt.Printf("num ObjLayers: %v\n", len(tileMapReturn.ObjectLayers))
 	return &tileMapReturn, nil
+}
+
+func (ol *ObjectLayer) extractCheckpoints(tilemapRtn *TilemapScene) {
+	for _, obj := range ol.Objects {
+		checkpointFound := false
+		isEnd := false
+		isStart := false
+		var checkpointIdx int
+		for _, prop := range obj.Properties {
+			if prop.Name == "Checkpoint" {
+				checkpointFound = true
+			}
+
+			if prop.Name == "StartPoint" {
+				isStart = true
+			} else if prop.Name == "EndPoint" {
+				isEnd = true
+			} else if prop.Name == "CheckPointIndex" {
+				checkpointIdx = int(prop.Value.(float64))
+			}
+		}
+
+		if checkpointFound {
+			//if found, append to checkpoints, then delete from obj and restart check
+			tilemapRtn.Checkpoints = append(tilemapRtn.Checkpoints,
+				&Checkpoint{
+					X:          obj.X,
+					Y:          obj.Y,
+					Index:      checkpointIdx,
+					StartPoint: isStart,
+					EndPoint:   isEnd,
+				},
+			)
+		}
+	}
 }

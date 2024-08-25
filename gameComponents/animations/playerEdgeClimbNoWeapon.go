@@ -48,6 +48,33 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 		png6,
 	}
 
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.4,
+		},
+		{
+			DeltaX: 1.55,
+			DeltaY: -1.4,
+		},
+		{
+			DeltaX: 1.55,
+			DeltaY: -1.4,
+		},
+		{
+			DeltaX: 1.55,
+			DeltaY: -1.4,
+		},
+		{
+			DeltaX: .0,
+			DeltaY: 0,
+		},
+	}
+
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
@@ -63,6 +90,7 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   2,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               false,

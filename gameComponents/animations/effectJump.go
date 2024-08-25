@@ -52,7 +52,6 @@ func GenerateEffectJump() *Effect {
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
-		Offset: 0,
 	}
 
 	return effect

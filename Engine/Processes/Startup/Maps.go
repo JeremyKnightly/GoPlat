@@ -8,11 +8,15 @@ import (
 )
 
 func CreateLevels() []*levels.Level {
-	levelOneMap, err := levels.NewTilemapScene("Assets/Maps/LevelOne.json")
+	levelOneMap, err := levels.NewTilemapScene("Assets/Maps/The_Descent_LevelOne.json")
 	if err != nil {
 		log.Fatal(err)
 	}
-	levelTwoMap, err := levels.NewTilemapScene("Assets/Maps/LevelTwo.json")
+	levelTwoMap, err := levels.NewTilemapScene("Assets/Maps/The_Descent_LevelTwo.JSON")
+	if err != nil {
+		log.Fatal(err)
+	}
+	levelThreeMap, err := levels.NewTilemapScene("Assets/Maps/LevelTwo.JSON")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,10 +33,15 @@ func CreateLevels() []*levels.Level {
 		TilemapScene: levelTwoMap,
 		TilemapImage: dungeonTiles,
 	}
+	levelThree := &levels.Level{
+		TilemapScene: levelThreeMap,
+		TilemapImage: dungeonTiles,
+	}
 
 	levels := []*levels.Level{
 		levelOne,
 		levelTwo,
+		levelThree,
 	}
 
 	return levels

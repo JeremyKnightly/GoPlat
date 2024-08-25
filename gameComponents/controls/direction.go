@@ -1,53 +1,15 @@
 package controls
 
 type Direction struct {
-	Name       string
-	VelX, VelY float64
-	AccX, AccY float64
+	Name           string
+	DeltaX, DeltaY float64
 }
 
 var (
-	LEFT = Direction{
-		Name: "LEFT",
-		VelX: -2,
-		VelY: 0,
-		AccX: 0,
-		AccY: 0,
-	}
-	RIGHT = Direction{
-		Name: "RIGHT",
-		VelX: 2,
-		VelY: 0,
-		AccX: 0,
-		AccY: 0,
-	}
-	//UP        = Direction{Name: "UP", X: 0, Y: -1}
-	DASHLEFT = Direction{
-		Name: "DASHLEFT",
-		VelX: 0,
-		VelY: 0,
-		AccX: 0,
-		AccY: 0,
-	}
-	DASHRIGHT = Direction{
-		Name: "DASHRIGHT",
-		VelX: 0,
-		VelY: 0,
-		AccX: 0,
-		AccY: 0,
-	}
-	JUMP = Direction{
-		Name: "JUMP",
-		VelX: 0,
-		VelY: 0,
-		AccX: 0,
-		AccY: 0,
-	}
-	WALLSLIDE = Direction{
-		Name: "WALLSLIDE",
-		VelX: 0,
-		VelY: 4,
-		AccX: 0,
-		AccY: 0,
-	}
+	LEFT      = Direction{Name: "LEFT", DeltaX: -1.35, DeltaY: 0}
+	RIGHT     = Direction{Name: "RIGHT", DeltaX: 1.35, DeltaY: 0}
+	DASHLEFT  = Direction{Name: "DASHLEFT", DeltaX: 0, DeltaY: 0}
+	DASHRIGHT = Direction{Name: "DASHRIGHT", DeltaX: 0, DeltaY: 0}
+	JUMP      = Direction{Name: "JUMP", DeltaX: 0, DeltaY: 0}
+	WALLSLIDE = Direction{Name: "WALLSLIDE", DeltaX: 0, DeltaY: 0}
 )

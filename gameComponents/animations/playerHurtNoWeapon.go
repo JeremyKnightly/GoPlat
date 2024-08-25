@@ -48,6 +48,33 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 		png6,
 	}
 
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+	}
+
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
@@ -63,6 +90,7 @@ func GeneratePlayerHurtNoWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               true,

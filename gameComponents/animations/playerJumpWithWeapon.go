@@ -88,6 +88,44 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 		jumpPngFlourish,
 		jumpPngReset,
 	}
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.95,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.85,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.8,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.65,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.45,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.35,
+		},
+	}
 
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
@@ -105,6 +143,7 @@ func GeneratePlayerJumpWithWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   6,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               false,

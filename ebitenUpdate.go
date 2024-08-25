@@ -1,47 +1,51 @@
 package main
 
 import (
-	"GoPlat/Engine/camera"
 	"GoPlat/engine/collision"
 	movement "GoPlat/engine/movement"
 	"GoPlat/gameComponents/animations"
 	levels "GoPlat/gameComponents/levels"
 	sprites "GoPlat/gameComponents/sprites"
-	"fmt"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func (g *Game) Update() error {
+	if g.Player.CurrentCheckpointIndex == 9999 {
+		g.GoNextLevel()
+	}
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
 	g.setPlayerPositionWithInput()
-	for !collision.IsValidMove(g.currentLevel, g.Player, g.Player.Physics.Velocity) {
-		collision.ResolveCollisions(g.currentLevel, g.Player)
-	}
 	g.setCameraPosition()
-	g.Player.Physics.UpdatePhysics(1 / ebiten.ActualFPS())
 	g.setPlayerFrame()
-
-	fmt.Printf("Player at (%v,%v)", g.Player.Physics.Position.X, g.Player.Physics.Position.Y)
+	g.playSFX()
+	g.loopBGM(g.currentBGMIdx)
 
 	return nil
+}
+
+func (g *Game) GoNextLevel() {
+	g.currentLevelIndex++
+	if g.currentLevelIndex > len(g.levels) {
+		g.currentLevelIndex = 0
+	}
+	g.Player.CurrentCheckpointIndex = 0
+	x, y := g.levels[g.currentLevelIndex].GetCheckpointXY(g.Player.CurrentCheckpointIndex)
+	g.Player.X = x
+	g.Player.Y = y
 }
 
 func (g *Game) setPlayerPositionWithInput() {
 	inputVector := movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
 
-	validVector := collision.IsValidMove(g.currentLevel, g.Player, inputVector)
-	if validVector {
-		g.Player.Physics.Velocity.X = inputVector.X
-		g.Player.Physics.Velocity.Y = inputVector.Y
-	}
+	collision.EnsureValidMove(g.currentLevel, g.Player, inputVector)
 }
 
 func (g *Game) setCameraPosition() {
-	g.camera.FollowTarget(g.Player.Physics.Position.X+g.tileSize/2, g.Player.Physics.Position.Y+g.tileSize/2, g.screenWidth, g.screenHeight)
-	g.camera.Constrain(g.currentLevel.Layers[0].Height,
-		g.currentLevel.Layers[0].Width,
+	g.camera.FollowTarget(g.Player.X+g.tileSize/2, g.Player.Y+g.tileSize/2, g.screenWidth, g.screenHeight)
+	g.camera.Constrain(g.currentLevel.Layers[0].Height*g.tileSize,
+		g.currentLevel.Layers[0].Width*g.tileSize,
 		g.screenWidth,
 		g.screenHeight,
 	)
@@ -51,17 +55,17 @@ func (g *Game) setPlayerFrame() {
 
 	g.Player.Frame.ImageOptions = ebiten.DrawImageOptions{}
 	g.Player.Frame.EffectOptions = ebiten.DrawImageOptions{}
-	if g.Player.IsIdle {
-		setPlayerIdleFrameAndPosition(g.Player, g.camera)
+	if g.Player.IsIdle && !g.Player.IsDead {
+		setPlayerIdleFrameAndPosition(g.Player)
 	} else {
-		setPlayerActiveFrameAndPosition(g.Player, g.currentLevel, g.camera)
+		g.setPlayerActiveFrame(g.Player, g.currentLevel)
 	}
+	translatePlayerDrawOptions(g.Player, g.Player.X+g.camera.X, g.Player.Y+g.camera.Y)
 }
 
-func setPlayerIdleFrameAndPosition(player *sprites.Player, cam *camera.Camera) {
+func setPlayerIdleFrameAndPosition(player *sprites.Player) {
 	prepSpriteNoEffect(player)
 	player.Frame.ImageToDraw = player.IdleAnimation.Animate()
-	player.Frame.ImageOptions.GeoM.Translate(cam.X, cam.Y)
 }
 
 func prepSpriteNoEffect(player *sprites.Player) {
@@ -71,7 +75,6 @@ func prepSpriteNoEffect(player *sprites.Player) {
 			getAnimationMaxFrameWidth(player),
 		)
 	}
-	player.Frame.ImageOptions.GeoM.Translate(player.Physics.Position.X, player.Physics.Position.Y)
 }
 
 func prepSpriteWithEffect(p *sprites.Player) {
@@ -82,9 +85,6 @@ func prepSpriteWithEffect(p *sprites.Player) {
 		adjustDrawOptionsForLeftMove(&p.Frame.EffectOptions, effectWidth+frameWidth)
 		adjustDrawOptionsForLeftMove(&p.Frame.ImageOptions, frameWidth)
 	}
-
-	p.Frame.ImageOptions.GeoM.Translate(p.Physics.Position.X, p.Physics.Position.Y)
-	p.Frame.EffectOptions.GeoM.Translate(p.Physics.Position.X, p.Physics.Position.Y)
 }
 
 func getAnimationMaxFrameWidth(player *sprites.Player) float64 {
@@ -100,12 +100,16 @@ func adjustDrawOptionsForLeftMove(options *ebiten.DrawImageOptions, maxWidth flo
 	options.GeoM.Translate(maxWidth, 0)
 }
 
-func stopCompletedAnimations(player *sprites.Player) {
+func (g *Game) stopCompletedAnimations(player *sprites.Player) {
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 	if !currentAnimation.AnimationComplete {
 		return
 	}
 
+	//if player dead
+	if player.CurrentAnimationIndex == 8 {
+		player.Resurrect(g.levels[g.currentLevelIndex])
+	}
 	//if I shouldn't loop, set index to walk
 	if !currentAnimation.LoopAnimation {
 		player.CurrentAnimationIndex = 0
@@ -130,43 +134,47 @@ func prepActiveSprite(player *sprites.Player) {
 	}
 }
 
-func setPlayerActiveFrameAndPosition(player *sprites.Player, lvl *levels.Level, cam *camera.Camera) {
-	stopCompletedAnimations(player)
+func (g *Game) setPlayerActiveFrame(player *sprites.Player, lvl *levels.Level) {
+	g.stopCompletedAnimations(player)
 	prepActiveSprite(player)
 
 	currentAnimation := player.ActionAnimations[player.CurrentAnimationIndex]
 
-	currentFrame, canCancel := currentAnimation.AnimateAction()
+	frameDurationInSeconds := currentAnimation.FrameDuration.Seconds()
+	currentAnimation.TicksPerFrame = frameDurationInSeconds * ebiten.ActualTPS()
+
+	currentFrame, frameVector, canCancel, _ := currentAnimation.AnimateAction()
 	player.Frame.HasEffect = currentAnimation.HasEffect
 	player.Frame.ImageToDraw = currentFrame
+	player.Frame.EffectOffset = currentAnimation.Effect.OffsetX
+	player.Frame.EffectOffsetOneWay = currentAnimation.Effect.OffsetOneWay
+	player.Frame.EffectOffsetRight = currentAnimation.Effect.OffsetRightOnly
 	player.CanAnimationCancel = canCancel
 
 	if player.Frame.HasEffect && !currentAnimation.AnimationComplete {
 		player.Frame.EffectImageToDraw = currentAnimation.Effect.Frames[currentAnimation.CurrentFrameIndex]
 	}
 
-	/*if !player.IsMovingRight {
+	if !player.IsMovingRight {
 		frameVector.DeltaX *= -1
-	}*/
+		player.Frame.EffectOffset *= -1
+	}
 
-	//finalVec := movement.HandleAnimationVectorCalculations(lvl, player, frameVector)
-	//newPosition := finalVec.PlayerMove(player.Physics.Position.X, player.Physics.Position.Y)
-
-	translatePlayerDrawOptions(player, cam.X, cam.Y)
-	//if invalid move, return frame as is
-	/*if !collision.IsValidMove(lvl, player, finalVec) {
-		return
-	}*/
-
-	//player.Physics.Position.X = newPosition.DeltaX
-	//player.Physics.Position.Y = newPosition.DeltaY
-	//translatePlayerDrawOptions(player, player.Physics.Position.X, player.Physics.Position.Y)
-
+	collision.EnsureValidMove(lvl, player, frameVector)
 }
 
 func translatePlayerDrawOptions(p *sprites.Player, DeltaX float64, DeltaY float64) {
 	p.Frame.ImageOptions.GeoM.Translate(DeltaX, DeltaY)
 	if p.Frame.HasEffect {
 		p.Frame.EffectOptions.GeoM.Translate(DeltaX, DeltaY)
+		if p.Frame.EffectOffsetOneWay {
+			if p.Frame.EffectOffsetRight && p.IsMovingRight {
+				p.Frame.EffectOptions.GeoM.Translate(p.Frame.EffectOffset, 0)
+			} else if !p.Frame.EffectOffsetRight && !p.IsMovingRight {
+				p.Frame.EffectOptions.GeoM.Translate(p.Frame.EffectOffset, 0)
+			}
+			return
+		}
+		p.Frame.EffectOptions.GeoM.Translate(p.Frame.EffectOffset, 0)
 	}
 }

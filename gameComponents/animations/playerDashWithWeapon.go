@@ -58,6 +58,52 @@ func GeneratePlayerDashWithWeapon() *ActionAnimation {
 		runPng8,
 	}
 
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 1.5,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.75,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.75,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.75,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.75,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.75,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.5,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1.25,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 1,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: .75,
+			DeltaY: 0,
+		}, {
+			DeltaX: .65,
+			DeltaY: 0,
+		},
+	}
+
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
 		controls.DASHLEFT,
@@ -74,6 +120,7 @@ func GeneratePlayerDashWithWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   2,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               true,

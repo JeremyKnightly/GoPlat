@@ -68,6 +68,65 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 		png8,
 	}
 
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 1.55,
+		},
+	}
+
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
@@ -84,6 +143,7 @@ func GeneratePlayerWallSlideNoWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   1,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               true,

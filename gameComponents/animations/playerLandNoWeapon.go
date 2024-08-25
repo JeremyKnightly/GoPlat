@@ -34,6 +34,21 @@ func GeneratePlayerLandNoWeapon() *ActionAnimation {
 		jumpPng19,
 	}
 
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: 0,
+		},
+	}
+
 	cancelDirections := []controls.Direction{
 		controls.JUMP,
 		controls.DASHLEFT,
@@ -50,6 +65,7 @@ func GeneratePlayerLandNoWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   0,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               true,

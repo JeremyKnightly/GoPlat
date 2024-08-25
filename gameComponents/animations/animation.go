@@ -12,6 +12,8 @@ type Animation struct {
 	NumberOfFrames                uint16
 	CurrentFrameIndex             uint16
 	FrameDuration                 time.Duration
+	TicksPerFrame                 float64
+	TicksThisFrame                float64
 	lastUpdate                    time.Time
 	MaxFrameWidth, MaxFrameHeight float64
 }
@@ -21,6 +23,7 @@ type ActionAnimation struct {
 	AnimationComplete       bool
 	WillAwaitInput          bool
 	StopAnimation           bool
+	FrameVectors            []controls.Vector
 	AllowCancelAfterFrame   uint16
 	LoopAnimation           bool
 	AllowCancelOnDirections []controls.Direction
@@ -31,14 +34,18 @@ type ActionAnimation struct {
 
 type Effect struct {
 	*Animation
-	Offset float64
+	OffsetX         float64
+	OffsetOneWay    bool
+	OffsetRightOnly bool
 }
 
 func (a *Animation) Animate() *ebiten.Image {
 	now := time.Now()
+	a.TicksThisFrame++
 
 	if now.Sub(a.lastUpdate) >= a.FrameDuration {
 		a.CurrentFrameIndex++
+		a.TicksThisFrame = 1
 
 		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
 			a.CurrentFrameIndex = 0
@@ -49,15 +56,19 @@ func (a *Animation) Animate() *ebiten.Image {
 	return a.Frames[a.CurrentFrameIndex]
 }
 
-func (a *ActionAnimation) AnimateAction() (*ebiten.Image, bool) {
+func (a *ActionAnimation) AnimateAction() (*ebiten.Image, controls.Vector, bool, bool) {
 	now := time.Now()
+	a.TicksThisFrame++
 
+	changedIndex := false
 	if now.Sub(a.lastUpdate) >= a.FrameDuration {
 		if !a.StopAnimation {
 			a.CurrentFrameIndex++
+			a.TicksThisFrame = 1
+			changedIndex = true
 		}
 
-		if a.CurrentFrameIndex >= a.NumberOfFrames-1 {
+		if a.CurrentFrameIndex > a.NumberOfFrames-1 {
 			a.endAnimationCycle()
 		}
 		if a.ResetAnimation {
@@ -66,12 +77,13 @@ func (a *ActionAnimation) AnimateAction() (*ebiten.Image, bool) {
 		a.lastUpdate = now
 	}
 	allowCancel := a.setAnimationCancel()
+	returnVector := a.FrameVectors[a.CurrentFrameIndex].ScaleByTPS(a.TicksThisFrame, a.TicksPerFrame)
 
-	return a.Frames[a.CurrentFrameIndex], allowCancel
+	return a.Frames[a.CurrentFrameIndex], returnVector, allowCancel, changedIndex
 }
 
 func (a *ActionAnimation) setAnimationCancel() bool {
-	return a.CurrentFrameIndex > a.AllowCancelAfterFrame
+	return a.CurrentFrameIndex >= a.AllowCancelAfterFrame
 }
 
 func (a *ActionAnimation) Reset() {
@@ -85,6 +97,6 @@ func (a *ActionAnimation) endAnimationCycle() {
 		a.StopAnimation = true
 	} else {
 		a.AnimationComplete = true
-		a.CurrentFrameIndex = 0
+		a.ResetAnimation = true
 	}
 }

@@ -58,6 +58,41 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 		dblJumpPng8,
 	}
 
+	frameVectors := []controls.Vector{
+		{
+			DeltaX: 0,
+			DeltaY: -2.25,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -2.25,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -2.25,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -2.25,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -2.15,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -2.15,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -2.15,
+		},
+		{
+			DeltaX: 0,
+			DeltaY: -1.15,
+		},
+	}
+
 	cancelDirections := []controls.Direction{
 		controls.DASHLEFT,
 		controls.DASHRIGHT,
@@ -73,6 +108,7 @@ func GeneratePlayerDoubleJumpNoWeapon() *ActionAnimation {
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},
 		AnimationComplete:       false,
+		FrameVectors:            frameVectors,
 		AllowCancelAfterFrame:   3,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               true,
