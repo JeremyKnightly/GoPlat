@@ -26,18 +26,14 @@ func HandleSpecialAction(p *sprites.Player, action string) bool {
 func handleJump(p *sprites.Player) bool {
 	//checks if cooldown has reset or if player can double jump
 	if p.CanJump {
-		if p.IsAnimationLocked {
-			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
-		}
+		p.CurrentAnimationIndex = 2
+		p.ActionAnimations[p.CurrentAnimationIndex].Reset()
 		p.HasSecondJump = true
 		p.CanJump = false
-		p.CurrentAnimationIndex = 2
 		return true
 	} else if p.HasSecondJump && p.IsAirborn {
-		if p.IsAnimationLocked {
-			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
-		}
 		p.CurrentAnimationIndex = 3
+		p.ActionAnimations[p.CurrentAnimationIndex].Reset()
 		p.HasSecondJump = false
 		return true
 	}
@@ -49,9 +45,7 @@ func handleDash(p *sprites.Player, movingRight bool) bool {
 		p.CanDash = false
 		p.IsMovingRight = movingRight
 		p.CurrentAnimationIndex = 1
-		if p.IsAnimationLocked {
-			p.ActionAnimations[p.CurrentAnimationIndex].ResetAnimation = true
-		}
+		p.ActionAnimations[p.CurrentAnimationIndex].Reset()
 		return true
 	}
 	return false
