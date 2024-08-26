@@ -12,61 +12,44 @@ import (
 )
 
 func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
-	rtnVector := controls.Vector{
-		DeltaX: 0,
-		DeltaY: 0,
+	if p.IsDead {
+		return controls.GetBlankVector()
 	}
-
 	if p.IsAnimationLocked {
 		AnimationLockWallOverride(p, lvl)
 	}
-	if (p.IsAnimationLocked && !p.CanAnimationCancel) || p.IsDead {
-		return rtnVector
-	}
+
 	directions := GetControlsPressed(playerControls)
-	if p.IsAnimationLocked && !IsAnimationCancelling(p, directions) {
-		return rtnVector
-	}
+	isLocked := p.IsAnimationLocked && (!p.CanAnimationCancel || !IsAnimationCancelling(p, directions))
+	xMulti := GetXMulti(p, directions, isLocked)
+	playerVector, specialAction := GetMovementVector(directions, xMulti)
 
-	//handle movement
-	playerVector, specialAction := GetMovementVector(directions)
-
-	var validSpecial bool
-	if len(specialAction.Name) > 0 {
-		validSpecial = DoSpecialAction(p, specialAction.Name)
-		if validSpecial {
-			p.IsAnimationLocked = true
-			p.IsIdle = false
-		} else {
-			//if they can animation cancel, the animation is not over
-			//this prevents user from cancelling animation lock on accident
-			if p.IsAnimationLocked {
-				p.IsPhysicsLocked = true
-			} else {
-				p.IsPhysicsLocked = false
-				physics.HandlePhysics(p, lvl, &rtnVector)
-			}
-		}
-		return rtnVector
-	} else {
-		p.IsIdle = IsIdle(p, playerVector, specialAction)
-		p.IsMovingRight = IsMovingRight(p, playerVector)
-		p.IsPhysicsLocked = false
+	if len(specialAction.Name) > 0 && !isLocked && DoSpecialAction(p, specialAction.Name) {
+		p.IsAnimationLocked = true
+	} else if !p.IsAnimationLocked {
 		p.CurrentAnimationIndex = 0
 	}
+	p.IsIdle = IsIdle(p, playerVector, specialAction)
+	p.IsMovingRight = IsMovingRight(p, playerVector)
+	p.IsPhysicsLocked = p.IsAnimationLocked
 
 	if !p.IsPhysicsLocked {
 		physics.HandlePhysics(p, lvl, &playerVector)
 	}
 
-	rtnVector.DeltaX = playerVector.DeltaX
-	rtnVector.DeltaY = playerVector.DeltaY
-
-	return rtnVector
+	return playerVector
 }
 
-func checkSpecialActions(p *sprites.Player) {
+func GetXMulti(p *sprites.Player, directions []controls.Direction, isLocked bool) float64 {
+	movementMulti := 1.0
+	animIDX := p.CurrentAnimationIndex
+	if isLocked {
+		movementMulti = .5
+	} else if animIDX == 1 || animIDX == 6 || animIDX == 4 {
+		movementMulti = 0
+	}
 
+	return movementMulti
 }
 
 func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
@@ -90,7 +73,7 @@ func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
 	return directions
 }
 
-func GetMovementVector(directions []controls.Direction) (controls.Vector, controls.Direction) {
+func GetMovementVector(directions []controls.Direction, XMulti float64) (controls.Vector, controls.Direction) {
 	specialDirections := []controls.Direction{
 		controls.JUMP,
 		controls.DASHLEFT,
@@ -111,6 +94,8 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector, contro
 		}
 	}
 
+	vector.ScaleX(XMulti)
+
 	return vector, specialAction
 }
 
@@ -127,6 +112,8 @@ func IsIdle(p *sprites.Player, vector controls.Vector, specialAction controls.Di
 	} else if vector.DeltaX != 0 || vector.DeltaY != 0 {
 		return false
 	} else if p.IsAirborn {
+		return false
+	} else if p.IsAnimationLocked || p.IsPhysicsLocked {
 		return false
 	}
 

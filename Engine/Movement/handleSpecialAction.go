@@ -14,6 +14,7 @@ func DoSpecialAction(p *sprites.Player, action string) bool {
 		valid := handleJump(p)
 		if valid {
 			p.CanDash = true
+			p.IsAnimationLocked = true
 		}
 		return valid
 	} else if action == "DASHLEFT" || action == "DASHRIGHT" {
@@ -46,6 +47,7 @@ func handleDash(p *sprites.Player, movingRight bool) bool {
 		p.IsMovingRight = movingRight
 		p.CurrentAnimationIndex = 1
 		p.ActionAnimations[p.CurrentAnimationIndex].Reset()
+		p.IsAnimationLocked = true
 		return true
 	}
 	return false

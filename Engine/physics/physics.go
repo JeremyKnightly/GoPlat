@@ -9,8 +9,8 @@ import (
 
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
 	onGround := collision.DetectGround(player, lvl)
-	stopPhysicsCalcs := adjustedAirbornStatus(player, onGround)
-	if stopPhysicsCalcs {
+	stopPhysics := shouldStopPhysics(player, onGround)
+	if stopPhysics {
 		player.CanDash = true
 		player.CanJump = true
 		return
@@ -64,19 +64,18 @@ func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool)
 	return validMove && nearGround
 }
 
-func adjustedAirbornStatus(player *sprites.Player, onGround bool) bool {
-	if player.IsAirborn {
-		if onGround {
-			player.IsAirborn = false
-			return true
-		}
+func shouldStopPhysics(player *sprites.Player, onGround bool) bool {
+	stopPhysics := false
+	// isAirborn checks if player WAS airborn before this frame
+	// onGround checks current state
+	if onGround {
+		player.IsAirborn = false
+		stopPhysics = true
 	} else {
-		if onGround {
-			return true
-		}
 		player.IsAirborn = true
 	}
-	return false
+
+	return stopPhysics
 }
 
 func handleFall(player *sprites.Player, pVector *controls.Vector) {
