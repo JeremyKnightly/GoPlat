@@ -31,10 +31,10 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	//handle movement
 	playerVector, specialAction := GetMovementVector(directions)
 
-	var validMove bool
+	var validSpecial bool
 	if len(specialAction.Name) > 0 {
-		validMove = HandleSpecialAction(p, specialAction.Name)
-		if validMove {
+		validSpecial = DoSpecialAction(p, specialAction.Name)
+		if validSpecial {
 			p.IsAnimationLocked = true
 			p.IsIdle = false
 		} else {
@@ -49,8 +49,8 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		}
 		return rtnVector
 	} else {
-		p.IsMovingRight = IsMovingRight(p, playerVector)
 		p.IsIdle = IsIdle(p, playerVector, specialAction)
+		p.IsMovingRight = IsMovingRight(p, playerVector)
 		p.IsPhysicsLocked = false
 		p.CurrentAnimationIndex = 0
 	}
@@ -63,6 +63,10 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 	rtnVector.DeltaY = playerVector.DeltaY
 
 	return rtnVector
+}
+
+func checkSpecialActions(p *sprites.Player) {
+
 }
 
 func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
@@ -112,7 +116,7 @@ func GetMovementVector(directions []controls.Direction) (controls.Vector, contro
 
 func IsMovingRight(player *sprites.Player, vector controls.Vector) bool {
 	if !player.IsAnimationLocked {
-		return vector.DeltaX >= 0
+		return vector.DeltaX > 0 || (player.IsMovingRight && vector.DeltaX == 0)
 	}
 	return player.IsMovingRight
 }

@@ -64,8 +64,8 @@ func (g *Game) setPlayerFrame() {
 }
 
 func setPlayerIdleFrameAndPosition(player *sprites.Player) {
-	prepSpriteNoEffect(player)
 	player.Frame.ImageToDraw = player.IdleAnimation.Animate()
+	prepSpriteNoEffect(player)
 }
 
 func prepSpriteNoEffect(player *sprites.Player) {

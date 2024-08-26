@@ -69,8 +69,12 @@ func (vec *Vector) ScaleByTPS(TicksThisFrame, TicksPerFrame float64) Vector {
 		return rtnVec
 	}
 	multiplier := TicksThisFrame / TicksPerFrame
-	rtnVec.DeltaX = vec.DeltaX * multiplier
-	rtnVec.DeltaY = vec.DeltaY * multiplier
+	rtnVec.Scale(multiplier)
 
 	return rtnVec
+}
+
+func (vec *Vector) Scale(multiplier float64) {
+	vec.DeltaX = vec.DeltaX * multiplier
+	vec.DeltaY = vec.DeltaY * multiplier
 }

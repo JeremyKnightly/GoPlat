@@ -4,7 +4,7 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
-func HandleSpecialAction(p *sprites.Player, action string) bool {
+func DoSpecialAction(p *sprites.Player, action string) bool {
 	if action == "JUMP" {
 		p.IsPhysicsLocked = true
 		if p.IsWallHanging { //trigger edgeclimb

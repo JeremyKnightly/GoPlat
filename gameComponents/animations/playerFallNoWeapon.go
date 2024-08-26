@@ -32,16 +32,16 @@ func GeneratePlayerFallNoWeapon() *ActionAnimation {
 		image.Rect(912, 16, 936, 48),
 	).(*ebiten.Image)
 
-	jumpPng16 := fullJumpPng.SubImage(
-		image.Rect(976, 16, 1000, 48),
-	).(*ebiten.Image)
+	/*jumpPng16 := fullJumpPng.SubImage(
+		image.Rect(976, 20, 1000, 52),
+	).(*ebiten.Image)*/
 
 	frames := []*ebiten.Image{
 		//jumpPng12,
 		jumpPng13,
 		jumpPng14,
 		jumpPng15,
-		jumpPng16,
+		//jumpPng16,
 	}
 
 	frameVectors := []controls.Vector{
