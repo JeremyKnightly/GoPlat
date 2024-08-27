@@ -13,6 +13,7 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 	if stopPhysics {
 		player.CanDash = true
 		player.CanJump = true
+		player.IsWallSliding = false
 		return
 	}
 	player.IsIdle = false
@@ -36,11 +37,13 @@ func handleWallLogic(player *sprites.Player, lvl *levels.Level, wallPlayerLeft, 
 		player.CurrentAnimationIndex = 6
 		player.IsWallHanging = true
 		player.IsAnimationLocked = true
+		player.IsWallSliding = false
 	} else if canWallSlide {
 		player.CurrentAnimationIndex = 7
 		player.IsMovingRight = wallPlayerLeft
 		player.IsWallSliding = true
 	} else {
+		player.IsWallSliding = false
 		return false
 	}
 	return true
@@ -51,7 +54,7 @@ func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool)
 
 	//takes a rectangle above players head and in
 	//specified direction to see if there is a ledge
-	playerRect.Y -= (4 + playerRect.Height)
+	playerRect.Y -= (8 + playerRect.Height)
 	if wallPlayerLeft {
 		playerRect.X -= playerRect.Width / 2
 	} else {
@@ -80,6 +83,7 @@ func shouldStopPhysics(player *sprites.Player, onGround bool) bool {
 
 func handleFall(player *sprites.Player, pVector *controls.Vector) {
 	player.CurrentAnimationIndex = 9
+	player.IsWallSliding = false
 	player.IsIdle = false
 	pVector.DeltaY += 1.4
 }

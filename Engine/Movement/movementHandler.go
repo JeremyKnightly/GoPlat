@@ -26,7 +26,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 
 	if len(specialAction.Name) > 0 && !isLocked && DoSpecialAction(p, specialAction.Name) {
 		p.IsAnimationLocked = true
-	} else if !p.IsAnimationLocked {
+	} else if !p.IsAnimationLocked && !p.IsAirborn {
 		p.CurrentAnimationIndex = 0
 	}
 	p.IsIdle = IsIdle(p, playerVector, specialAction)
@@ -43,10 +43,10 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 func GetXMulti(p *sprites.Player, directions []controls.Direction, isLocked bool) float64 {
 	movementMulti := 1.0
 	animIDX := p.CurrentAnimationIndex
-	if isLocked {
-		movementMulti = .5
-	} else if animIDX == 1 || animIDX == 6 || animIDX == 4 {
+	if animIDX == 1 || animIDX == 6 || animIDX == 4 {
 		movementMulti = 0
+	} else if isLocked {
+		movementMulti = .35
 	}
 
 	return movementMulti
@@ -100,10 +100,14 @@ func GetMovementVector(directions []controls.Direction, XMulti float64) (control
 }
 
 func IsMovingRight(player *sprites.Player, vector controls.Vector) bool {
-	if !player.IsAnimationLocked {
-		return vector.DeltaX > 0 || (player.IsMovingRight && vector.DeltaX == 0)
+	if player.IsAnimationLocked {
+		return player.IsMovingRight
 	}
-	return player.IsMovingRight
+	if !player.IsWallSliding {
+		return vector.DeltaX > 0 || (player.IsMovingRight && vector.DeltaX == 0)
+	} else {
+		return vector.DeltaX < 0 || (!player.IsMovingRight && vector.DeltaX == 0)
+	}
 }
 
 func IsIdle(p *sprites.Player, vector controls.Vector, specialAction controls.Direction) bool {
