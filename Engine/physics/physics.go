@@ -5,6 +5,7 @@ import (
 	controls "GoPlat/gameComponents/controls"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
+	"math"
 )
 
 func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.Vector) {
@@ -25,6 +26,7 @@ func HandlePhysics(player *sprites.Player, lvl *levels.Level, pVector *controls.
 		eventHandled := handleWallLogic(player, lvl, wallPlayerLeft, canSlide)
 		if eventHandled {
 			return
+		} else {
 		}
 	}
 
@@ -54,17 +56,26 @@ func canWallHang(player *sprites.Player, lvl *levels.Level, wallPlayerLeft bool)
 
 	//takes a rectangle above players head and in
 	//specified direction to see if there is a ledge
-	playerRect.Y -= (8 + playerRect.Height)
+	playerRect.Y -= (playerRect.Height)
 	if wallPlayerLeft {
 		playerRect.X -= playerRect.Width / 2
 	} else {
 		playerRect.X += playerRect.Width / 2
 	}
+	yCoord, xCoord := collision.GetWallHangCoords(lvl, playerRect, wallPlayerLeft)
+	if yCoord == 0 {
+		return false
+	} else {
+		//constraint to prevent shenanigans
+		if math.Abs(player.Y-yCoord) <= 14 {
+			player.Y = yCoord - 4
+			player.X = xCoord - 8
+		}
+	}
 
-	validMove := collision.IsValidMoveRect(lvl, playerRect)
-	nearGround := collision.DetectGroundRect(playerRect, lvl)
+	//nearGround := collision.DetectGroundRect(playerRect, lvl)
 
-	return validMove && nearGround
+	return true
 }
 
 func shouldStopPhysics(player *sprites.Player, onGround bool) bool {

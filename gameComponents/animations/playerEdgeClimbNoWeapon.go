@@ -51,27 +51,27 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 	frameVectors := []controls.Vector{
 		{
 			DeltaX: 0,
-			DeltaY: 0,
+			DeltaY: -4,
 		},
 		{
 			DeltaX: 0,
-			DeltaY: -1.4,
+			DeltaY: -3,
 		},
 		{
-			DeltaX: 1.55,
-			DeltaY: -1.4,
+			DeltaX: 1.5,
+			DeltaY: -2.5,
 		},
 		{
-			DeltaX: 1.55,
-			DeltaY: -1.4,
+			DeltaX: 2.4,
+			DeltaY: -2.6,
 		},
 		{
-			DeltaX: 1.55,
-			DeltaY: -1.4,
+			DeltaX: 1.9,
+			DeltaY: -2.3,
 		},
 		{
-			DeltaX: .0,
-			DeltaY: 0,
+			DeltaX: 1.6,
+			DeltaY: -.7,
 		},
 	}
 
@@ -85,7 +85,7 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 			Frames:            frames,
 			NumberOfFrames:    uint16(len(frames)),
 			CurrentFrameIndex: 0,
-			FrameDuration:     time.Millisecond * 120,
+			FrameDuration:     time.Millisecond * 80,
 			MaxFrameWidth:     float64(frames[0].Bounds().Dx()),
 			MaxFrameHeight:    float64(frames[0].Bounds().Dy()),
 		},

@@ -12,7 +12,7 @@ func DetectWall(player *sprites.Player, lvl *levels.Level) (bool, bool, bool) {
 	for _, collision := range collisionData {
 		wallNearby, isLeft := CheckWallNearby(playerRect, collision)
 		if wallNearby {
-			return wallNearby, isLeft, collision.Height >= playerRect.Height
+			return wallNearby, isLeft, collision.Height >= playerRect.Height/2
 		}
 	}
 
@@ -24,9 +24,12 @@ func DetectGround(player *sprites.Player, lvl *levels.Level) bool {
 	playerRect := GetPlayerRect(player)
 
 	for _, collision := range collisionData {
+		if collision.HasSpecialProps() {
+			continue
+		}
 		groundNearby := CheckGroundNearby(playerRect, collision)
 		//ensures that vertical collisions happen with special collision boxes
-		if groundNearby && (!collision.HasSpecialProps()) {
+		if groundNearby {
 			return true
 		}
 	}
@@ -57,18 +60,24 @@ func CheckGroundNearby(pRect Rect, coll Rect) bool {
 	return CheckYCollisionPlayerBottom(pRect, coll)
 }
 
+// returns if there is a wall nearby and if it is to the left of player
 func CheckWallNearby(pRect Rect, coll Rect) (bool, bool) {
-	// no Y collision means there is no collision on the same horizontal plane
-	if !CheckYCollisionPlayerTop(pRect, coll) && !CheckYCollisionPlayerBottom(pRect, coll) {
+	if coll.HasSpecialProps() {
+		return false, false
+	}
+
+	YOverlap := getYOverlap(pRect, coll)
+	if YOverlap <= 0 {
 		return false, false
 	}
 
 	//increase width and shift left for detection range
 	pRect.Width += 2
 	pRect.X -= 1
-	if CheckXCollisionPlayerRight(pRect, coll) && !coll.HasSpecialProps() {
+
+	if CheckXCollisionPlayerRight(pRect, coll) {
 		return true, false
-	} else if CheckXCollisionPlayerLeft(pRect, coll) && !coll.HasSpecialProps() {
+	} else if CheckXCollisionPlayerLeft(pRect, coll) {
 		return true, true
 	}
 
