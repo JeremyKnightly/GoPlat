@@ -28,29 +28,17 @@ type Game struct {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-
-	screenAspectRatio := float64(outsideWidth) / float64(outsideHeight)
-	var gameAspectRatio float64
 	var screenWidthIn float64
 	var screenHeightIn float64
 	if g.gameState == 0 {
-		gameAspectRatio = float64(g.startScreenWidth) / float64(g.startScreenHeight)
 		screenWidthIn = float64(g.startScreenWidth)
 		screenHeightIn = float64(g.startScreenHeight)
 	} else if g.gameState == 1 {
-		gameAspectRatio = g.defaultScreenWidth / g.defaultScreenHeight
 		screenWidthIn = g.defaultScreenWidth
 		screenHeightIn = g.defaultScreenHeight
 	}
-	//gameAspectRatio := g.defaultScreenWidth / g.defaultScreenHeight
 
-	if screenAspectRatio > gameAspectRatio {
-		return int(float64(screenWidthIn) * screenAspectRatio), int(screenWidthIn)
-	} else {
-		return int(screenHeightIn), int(float64(screenHeightIn) / screenAspectRatio)
-	}
-
-	//return int(g.screenWidth), int(g.screenHeight)
+	return int(screenWidthIn), int(screenHeightIn)
 }
 
 func main() {
@@ -73,8 +61,8 @@ func (game *Game) SetGameProperties() {
 	game.tileSize = 16
 	game.defaultScreenWidth = 380
 	game.defaultScreenHeight = 285
-	game.startScreenWidth = 1067
-	game.startScreenHeight = 800
+	game.startScreenWidth = 800
+	game.startScreenHeight = 630
 	game.currentBGMIdx = 0
 	game.defaultWindowWidth = 1200
 	game.defaultWindowHeight = 950
