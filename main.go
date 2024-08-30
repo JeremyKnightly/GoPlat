@@ -71,8 +71,8 @@ func (game *Game) SetGameProperties() {
 	game.controls = startup.GetControls()
 	game.currentLevelIndex = 0
 	game.tileSize = 16
-	game.defaultScreenWidth = 280
-	game.defaultScreenHeight = 210
+	game.defaultScreenWidth = 380
+	game.defaultScreenHeight = 285
 	game.startScreenWidth = 1067
 	game.startScreenHeight = 800
 	game.currentBGMIdx = 0

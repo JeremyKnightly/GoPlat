@@ -13,15 +13,22 @@ import (
 func (g *Game) Update() error {
 	if g.gameState == 0 { //start screen
 		g.StartScreen()
+		g.currentBGMIdx = 1
 	} else if g.gameState == 1 { //game
 		g.PlayGame()
+		g.currentBGMIdx = 0
 	} else if g.gameState == 2 { //credits
 		g.RollCredits()
+		g.currentBGMIdx = 2
 	} else if g.gameState == 3 { //High Scores
 		g.ShowScores()
+		g.currentBGMIdx = 3
 	} else if g.gameState == 4 { //options
 		g.ShowOptions()
+		g.currentBGMIdx = 4
 	}
+
+	g.loopBGM(g.currentBGMIdx)
 
 	return nil
 }
@@ -32,12 +39,11 @@ func (g *Game) StartScreen() {
 	g.checkPlayerClicks()
 	g.setPlayerFrame()
 	g.playSFX()
-	g.loopBGM(1)
 }
 
 func (g *Game) PlayGame() {
 	if g.Player.CurrentCheckpointIndex == 9999 {
-		g.GoNextLevel()
+		g.GoToLevel(g.currentLevelIndex + 1)
 	}
 	g.currentLevel = g.levels[g.currentLevelIndex]
 
@@ -45,26 +51,22 @@ func (g *Game) PlayGame() {
 	g.setCameraPosition()
 	g.setPlayerFrame()
 	g.playSFX()
-	g.loopBGM(g.currentBGMIdx)
 }
 
 func (g *Game) RollCredits() {
 	g.currentLevel = g.startScreen
-	g.loopBGM(4)
 }
 
 func (g *Game) ShowScores() {
 	g.currentLevel = g.startScreen
-	g.loopBGM(3)
 }
 
 func (g *Game) ShowOptions() {
 	g.currentLevel = g.startScreen
-	g.loopBGM(2)
 }
 
-func (g *Game) GoNextLevel() {
-	g.currentLevelIndex++
+func (g *Game) GoToLevel(levelNum int) {
+	g.currentLevelIndex = levelNum
 	if g.currentLevelIndex > len(g.levels) {
 		g.currentLevelIndex = 0
 	}
@@ -79,6 +81,7 @@ func (g *Game) checkPlayerClicks() {
 		changeState, stateInt := collision.MenuStateChange(g.currentLevel)
 		if changeState {
 			g.gameState = stateInt
+			g.GoToLevel(0)
 		}
 	}
 }

@@ -26,11 +26,14 @@ func (g *Game) playSFX() {
 }
 
 func (g *Game) loopBGM(trackNum int) {
-	bgmPlayer, err := g.SoundManager.GetStation("BGM").GetSoundPlayerByNum(trackNum)
+	bgmPlayer := g.SoundManager.GetStation("BGM")
+
+	bgmPlayer.StopOtherStationSounds(trackNum)
+	bgmTrack, err := bgmPlayer.GetSoundPlayerByNum(trackNum)
 	if err != nil {
 		panic(err)
 	}
-	bgmPlayer.ResetOnTrackComplete()
+	bgmTrack.ResetOnTrackComplete()
 }
 
 func (g *Game) handleWalkSFX() {

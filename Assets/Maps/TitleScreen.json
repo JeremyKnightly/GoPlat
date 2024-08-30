@@ -164,6 +164,11 @@
                          "name":"InitiateState",
                          "type":"int",
                          "value":3
+                        }, 
+                        {
+                         "name":"Special",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
                  "type":"",
@@ -186,6 +191,11 @@
                          "name":"InitiateState",
                          "type":"int",
                          "value":2
+                        }, 
+                        {
+                         "name":"Special",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
                  "type":"",
@@ -208,6 +218,11 @@
                          "name":"InitiateState",
                          "type":"int",
                          "value":4
+                        }, 
+                        {
+                         "name":"Special",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
                  "type":"",

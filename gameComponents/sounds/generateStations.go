@@ -15,6 +15,19 @@ func GetAllSounds() *SoundManager {
 	return manager
 }
 
+func (ss *SoundStation) StopOtherStationSounds(stopIdx int) {
+	for idx, player := range ss.players {
+		if stopIdx == idx {
+			continue
+		} else {
+			player.Rewind()
+			player.Pause()
+		}
+
+		//player.Rewind()
+	}
+}
+
 func (ss *SoundStation) GetBGM() {
 	ss.StationName = "BGM"
 
