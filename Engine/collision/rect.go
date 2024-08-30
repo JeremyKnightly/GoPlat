@@ -10,6 +10,15 @@ type Rect struct {
 	Properties          []levels.Property
 }
 
+func NewBlankRect(x, y float64) Rect {
+	return Rect{
+		X:      x,
+		Y:      y,
+		Width:  10,
+		Height: 10,
+	}
+}
+
 func (r *Rect) HasSpecialProps() bool {
 	for _, property := range r.Properties {
 		if property.Name == "Special" || property.Name == "Checkpoint" {
@@ -24,6 +33,16 @@ func (r *Rect) HasProp(propName string) bool {
 	for _, property := range r.Properties {
 		if property.Name == propName {
 			return true
+		}
+	}
+
+	return false
+}
+
+func (r *Rect) GetPropValue(propName string) interface{} {
+	for _, property := range r.Properties {
+		if property.Name == propName {
+			return property.Value
 		}
 	}
 

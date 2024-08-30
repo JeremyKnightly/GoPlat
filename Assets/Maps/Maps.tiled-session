@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "The_Descent_LevelTwo.json",
     "expandedProjectPaths": [
-        "Tilesets",
-        "."
+        ".",
+        "Tilesets"
     ],
     "fileStates": {
         "": {
@@ -75,14 +75,14 @@
         },
         "The_Descent_LevelOne.json": {
             "expandedObjectLayers": [
-                12,
-                7
+                7,
+                12
             ],
             "scale": 3,
-            "selectedLayer": 3,
+            "selectedLayer": 4,
             "viewCenter": {
                 "x": 130.83333333333334,
-                "y": 509.33333333333326
+                "y": -42.66666666666666
             }
         },
         "The_Descent_LevelOne.tmj": {
@@ -100,14 +100,14 @@
         },
         "The_Descent_LevelTwo.json": {
             "expandedObjectLayers": [
-                6,
-                7
+                7,
+                6
             ],
             "scale": 3,
-            "selectedLayer": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 568.8333333333333,
-                "y": 400.66666666666663
+                "x": 488.83333333333326,
+                "y": 354.66666666666663
             }
         },
         "The_Descent_LevelTwo.tmj": {
@@ -140,6 +140,18 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "TitleScreen.json": {
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 415.5,
+                "y": 337
+            }
+        },
         "test.json": {
             "scale": 2,
             "selectedLayer": 0,
@@ -160,19 +172,22 @@
     "last.exportedFilePath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps",
     "last.externalTilesetPath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps/Tilesets",
     "last.imagePath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps/Tilesets",
-    "map.height": 70,
+    "map.height": 40,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 60,
+    "map.width": 50,
     "openFiles": [
-        "test.tmj",
-        "test.json"
+        "The_Descent_LevelTwo.json",
+        "The_Descent_LevelOne.json"
     ],
     "project": "Maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
+        "TitleScreen.json",
+        "The_Descent_LevelOne.json",
+        "The_Descent_LevelTwo.json",
         "The_Descent_LevelTwo.tmj",
         "LevelOne.JSON",
         "Level1.JSON",
@@ -181,10 +196,7 @@
         "test.tmj",
         "Tilesets/Dungeon Tile Set.tsx",
         "LevelTwo.tmj",
-        "Tilesets/DungeonTiles.tsx",
-        "Rules.tmj",
-        "The_Descent_Playground.tmj",
-        "Tilesets/Dungeon.tsx"
+        "Tilesets/DungeonTiles.tsx"
     ],
     "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "tsx",

@@ -11,6 +11,31 @@ import (
 )
 
 func (g *Game) Update() error {
+	if g.gameState == 0 { //start screen
+		g.StartScreen()
+	} else if g.gameState == 1 { //game
+		g.PlayGame()
+	} else if g.gameState == 2 { //credits
+		g.RollCredits()
+	} else if g.gameState == 3 { //High Scores
+		g.ShowScores()
+	} else if g.gameState == 4 { //options
+		g.ShowOptions()
+	}
+
+	return nil
+}
+
+func (g *Game) StartScreen() {
+	g.currentLevel = g.startScreen
+	g.setPlayerPositionWithInput()
+	g.checkPlayerClicks()
+	g.setPlayerFrame()
+	g.playSFX()
+	g.loopBGM(1)
+}
+
+func (g *Game) PlayGame() {
 	if g.Player.CurrentCheckpointIndex == 9999 {
 		g.GoNextLevel()
 	}
@@ -20,9 +45,22 @@ func (g *Game) Update() error {
 	g.setCameraPosition()
 	g.setPlayerFrame()
 	g.playSFX()
-	//g.loopBGM(g.currentBGMIdx)
+	g.loopBGM(g.currentBGMIdx)
+}
 
-	return nil
+func (g *Game) RollCredits() {
+	g.currentLevel = g.startScreen
+	g.loopBGM(4)
+}
+
+func (g *Game) ShowScores() {
+	g.currentLevel = g.startScreen
+	g.loopBGM(3)
+}
+
+func (g *Game) ShowOptions() {
+	g.currentLevel = g.startScreen
+	g.loopBGM(2)
 }
 
 func (g *Game) GoNextLevel() {
@@ -36,6 +74,15 @@ func (g *Game) GoNextLevel() {
 	g.Player.Y = y
 }
 
+func (g *Game) checkPlayerClicks() {
+	if ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
+		changeState, stateInt := collision.MenuStateChange(g.currentLevel)
+		if changeState {
+			g.gameState = stateInt
+		}
+	}
+}
+
 func (g *Game) setPlayerPositionWithInput() {
 	inputVector := movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
 
@@ -43,11 +90,11 @@ func (g *Game) setPlayerPositionWithInput() {
 }
 
 func (g *Game) setCameraPosition() {
-	g.camera.FollowTarget(g.Player.X+g.tileSize/2, g.Player.Y+g.tileSize/2, g.screenWidth, g.screenHeight)
+	g.camera.FollowTarget(g.Player.X+g.tileSize/2, g.Player.Y+g.tileSize/2, g.defaultScreenWidth, g.defaultScreenHeight)
 	g.camera.Constrain(g.currentLevel.Layers[0].Height*g.tileSize,
 		g.currentLevel.Layers[0].Width*g.tileSize,
-		g.screenWidth,
-		g.screenHeight,
+		g.defaultScreenWidth,
+		g.defaultScreenHeight,
 	)
 }
 

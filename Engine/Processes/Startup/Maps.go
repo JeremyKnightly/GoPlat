@@ -46,3 +46,21 @@ func CreateLevels() []*levels.Level {
 
 	return levels
 }
+
+func CreateStartScreen() *levels.Level {
+	startScreenRaw, err := levels.NewTilemapScene("Assets/Maps/TitleScreen.JSON")
+	if err != nil {
+		log.Fatal(err)
+	}
+	dungeonTiles, _, err := ebitenutil.NewImageFromFile("Assets/Maps/Tilesets/Dungeon Tile Set.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	startScreen := &levels.Level{
+		TilemapScene: startScreenRaw,
+		TilemapImage: dungeonTiles,
+	}
+
+	return startScreen
+}

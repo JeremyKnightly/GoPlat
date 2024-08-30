@@ -22,6 +22,22 @@ func (ss *SoundStation) GetBGM() {
 	if err != nil {
 		panic(err)
 	}
+	err = ss.LoadSound("Assets/Audio/Final/BGM/Track 2.wav", "wav", "Track 2", .1)
+	if err != nil {
+		panic(err)
+	}
+	err = ss.LoadSound("Assets/Audio/Final/BGM/Track 3.wav", "wav", "Track 3", .1)
+	if err != nil {
+		panic(err)
+	}
+	err = ss.LoadSound("Assets/Audio/Final/BGM/Track 4.wav", "wav", "Track 4", .1)
+	if err != nil {
+		panic(err)
+	}
+	err = ss.LoadSound("Assets/Audio/Final/BGM/Track 5.wav", "wav", "Track 5", .1)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (ss *SoundStation) GetSFX() {

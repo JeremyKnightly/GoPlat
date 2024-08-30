@@ -5,7 +5,27 @@ import (
 	levels "GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
 	"math"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
+
+func MenuStateChange(menu *levels.Level) (bool, int) {
+	collisionData := ExtractCollisionData(menu)
+	x, y := ebiten.CursorPosition()
+	cursorRect := NewBlankRect(float64(x), float64(y))
+
+	for _, collision := range collisionData {
+		if !collision.HasProp("Clickable") {
+			continue
+		}
+		x, y := getXYOverlap(cursorRect, collision)
+		if x > 0 && y > 0 && collision.HasProp("InitiateState") {
+			return true, int(collision.GetPropValue("InitiateState").(float64))
+		}
+	}
+
+	return false, 0
+}
 
 func GetWallHangCoords(lvl *levels.Level, pRect Rect, wallPlayerLeft bool) (float64, float64) {
 	//I know that the player is near a wall
@@ -18,9 +38,9 @@ func GetWallHangCoords(lvl *levels.Level, pRect Rect, wallPlayerLeft bool) (floa
 	pRectDwn.Y += 1.2
 
 	for _, collision := range collisionData {
-		colliding := PlayerIsColliding(pRect, collision)
-		collidingUp := PlayerIsColliding(pRectUp, collision)
-		collidingDwn := PlayerIsColliding(pRectDwn, collision)
+		colliding := IsCollidingNoSpecial(pRect, collision)
+		collidingUp := IsCollidingNoSpecial(pRectUp, collision)
+		collidingDwn := IsCollidingNoSpecial(pRectDwn, collision)
 		// if all collide, skip
 		if colliding && collidingUp && collidingDwn {
 			continue
@@ -129,7 +149,7 @@ func GetPlayerRect(p *sprites.Player) Rect {
 	return playerRect
 }
 
-func PlayerIsColliding(pRect Rect, coll Rect) bool {
+func IsCollidingNoSpecial(pRect Rect, coll Rect) bool {
 	if coll.HasSpecialProps() {
 		return false
 	}
