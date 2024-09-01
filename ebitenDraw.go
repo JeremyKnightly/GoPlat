@@ -20,14 +20,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) DrawLevel(screen *ebiten.Image) {
-	runtime.DrawLevelFirstDraw(g.currentLevel, screen, g.camera)
+
+	runtime.DrawLevel_FirstDraw(g.currentLevel, screen, g.camera)
 	runtime.DrawPlayer(g.Player, screen)
-	runtime.DrawLevelSecondDraw(g.currentLevel, screen, g.camera)
+	runtime.DrawLevel_SecondDraw(g.currentLevel, screen, g.camera)
 	runtime.DrawPlayerDeathCount(g.Player.Deaths, screen)
+	runtime.DrawScore(g.Player, screen)
 }
 
 func (g *Game) DrawStartScreen(screen *ebiten.Image) {
-	runtime.DrawLevelFirstDraw(g.currentLevel, screen, g.camera)
+	runtime.DrawLevel_FirstDraw(g.currentLevel, screen, g.camera)
 	runtime.DrawPlayer(g.Player, screen)
-	//runtime.DrawLevelSecondDraw(g.currentLevel, screen, g.camera)
 }

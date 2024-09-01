@@ -3,17 +3,14 @@ package runtime
 import (
 	"GoPlat/Engine/camera"
 	levels "GoPlat/gameComponents/levels"
-	sprites "GoPlat/gameComponents/sprites"
-	"fmt"
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 const tileSize = 16
 
-func DrawLevelFirstDraw(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
+func DrawLevel_FirstDraw(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
 	for idx, layer := range level.Layers {
 		if !layer.FirstDraw {
 			continue
@@ -22,7 +19,7 @@ func DrawLevelFirstDraw(level *levels.Level, screen *ebiten.Image, cam *camera.C
 	}
 }
 
-func DrawLevelSecondDraw(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
+func DrawLevel_SecondDraw(level *levels.Level, screen *ebiten.Image, cam *camera.Camera) {
 	for idx, layer := range level.Layers {
 		if layer.FirstDraw {
 			continue
@@ -62,15 +59,4 @@ func DrawLayer(level *levels.Level, layerIdx int, screen *ebiten.Image, cam *cam
 
 		mapDrawOptions.GeoM.Reset()
 	}
-}
-
-func DrawPlayer(player *sprites.Player, screen *ebiten.Image) {
-	screen.DrawImage(player.Frame.ImageToDraw, &player.Frame.ImageOptions)
-	if player.Frame.HasEffect {
-		screen.DrawImage(player.Frame.EffectImageToDraw, &player.Frame.EffectOptions)
-	}
-}
-
-func DrawPlayerDeathCount(numDeaths int, screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("Deaths: %v", numDeaths))
 }
