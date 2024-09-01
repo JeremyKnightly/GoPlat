@@ -24,7 +24,7 @@ func (g *Game) DrawLevel(screen *ebiten.Image) {
 	runtime.DrawLevel_FirstDraw(g.currentLevel, screen, g.camera)
 	runtime.DrawPlayer(g.Player, screen)
 	runtime.DrawLevel_SecondDraw(g.currentLevel, screen, g.camera)
-	runtime.DrawPlayerDeathCount(g.Player.Deaths, screen)
+	//runtime.DrawPlayerDeathCount(g.Player.Deaths, screen)
 	runtime.DrawScore(g.Player, screen)
 }
 

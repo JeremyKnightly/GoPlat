@@ -19,6 +19,6 @@ func DrawPlayerDeathCount(numDeaths int, screen *ebiten.Image) {
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("Deaths: %v", numDeaths))
 }
 
-func DrawScore(game *sprites.Player, screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("Score: %v", 100000))
+func DrawScore(p *sprites.Player, screen *ebiten.Image) {
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("Score: %v", p.Score.GetScore()))
 }
