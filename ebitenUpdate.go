@@ -81,13 +81,14 @@ func (g *Game) checkPlayerClicks() {
 		changeState, stateInt := collision.MenuStateChange(g.currentLevel)
 		if changeState {
 			g.gameState = stateInt
+			g.Player.Score.SetGameStartTime()
 			g.GoToLevel(0)
 		}
 	}
 }
 
 func (g *Game) setPlayerPositionWithInput() {
-	inputVector := movement.HandleMovementCalculations(g.Player, g.controls, g.currentLevel)
+	inputVector := movement.HandleMovementCalculations(g.Gamepad, g.Player, g.controls, g.currentLevel)
 
 	collision.EnsureValidMove(g.currentLevel, g.Player, inputVector)
 }

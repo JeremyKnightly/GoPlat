@@ -6,11 +6,12 @@ const DEFAULT_SCORE_VALUE = 100000
 const PUP_POINT_VALUE = 4000
 const ITEM_POINT_VALUE = 5000
 const SCROLL_POINT_VALUE = 2500
+const DEATH_POINT_LOSS = 1000
 
 type Score struct {
-	GameStartTime                              time.Time
-	ScoreValue                                 int
-	PUpsCollected, ItemsCollected, ScrollsRead int
+	GameStartTime                                      time.Time
+	ScoreValue                                         int
+	Deaths, PUpsCollected, ItemsCollected, ScrollsRead int
 }
 
 func (s *Score) SetGameStartTime() {
@@ -18,11 +19,12 @@ func (s *Score) SetGameStartTime() {
 }
 
 func (s *Score) evaluateScore() {
-	timeScoreDepletion := int(time.Since(s.GameStartTime).Milliseconds() / 10)
+	timeScoreDepletion := int(time.Since(s.GameStartTime).Milliseconds() / 100)
 	s.ScoreValue = DEFAULT_SCORE_VALUE - timeScoreDepletion
 	s.ScoreValue += s.PUpsCollected * PUP_POINT_VALUE
 	s.ScoreValue += s.ItemsCollected * ITEM_POINT_VALUE
 	s.ScoreValue += s.ScrollsRead * SCROLL_POINT_VALUE
+	s.ScoreValue -= s.Deaths * DEATH_POINT_LOSS
 }
 
 func (s *Score) GetScore() int {
@@ -59,4 +61,12 @@ func (s *Score) SubPUpPoints() {
 
 func (s *Score) SubScrollPoints() {
 	s.ScrollsRead--
+}
+
+func (s *Score) AddDeath() {
+	s.Deaths++
+}
+
+func (s *Score) GetDeathCount() int {
+	return s.Deaths
 }

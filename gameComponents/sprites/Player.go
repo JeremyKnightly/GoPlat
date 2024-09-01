@@ -17,7 +17,6 @@ type Player struct {
 	IsWallSliding          bool
 	IsWallHanging          bool
 	CurrentCheckpointIndex int
-	Deaths                 int
 	Score                  *score.Score
 }
 
@@ -32,7 +31,7 @@ func (p *Player) Kill() {
 }
 
 func (p *Player) Resurrect(lvl *levels.Level) {
-	p.Deaths++
+	p.Score.AddDeath()
 	p.IsDead = false
 	checkpointX, checkpointY := lvl.GetCheckpointXY(p.CurrentCheckpointIndex)
 	p.X = checkpointX

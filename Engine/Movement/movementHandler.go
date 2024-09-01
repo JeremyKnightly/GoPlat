@@ -4,6 +4,7 @@ import (
 	"GoPlat/engine/collision"
 	"GoPlat/engine/physics"
 	controls "GoPlat/gameComponents/controls"
+	"GoPlat/gameComponents/gamepad"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
 	"math"
@@ -11,7 +12,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
+func HandleMovementCalculations(gp *gamepad.Gamepad, p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
 	if p.IsDead {
 		return controls.GetBlankVector()
 	}
@@ -19,7 +20,7 @@ func HandleMovementCalculations(p *sprites.Player, playerControls []controls.Con
 		AnimationLockWallOverride(p, lvl)
 	}
 
-	directions := GetControlsPressed(playerControls)
+	directions := GetControlsPressed(gp, playerControls)
 	isLocked := p.IsAnimationLocked && (!p.CanAnimationCancel || !IsAnimationCancelling(p, directions))
 	xMulti := GetXMulti(p, directions, isLocked)
 	playerVector, specialAction := GetMovementVector(directions, xMulti)
@@ -52,22 +53,27 @@ func GetXMulti(p *sprites.Player, directions []controls.Direction, isLocked bool
 	return movementMulti
 }
 
-func GetControlsPressed(controlSlice []controls.Control) []controls.Direction {
+func GetControlsPressed(gp *gamepad.Gamepad, controlSlice []controls.Control) []controls.Direction {
 	var directions []controls.Direction
 	for _, control := range controlSlice {
 		controlActivated := true
-		if len(control.Keys) > 0 {
-			for _, key := range control.Keys {
-				if !ebiten.IsKeyPressed(key) {
-					controlActivated = false
+		if control.GetType() == "Gamepad" {
+			controlActivated = gp.IsButtonPressed(control.Input)
+		} else if control.GetType() == "Keyboard" {
+			if len(control.Keys) > 0 {
+				for _, key := range control.Keys {
+					if !ebiten.IsKeyPressed(key) {
+						controlActivated = false
+					}
 				}
+			} else {
+				controlActivated = ebiten.IsKeyPressed(control.Key)
 			}
-		} else {
-			controlActivated = ebiten.IsKeyPressed(control.Key)
 		}
 		if controlActivated {
 			directions = append(directions, control.Direction)
 		}
+
 	}
 
 	return directions

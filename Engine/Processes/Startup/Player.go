@@ -39,7 +39,6 @@ func CreateDefaultPlayer(lvl *levels.Level) *sprites.Player {
 		Score:                  &score.Score{},
 	}
 	player.Score.ResetScore()
-	player.Score.SetGameStartTime()
 
 	return player
 }

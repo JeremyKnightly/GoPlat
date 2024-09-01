@@ -4,6 +4,7 @@ import (
 	camera "GoPlat/Engine/camera"
 	startup "GoPlat/engine/processes/startup"
 	controls "GoPlat/gameComponents/controls"
+	"GoPlat/gameComponents/gamepad"
 	levels "GoPlat/gameComponents/levels"
 	sound "GoPlat/gameComponents/sounds"
 	sprites "GoPlat/gameComponents/sprites"
@@ -13,6 +14,7 @@ import (
 )
 
 type Game struct {
+	Gamepad                                                                      *gamepad.Gamepad
 	SoundManager                                                                 *sound.SoundManager
 	Player                                                                       *sprites.Player
 	levels                                                                       []*levels.Level
@@ -54,6 +56,7 @@ func main() {
 }
 
 func (game *Game) SetGameProperties() {
+	game.Gamepad = gamepad.GetNewGamepad()
 	game.levels = startup.CreateLevels()
 	game.startScreen = startup.CreateStartScreen()
 	game.controls = startup.GetControls()
