@@ -1,7 +1,7 @@
 package main
 
 import (
-	runtime "GoPlat/engine/processes/runtime"
+	"GoPlat/Engine/processes/runtime"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )

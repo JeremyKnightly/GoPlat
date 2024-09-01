@@ -1,6 +1,7 @@
 package sprites
 
 import (
+	score "GoPlat/gameComponents/PlayerStatus/Score"
 	"GoPlat/gameComponents/levels"
 )
 
@@ -17,6 +18,7 @@ type Player struct {
 	IsWallHanging          bool
 	CurrentCheckpointIndex int
 	Deaths                 int
+	Score                  *score.Score
 }
 
 func (p *Player) Kill() {
