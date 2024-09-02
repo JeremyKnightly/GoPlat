@@ -4,13 +4,14 @@ import "github.com/hajimehoshi/ebiten/v2"
 
 type KeySprite struct {
 	*Sprite
-	firstSpriteName   string
-	currentSpriteName string
+	FirstSpriteName   string
+	CurrentSpriteName string
 	messageText       string
-	nextSpriteName    string
+	NextSpriteName    string
 	HasNextSprite     bool
-	spawnType         string
+	SpawnType         string
 	Exists            bool
+	UniqueName        string
 }
 
 func (ks *KeySprite) SetPosition(x, y float64) {
@@ -27,40 +28,40 @@ func (ks *KeySprite) SetMessageText(messageText string) {
 }
 
 func (ks *KeySprite) SetNextSpriteName(spriteName string) {
-	ks.nextSpriteName = spriteName
+	ks.NextSpriteName = spriteName
 }
 
 func (ks *KeySprite) GoToNextSprite() {
-	if ks.currentSpriteName == ks.nextSpriteName {
+	if ks.CurrentSpriteName == ks.NextSpriteName {
 		return
 	}
 
 	if ks.HasNextSprite {
-		ks.currentSpriteName = ks.nextSpriteName
+		ks.CurrentSpriteName = ks.NextSpriteName
 	} else {
 		ks.Exists = false
 	}
 }
 
 func (ks *KeySprite) GoToPrevSprite() {
-	if ks.currentSpriteName == ks.firstSpriteName {
+	if ks.CurrentSpriteName == ks.FirstSpriteName {
 		return
 	}
 
-	ks.currentSpriteName = ks.firstSpriteName
+	ks.CurrentSpriteName = ks.FirstSpriteName
 	ks.Exists = true
 }
 
 func (ks *KeySprite) GetSpawnType() string {
-	return ks.spawnType
+	return ks.SpawnType
 }
 
 func (ks *KeySprite) SetSpawnType(typeName string) {
-	ks.spawnType = typeName
+	ks.SpawnType = typeName
 }
 
 func (ks *KeySprite) GetCurrentSpriteName() string {
-	return ks.currentSpriteName
+	return ks.CurrentSpriteName
 }
 
 func (ks *KeySprite) AddToPlayerStatus(player *Player) {

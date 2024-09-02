@@ -1002,11 +1002,6 @@
                          "value":false
                         }, 
                         {
-                         "name":"MessageText",
-                         "type":"string",
-                         "value":"You have acquired a key!"
-                        }, 
-                        {
                          "name":"NextSpriteName",
                          "type":"string",
                          "value":"none"
@@ -1025,6 +1020,16 @@
                          "name":"SpriteName",
                          "type":"string",
                          "value":"Key"
+                        }, 
+                        {
+                         "name":"SpriteSpawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"UniqueName",
+                         "type":"string",
+                         "value":"LevelOneKey"
                         }],
                  "rotation":0,
                  "type":"",
@@ -1196,11 +1201,6 @@
                          "value":true
                         }, 
                         {
-                         "name":"MessageText",
-                         "type":"string",
-                         "value":"You have acquired an item!"
-                        }, 
-                        {
                          "name":"NextSpriteName",
                          "type":"string",
                          "value":"OpenChest"
@@ -1219,6 +1219,16 @@
                          "name":"SpriteName",
                          "type":"string",
                          "value":"ClosedChest"
+                        }, 
+                        {
+                         "name":"SpriteSpawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"UniqueName",
+                         "type":"string",
+                         "value":""
                         }],
                  "rotation":0,
                  "type":"",

@@ -4,13 +4,14 @@ import "github.com/hajimehoshi/ebiten/v2"
 
 type PUpSprite struct {
 	*Sprite
-	currentSpriteName string
-	firstSpriteName   string
+	FirstSpriteName   string
+	CurrentSpriteName string
 	messageText       string
-	nextSpriteName    string
+	NextSpriteName    string
 	HasNextSprite     bool
-	spawnType         string
+	SpawnType         string
 	Exists            bool
+	UniqueName        string
 }
 
 func (pu *PUpSprite) SetPosition(x, y float64) {
@@ -27,39 +28,39 @@ func (pu *PUpSprite) SetMessageText(messageText string) {
 }
 
 func (pu *PUpSprite) SetNextSpriteName(spriteName string) {
-	pu.nextSpriteName = spriteName
+	pu.NextSpriteName = spriteName
 }
 
 func (pu *PUpSprite) GoToNextSprite() {
-	if pu.currentSpriteName == pu.nextSpriteName {
+	if pu.CurrentSpriteName == pu.NextSpriteName {
 		return
 	}
 
 	if pu.HasNextSprite {
-		pu.currentSpriteName = pu.nextSpriteName
+		pu.CurrentSpriteName = pu.NextSpriteName
 	} else {
 		pu.Exists = false
 	}
 }
 func (pu *PUpSprite) GoToPrevSprite() {
-	if pu.currentSpriteName == pu.firstSpriteName {
+	if pu.CurrentSpriteName == pu.FirstSpriteName {
 		return
 	}
 
-	pu.currentSpriteName = pu.firstSpriteName
+	pu.CurrentSpriteName = pu.FirstSpriteName
 	pu.Exists = true
 }
 
 func (pu *PUpSprite) GetSpawnType() string {
-	return pu.spawnType
+	return pu.SpawnType
 }
 
 func (pu *PUpSprite) SetSpawnType(typeName string) {
-	pu.spawnType = typeName
+	pu.SpawnType = typeName
 }
 
 func (pu *PUpSprite) GetCurrentSpriteName() string {
-	return pu.currentSpriteName
+	return pu.CurrentSpriteName
 }
 
 func (pu *PUpSprite) AddToPlayerStatus(player *Player) {

@@ -100,7 +100,7 @@
     "openFiles": [
     ],
     "project": "Maps.tiled-project",
-    "property.type": "string",
+    "property.type": "bool",
     "recentFiles": [
         "LevelTwo.json",
         "The_Descent__Playground.tmj",
