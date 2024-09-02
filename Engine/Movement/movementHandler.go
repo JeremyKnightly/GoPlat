@@ -58,7 +58,11 @@ func GetControlsPressed(gp *gamepad.Gamepad, controlSlice []controls.Control) []
 	for _, control := range controlSlice {
 		controlActivated := true
 		if control.GetType() == "Gamepad" {
-			controlActivated = gp.IsButtonPressed(control.Input)
+			if control.InputType == "AXIS" {
+				controlActivated = gp.AxisMatchesInput(control)
+			} else if control.InputType == "BTN" {
+				controlActivated = gp.IsButtonPressed(control.Input)
+			}
 		} else if control.GetType() == "Keyboard" {
 			if len(control.Keys) > 0 {
 				for _, key := range control.Keys {

@@ -9,38 +9,45 @@ import (
 func GetControls() []controls.Control {
 	//gamepad support
 	GPLeft1 := controls.Control{
-		Input:     ebiten.StandardGamepadButtonCenterLeft,
+		InputAxis: ebiten.StandardGamepadAxisRightStickHorizontal,
 		Direction: controls.LEFT,
+		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
 	GPRight1 := controls.Control{
-		Input:     ebiten.StandardGamepadButtonCenterRight,
+		InputAxis: ebiten.StandardGamepadAxisRightStickHorizontal,
 		Direction: controls.RIGHT,
+		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
 	GPLeft2 := controls.Control{
-		Input:     ebiten.StandardGamepadButtonLeftLeft,
+		InputAxis: ebiten.StandardGamepadAxisLeftStickHorizontal,
 		Direction: controls.LEFT,
+		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
 	GPRight2 := controls.Control{
-		Input:     ebiten.StandardGamepadButtonLeftRight,
+		InputAxis: ebiten.StandardGamepadAxisLeftStickHorizontal,
 		Direction: controls.RIGHT,
+		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
 	GPDashRight := controls.Control{
 		Input:     ebiten.StandardGamepadButtonFrontTopRight,
 		Direction: controls.DASHRIGHT,
+		InputType: "BTN",
 		Type:      "Gamepad",
 	}
 	GPDashLeft := controls.Control{
 		Input:     ebiten.StandardGamepadButtonFrontTopLeft,
 		Direction: controls.DASHLEFT,
+		InputType: "BTN",
 		Type:      "Gamepad",
 	}
 	GPJump := controls.Control{
 		Input:     ebiten.StandardGamepadButtonRightRight,
 		Direction: controls.JUMP,
+		InputType: "BTN",
 		Type:      "Gamepad",
 	}
 

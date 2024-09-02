@@ -14,19 +14,20 @@ import (
 )
 
 type Game struct {
-	Gamepad                                                                      *gamepad.Gamepad
-	SoundManager                                                                 *sound.SoundManager
-	Player                                                                       *sprites.Player
-	levels                                                                       []*levels.Level
-	startScreen                                                                  *levels.Level
-	controls                                                                     []controls.Control
-	currentLevel                                                                 *levels.Level
-	currentBGMIdx                                                                int
-	currentLevelIndex                                                            int
-	camera                                                                       *camera.Camera
-	gameState                                                                    int
-	defaultWindowWidth, defaultWindowHeight, startScreenWidth, startScreenHeight int
-	tileSize, defaultScreenWidth, defaultScreenHeight                            float64
+	Gamepad                                           *gamepad.Gamepad
+	SoundManager                                      *sound.SoundManager
+	Player                                            *sprites.Player
+	levels                                            []*levels.Level
+	startScreen                                       *levels.Level
+	controls                                          []controls.Control
+	currentLevel                                      *levels.Level
+	currentBGMIdx                                     int
+	currentLevelIndex                                 int
+	camera                                            *camera.Camera
+	gameState                                         int
+	defaultWindowWidth, defaultWindowHeight           int
+	startScreenWidth, startScreenHeight               int
+	tileSize, defaultScreenWidth, defaultScreenHeight float64
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {

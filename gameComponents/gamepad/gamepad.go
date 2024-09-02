@@ -1,8 +1,7 @@
 package gamepad
 
 import (
-	"log"
-	"math"
+	"GoPlat/gameComponents/controls"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -26,12 +25,10 @@ func (gp *Gamepad) CheckGamepadConnection() {
 
 	gp.gamepadIDsBuf = inpututil.AppendJustConnectedGamepadIDs(gp.gamepadIDsBuf[:0])
 	for _, id := range gp.gamepadIDsBuf {
-		log.Printf("gamepad connected: id: %d, SDL ID: %s", id, ebiten.GamepadSDLID(id))
 		gp.gamepadIDs[id] = struct{}{}
 	}
 	for id := range gp.gamepadIDs {
 		if inpututil.IsGamepadJustDisconnected(id) {
-			log.Printf("gamepad disconnected: id: %d", id)
 			delete(gp.gamepadIDs, id)
 		}
 	}
@@ -42,23 +39,33 @@ func (gp *Gamepad) UpdateInput() {
 	gp.pressedButtons = map[ebiten.GamepadID][]string{}
 }
 
-func (gp *Gamepad) IsButtonPressed(button ebiten.StandardGamepadButton) bool {
+func (gp *Gamepad) AxisMatchesInput(control controls.Control) bool {
 	gp.CheckGamepadConnection()
 	gp.UpdateInput()
 
 	for id := range gp.gamepadIDs {
 		var axisDirection float64
 		maxAxis := ebiten.GamepadAxisType(ebiten.GamepadAxisCount(id))
-		for a := ebiten.GamepadAxisType(0); a < maxAxis; a++ {
-			axisDirection = ebiten.GamepadAxisValue(id, a)
-			//g.axes[id] = append(g.axes[id], fmt.Sprintf("%d:%+0.2f", a, v))
-		}
-		if math.Abs(axisDirection) > 0 {
-			if button == ebiten.StandardGamepadButtonCenterRight && axisDirection > 0 {
-				println("moving right")
+		for axisType := ebiten.GamepadAxisType(0); axisType < maxAxis; axisType++ {
+			if axisType != int(control.InputAxis) {
+				continue
+			}
+			axisDirection = ebiten.GamepadAxisValue(id, axisType)
+			if control.Direction.Name == "RIGHT" && axisDirection > 0.1 {
+				return true
+			} else if control.Direction.Name == "LEFT" && axisDirection < -0.1 {
 				return true
 			}
 		}
+	}
+	return false
+}
+
+func (gp *Gamepad) IsButtonPressed(button ebiten.StandardGamepadButton) bool {
+	gp.CheckGamepadConnection()
+	gp.UpdateInput()
+
+	for id := range gp.gamepadIDs {
 		if !ebiten.IsStandardGamepadLayoutAvailable(id) {
 			continue
 		}
