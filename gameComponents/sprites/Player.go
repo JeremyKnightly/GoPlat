@@ -1,7 +1,7 @@
 package sprites
 
 import (
-	score "GoPlat/gameComponents/PlayerStatus/Score"
+	playerstatus "GoPlat/gameComponents/PlayerStatus"
 	"GoPlat/gameComponents/levels"
 )
 
@@ -17,7 +17,7 @@ type Player struct {
 	IsWallSliding          bool
 	IsWallHanging          bool
 	CurrentCheckpointIndex int
-	Score                  *score.Score
+	Status                 *playerstatus.Status
 }
 
 func (p *Player) Kill() {
@@ -31,7 +31,7 @@ func (p *Player) Kill() {
 }
 
 func (p *Player) Resurrect(lvl *levels.Level) {
-	p.Score.AddDeath()
+	p.Status.Score.AddDeath()
 	p.IsDead = false
 	checkpointX, checkpointY := lvl.GetCheckpointXY(p.CurrentCheckpointIndex)
 	p.X = checkpointX

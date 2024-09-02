@@ -48,19 +48,19 @@
             "scaleInDock": 1
         },
         "The_Descent_LevelOne.json": {
-            "scale": 0.95,
-            "selectedLayer": 0,
+            "scale": 3,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 479.4736842105263,
-                "y": 319.4736842105263
+                "x": 272.16666666666663,
+                "y": 151.16666666666669
             }
         },
         "The_Descent_LevelTwo.json": {
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 335.75,
-                "y": 812
+                "x": 333.75,
+                "y": 824.75
             }
         },
         "The_Descent__Playground.tmj": {
@@ -100,8 +100,9 @@
     "openFiles": [
     ],
     "project": "Maps.tiled-project",
-    "property.type": "int",
+    "property.type": "string",
     "recentFiles": [
+        "LevelTwo.json",
         "The_Descent__Playground.tmj",
         "test.json",
         "Tilesets/Dungeon.tsx",
