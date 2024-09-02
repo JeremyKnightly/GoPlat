@@ -6,45 +6,45 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func GetControls() []controls.Control {
+func GetControls() []*controls.Control {
 	//gamepad support
-	GPLeft1 := controls.Control{
+	GPLeft1 := &controls.Control{
 		InputAxis: ebiten.StandardGamepadAxisRightStickHorizontal,
 		Direction: controls.LEFT,
 		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
-	GPRight1 := controls.Control{
+	GPRight1 := &controls.Control{
 		InputAxis: ebiten.StandardGamepadAxisRightStickHorizontal,
 		Direction: controls.RIGHT,
 		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
-	GPLeft2 := controls.Control{
+	GPLeft2 := &controls.Control{
 		InputAxis: ebiten.StandardGamepadAxisLeftStickHorizontal,
 		Direction: controls.LEFT,
 		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
-	GPRight2 := controls.Control{
+	GPRight2 := &controls.Control{
 		InputAxis: ebiten.StandardGamepadAxisLeftStickHorizontal,
 		Direction: controls.RIGHT,
 		InputType: "AXIS",
 		Type:      "Gamepad",
 	}
-	GPDashRight := controls.Control{
+	GPDashRight := &controls.Control{
 		Input:     ebiten.StandardGamepadButtonFrontTopRight,
 		Direction: controls.DASHRIGHT,
 		InputType: "BTN",
 		Type:      "Gamepad",
 	}
-	GPDashLeft := controls.Control{
+	GPDashLeft := &controls.Control{
 		Input:     ebiten.StandardGamepadButtonFrontTopLeft,
 		Direction: controls.DASHLEFT,
 		InputType: "BTN",
 		Type:      "Gamepad",
 	}
-	GPJump := controls.Control{
+	GPJump := &controls.Control{
 		Input:     ebiten.StandardGamepadButtonRightRight,
 		Direction: controls.JUMP,
 		InputType: "BTN",
@@ -52,17 +52,17 @@ func GetControls() []controls.Control {
 	}
 
 	//keyboard support
-	left := controls.Control{
+	left := &controls.Control{
 		Key:       ebiten.KeyA,
 		Direction: controls.LEFT,
 		Type:      "Keyboard",
 	}
-	right := controls.Control{
+	right := &controls.Control{
 		Key:       ebiten.KeyD,
 		Direction: controls.RIGHT,
 		Type:      "Keyboard",
 	}
-	dashRight := controls.Control{
+	dashRight := &controls.Control{
 		Keys: []ebiten.Key{
 			ebiten.KeyShift,
 			ebiten.KeyD,
@@ -70,7 +70,7 @@ func GetControls() []controls.Control {
 		Direction: controls.DASHRIGHT,
 		Type:      "Keyboard",
 	}
-	dashLeft := controls.Control{
+	dashLeft := &controls.Control{
 		Keys: []ebiten.Key{
 			ebiten.KeyShift,
 			ebiten.KeyA,
@@ -78,13 +78,15 @@ func GetControls() []controls.Control {
 		Direction: controls.DASHLEFT,
 		Type:      "Keyboard",
 	}
-	space := controls.Control{
-		Key:       ebiten.KeySpace,
-		Direction: controls.JUMP,
-		Type:      "Keyboard",
+	space := &controls.Control{
+		Key:              ebiten.KeySpace,
+		Direction:        controls.JUMP,
+		Type:             "Keyboard",
+		RequireJustPress: true,
+		KeyReleased:      true,
 	}
 
-	return []controls.Control{
+	return []*controls.Control{
 		//Gamepad
 		GPLeft1,
 		GPLeft2,

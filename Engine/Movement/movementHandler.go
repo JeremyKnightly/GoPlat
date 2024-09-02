@@ -12,7 +12,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func HandleMovementCalculations(gp *gamepad.Gamepad, p *sprites.Player, playerControls []controls.Control, lvl *levels.Level) controls.Vector {
+func HandleMovementCalculations(gp *gamepad.Gamepad, p *sprites.Player, playerControls []*controls.Control, lvl *levels.Level) controls.Vector {
 	if p.IsDead {
 		return controls.GetBlankVector()
 	}
@@ -53,25 +53,22 @@ func GetXMulti(p *sprites.Player, directions []controls.Direction, isLocked bool
 	return movementMulti
 }
 
-func GetControlsPressed(gp *gamepad.Gamepad, controlSlice []controls.Control) []controls.Direction {
+func GetControlsPressed(gp *gamepad.Gamepad, controlSlice []*controls.Control) []controls.Direction {
 	var directions []controls.Direction
 	for _, control := range controlSlice {
 		controlActivated := true
 		if control.GetType() == "Gamepad" {
 			if control.InputType == "AXIS" {
-				controlActivated = gp.AxisMatchesInput(control)
+				controlActivated = gp.AxisMatchesInput(*control)
 			} else if control.InputType == "BTN" {
 				controlActivated = gp.IsButtonPressed(control.Input)
 			}
 		} else if control.GetType() == "Keyboard" {
+
 			if len(control.Keys) > 0 {
-				for _, key := range control.Keys {
-					if !ebiten.IsKeyPressed(key) {
-						controlActivated = false
-					}
-				}
+				controlActivated = KeysPressed(control.Keys)
 			} else {
-				controlActivated = ebiten.IsKeyPressed(control.Key)
+				controlActivated = KeyPressed(control)
 			}
 		}
 		if controlActivated {
@@ -81,6 +78,31 @@ func GetControlsPressed(gp *gamepad.Gamepad, controlSlice []controls.Control) []
 	}
 
 	return directions
+}
+
+func KeyPressed(control *controls.Control) bool {
+	if !control.RequireJustPress {
+		return ebiten.IsKeyPressed(control.Key)
+	}
+
+	if ebiten.IsKeyPressed(control.Key) {
+		if control.KeyReleased {
+			control.KeyReleased = false
+			return true
+		}
+		return false
+	}
+	control.KeyReleased = true
+	return false
+}
+
+func KeysPressed(keysRequired []ebiten.Key) bool {
+	for _, key := range keysRequired {
+		if !ebiten.IsKeyPressed(key) {
+			return false
+		}
+	}
+	return true
 }
 
 func GetMovementVector(directions []controls.Direction, XMulti float64) (controls.Vector, controls.Direction) {

@@ -19,7 +19,7 @@ type Game struct {
 	Player                                            *sprites.Player
 	levels                                            []*levels.Level
 	startScreen                                       *levels.Level
-	controls                                          []controls.Control
+	controls                                          []*controls.Control
 	currentLevel                                      *levels.Level
 	currentBGMIdx                                     int
 	currentLevelIndex                                 int
