@@ -16,3 +16,11 @@ func (s *Status) AddKey(keyName string) {
 	//add key to inventory
 
 }
+
+func CreateNewStatus() *Status {
+	return &Status{
+		Score:     &score.Score{},
+		Inventory: &inventory.Inventory{},
+		Powers:    &powers.Powers{},
+	}
+}

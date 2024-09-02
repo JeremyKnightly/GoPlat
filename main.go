@@ -14,6 +14,7 @@ import (
 )
 
 type Game struct {
+	NPSpriteManager                                   *sprites.NPSpriteManager
 	Gamepad                                           *gamepad.Gamepad
 	SoundManager                                      *sound.SoundManager
 	Player                                            *sprites.Player
@@ -74,4 +75,6 @@ func (game *Game) SetGameProperties() {
 	game.camera = camera.NewCamera(0, 0)
 	game.Player = startup.CreateDefaultPlayer(game.levels[game.currentLevelIndex])
 	game.SoundManager = startup.GetAllSounds()
+	game.NPSpriteManager = sprites.NewNPSpriteManager()
+	game.NPSpriteManager.CreateSpriteDB()
 }

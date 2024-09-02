@@ -4,11 +4,13 @@ import "github.com/hajimehoshi/ebiten/v2"
 
 type ItemSprite struct {
 	*Sprite
+	firstSpriteName   string
 	currentSpriteName string
 	messageText       string
 	nextSpriteName    string
 	HasNextSprite     bool
 	spawnType         string
+	Exists            bool
 }
 
 func (is *ItemSprite) SetPosition(x, y float64) {
@@ -29,10 +31,24 @@ func (is *ItemSprite) SetNextSpriteName(spriteName string) {
 }
 
 func (is *ItemSprite) GoToNextSprite() {
+	if is.currentSpriteName == is.nextSpriteName {
+		return
+	}
+
 	if is.HasNextSprite {
 		is.currentSpriteName = is.nextSpriteName
-		//ks.Frame.EffectImageToDraw = SpriteMaker.Get(ks.nextSpriteName)
+	} else {
+		is.Exists = false
 	}
+}
+
+func (is *ItemSprite) GoToPrevSprite() {
+	if is.currentSpriteName == is.firstSpriteName {
+		return
+	}
+
+	is.currentSpriteName = is.firstSpriteName
+	is.Exists = true
 }
 
 func (is *ItemSprite) GetSpawnType() string {
@@ -53,4 +69,8 @@ func (is *ItemSprite) AddToPlayerStatus(player *Player) {
 
 func (is *ItemSprite) SetSpriteFrameImage(image *ebiten.Image) {
 	is.Sprite.Frame.ImageToDraw = image
+}
+
+func (is *ItemSprite) DoesExist() bool {
+	return is.Exists
 }

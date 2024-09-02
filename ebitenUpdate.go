@@ -81,7 +81,7 @@ func (g *Game) checkPlayerClicks() {
 		changeState, stateInt := collision.MenuStateChange(g.currentLevel)
 		if changeState {
 			g.gameState = stateInt
-			g.Player.Score.SetGameStartTime()
+			g.Player.Status.Score.SetGameStartTime()
 			g.GoToLevel(0)
 		}
 	}

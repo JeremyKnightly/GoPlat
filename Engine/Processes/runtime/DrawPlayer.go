@@ -20,5 +20,5 @@ func DrawPlayerDeathCount(numDeaths int, screen *ebiten.Image) {
 }
 
 func DrawScore(p *sprites.Player, screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("Score: %v", p.Score.GetScore()))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("Score: %v", p.Status.Score.GetScore()))
 }

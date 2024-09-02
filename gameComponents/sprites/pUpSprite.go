@@ -5,10 +5,12 @@ import "github.com/hajimehoshi/ebiten/v2"
 type PUpSprite struct {
 	*Sprite
 	currentSpriteName string
+	firstSpriteName   string
 	messageText       string
 	nextSpriteName    string
 	HasNextSprite     bool
 	spawnType         string
+	Exists            bool
 }
 
 func (pu *PUpSprite) SetPosition(x, y float64) {
@@ -29,10 +31,23 @@ func (pu *PUpSprite) SetNextSpriteName(spriteName string) {
 }
 
 func (pu *PUpSprite) GoToNextSprite() {
+	if pu.currentSpriteName == pu.nextSpriteName {
+		return
+	}
+
 	if pu.HasNextSprite {
 		pu.currentSpriteName = pu.nextSpriteName
-		//ks.Frame.EffectImageToDraw = SpriteMaker.Get(ks.nextSpriteName)
+	} else {
+		pu.Exists = false
 	}
+}
+func (pu *PUpSprite) GoToPrevSprite() {
+	if pu.currentSpriteName == pu.firstSpriteName {
+		return
+	}
+
+	pu.currentSpriteName = pu.firstSpriteName
+	pu.Exists = true
 }
 
 func (pu *PUpSprite) GetSpawnType() string {
@@ -53,4 +68,8 @@ func (pu *PUpSprite) AddToPlayerStatus(player *Player) {
 
 func (pu *PUpSprite) SetSpriteFrameImage(image *ebiten.Image) {
 	pu.Sprite.Frame.ImageToDraw = image
+}
+
+func (pu *PUpSprite) DoesExist() bool {
+	return pu.Exists
 }
