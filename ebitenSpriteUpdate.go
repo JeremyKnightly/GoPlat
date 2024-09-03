@@ -5,7 +5,7 @@ import (
 	"GoPlat/gameComponents/sprites"
 )
 
-func (g *Game) LoadSpriteSpawns() {
+func (g *Game) UpdateSpriteSpawns() {
 	npsm := g.NPSpriteManager
 	collisionData := collision.ExtractCollisionData(g.currentLevel)
 
@@ -13,19 +13,24 @@ func (g *Game) LoadSpriteSpawns() {
 		if !collision.HasSpecialProps() {
 			continue
 		}
-		if !collision.HasProp("SpriteSpawn") || !collision.HasProp("CanInteract") {
+		if !collision.HasProp("SpriteSpawn") {
 			continue
 		}
 
 		switch collision.GetPropValue("SpawnType").(string) {
 		case "Item":
 			temp := &sprites.ItemSprite{
-				HasNextSprite:   collision.GetPropValue("HasNextSprite").(bool),
-				FirstSpriteName: collision.GetPropValue("SpriteName").(string),
+				Sprite: &sprites.Sprite{
+					Frame: sprites.GetNewFrame(),
+					X:     0,
+					Y:     0,
+				},
+				HasNextSprite:     collision.GetPropValue("HasNextSprite").(bool),
+				FirstSpriteName:   collision.GetPropValue("SpriteName").(string),
+				CurrentSpriteName: collision.GetPropValue("SpriteName").(string),
 			}
 
-			temp.X = collision.X
-			temp.Y = collision.Y
+			temp.SetPosition(collision.X, collision.Y)
 
 			if collision.HasProp("UniqueName") {
 				temp.UniqueName = collision.GetPropValue("UniqueName").(string)
@@ -35,12 +40,16 @@ func (g *Game) LoadSpriteSpawns() {
 
 		case "Key":
 			temp := &sprites.KeySprite{
-				HasNextSprite:   collision.GetPropValue("HasNextSprite").(bool),
-				FirstSpriteName: collision.GetPropValue("SpriteName").(string),
+				Sprite: &sprites.Sprite{
+					Frame: sprites.GetNewFrame(),
+					X:     0,
+					Y:     0,
+				},
+				HasNextSprite:     collision.GetPropValue("HasNextSprite").(bool),
+				FirstSpriteName:   collision.GetPropValue("SpriteName").(string),
+				CurrentSpriteName: collision.GetPropValue("SpriteName").(string),
 			}
-
-			temp.X = collision.X
-			temp.Y = collision.Y
+			temp.SetPosition(collision.X, collision.Y)
 
 			if collision.HasProp("UniqueName") {
 				temp.UniqueName = collision.GetPropValue("UniqueName").(string)
@@ -50,12 +59,16 @@ func (g *Game) LoadSpriteSpawns() {
 
 		case "Power":
 			temp := &sprites.PUpSprite{
-				HasNextSprite:   collision.GetPropValue("HasNextSprite").(bool),
-				FirstSpriteName: collision.GetPropValue("SpriteName").(string),
+				Sprite: &sprites.Sprite{
+					Frame: sprites.GetNewFrame(),
+					X:     0,
+					Y:     0,
+				},
+				HasNextSprite:     collision.GetPropValue("HasNextSprite").(bool),
+				FirstSpriteName:   collision.GetPropValue("SpriteName").(string),
+				CurrentSpriteName: collision.GetPropValue("SpriteName").(string),
 			}
-
-			temp.X = collision.X
-			temp.Y = collision.Y
+			temp.SetPosition(collision.X, collision.Y)
 
 			if collision.HasProp("UniqueName") {
 				temp.UniqueName = collision.GetPropValue("UniqueName").(string)

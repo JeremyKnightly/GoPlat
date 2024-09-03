@@ -19,6 +19,10 @@ func (is *ItemSprite) SetPosition(x, y float64) {
 	is.Y = y
 }
 
+func (is *ItemSprite) GetPosition() (float64, float64) {
+	return is.X, is.Y
+}
+
 func (is *ItemSprite) GetMessageText() string {
 	return is.messageText
 }
@@ -61,7 +65,15 @@ func (is *ItemSprite) SetSpawnType(typeName string) {
 }
 
 func (is *ItemSprite) GetCurrentSpriteName() string {
-	return is.CurrentSpriteName
+	if len(is.CurrentSpriteName) > 0 {
+		return is.CurrentSpriteName
+	} /*else if is.Exists {
+		is.GoToPrevSprite()
+		return is.CurrentSpriteName
+	}
+
+	println("InvalidCurrentSpriteName")*/
+	return ""
 }
 
 func (is *ItemSprite) AddToPlayerStatus(player *Player) {
@@ -70,6 +82,10 @@ func (is *ItemSprite) AddToPlayerStatus(player *Player) {
 
 func (is *ItemSprite) SetSpriteFrameImage(image *ebiten.Image) {
 	is.Sprite.Frame.ImageToDraw = image
+}
+
+func (is *ItemSprite) GetSpriteFrameImage() *ebiten.Image {
+	return is.Sprite.Frame.ImageToDraw
 }
 
 func (is *ItemSprite) DoesExist() bool {

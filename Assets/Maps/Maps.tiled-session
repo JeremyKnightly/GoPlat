@@ -60,10 +60,10 @@
         },
         "The_Descent_LevelTwo.json": {
             "scale": 2,
-            "selectedLayer": 4,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 333.75,
-                "y": 824.75
+                "x": 736.75,
+                "y": 224.75
             }
         },
         "The_Descent__Playground.tmj": {

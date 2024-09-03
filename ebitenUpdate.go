@@ -45,11 +45,12 @@ func (g *Game) PlayGame() {
 	if g.Player.CurrentCheckpointIndex == 9999 {
 		g.GoToLevel(g.currentLevelIndex + 1)
 	}
-	g.currentLevel = g.levels[g.currentLevelIndex]
+	//g.currentLevel = g.levels[g.currentLevelIndex]
 
 	g.setPlayerPositionWithInput()
 	g.setCameraPosition()
 	g.setPlayerFrame()
+	g.NPSpriteManager.UpdateInteractableSprites()
 	g.playSFX()
 }
 
@@ -70,10 +71,12 @@ func (g *Game) GoToLevel(levelNum int) {
 	if g.currentLevelIndex > len(g.levels) {
 		g.currentLevelIndex = 0
 	}
+	g.currentLevel = g.levels[g.currentLevelIndex]
 	g.Player.CurrentCheckpointIndex = 0
 	x, y := g.levels[g.currentLevelIndex].GetCheckpointXY(g.Player.CurrentCheckpointIndex)
 	g.Player.X = x
 	g.Player.Y = y
+	g.UpdateSpriteSpawns()
 }
 
 func (g *Game) checkPlayerClicks() {

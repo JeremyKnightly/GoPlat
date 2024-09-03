@@ -15,8 +15,11 @@ type KeySprite struct {
 }
 
 func (ks *KeySprite) SetPosition(x, y float64) {
-	ks.X = x
-	ks.Y = y
+	ks.Sprite.SetPosition(x, y)
+}
+
+func (ks *KeySprite) GetPosition() (float64, float64) {
+	return ks.Sprite.X, ks.Sprite.Y
 }
 
 func (ks *KeySprite) GetMessageText() string {
@@ -61,7 +64,17 @@ func (ks *KeySprite) SetSpawnType(typeName string) {
 }
 
 func (ks *KeySprite) GetCurrentSpriteName() string {
-	return ks.CurrentSpriteName
+	if len(ks.CurrentSpriteName) > 0 {
+		return ks.CurrentSpriteName
+	} /*else if ks.Exists {
+		println("loading prev key")
+
+		ks.GoToPrevSprite()
+		return ks.CurrentSpriteName
+	}
+
+	println("InvalidCurrentSpriteName")*/
+	return ""
 }
 
 func (ks *KeySprite) AddToPlayerStatus(player *Player) {
@@ -70,6 +83,10 @@ func (ks *KeySprite) AddToPlayerStatus(player *Player) {
 
 func (ks *KeySprite) SetSpriteFrameImage(image *ebiten.Image) {
 	ks.Sprite.Frame.ImageToDraw = image
+}
+
+func (ks *KeySprite) GetSpriteFrameImage() *ebiten.Image {
+	return ks.Sprite.Frame.ImageToDraw
 }
 
 func (ks *KeySprite) DoesExist() bool {

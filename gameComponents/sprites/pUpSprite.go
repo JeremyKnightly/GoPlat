@@ -19,6 +19,10 @@ func (pu *PUpSprite) SetPosition(x, y float64) {
 	pu.Y = y
 }
 
+func (pu *PUpSprite) GetPosition() (float64, float64) {
+	return pu.X, pu.Y
+}
+
 func (pu *PUpSprite) GetMessageText() string {
 	return pu.messageText
 }
@@ -60,7 +64,16 @@ func (pu *PUpSprite) SetSpawnType(typeName string) {
 }
 
 func (pu *PUpSprite) GetCurrentSpriteName() string {
-	return pu.CurrentSpriteName
+	if len(pu.CurrentSpriteName) > 0 {
+		return pu.CurrentSpriteName
+	} /*else if pu.Exists {
+		println("loading prev pup")
+		pu.GoToPrevSprite()
+		return pu.CurrentSpriteName
+	}
+
+	println("InvalidCurrentSpriteName")*/
+	return ""
 }
 
 func (pu *PUpSprite) AddToPlayerStatus(player *Player) {
@@ -69,6 +82,10 @@ func (pu *PUpSprite) AddToPlayerStatus(player *Player) {
 
 func (pu *PUpSprite) SetSpriteFrameImage(image *ebiten.Image) {
 	pu.Sprite.Frame.ImageToDraw = image
+}
+
+func (pu *PUpSprite) GetSpriteFrameImage() *ebiten.Image {
+	return pu.Sprite.Frame.ImageToDraw
 }
 
 func (pu *PUpSprite) DoesExist() bool {

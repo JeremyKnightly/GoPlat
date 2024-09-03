@@ -14,6 +14,7 @@ type Sprite struct {
 
 type interactableSprite interface {
 	SetPosition(float64, float64)
+	GetPosition() (float64, float64)
 	GetMessageText() string
 	SetMessageText(string)
 	SetNextSpriteName(string)
@@ -22,6 +23,7 @@ type interactableSprite interface {
 	SetSpawnType(string)
 	GetCurrentSpriteName() string
 	SetSpriteFrameImage(*ebiten.Image)
+	GetSpriteFrameImage() *ebiten.Image
 	AddToPlayerStatus(*Player)
 }
 
@@ -44,4 +46,19 @@ type BioSprite struct {
 	IsMovingRight         bool
 	CurrentAnimationIndex uint16
 	IsDead                bool
+}
+
+func (s *Sprite) GetPosition() (float64, float64) {
+	return s.X, s.Y
+}
+
+func (s *Sprite) SetPosition(x, y float64) {
+	s.X = x
+	s.Y = y
+}
+
+func GetNewFrame() *Frame {
+	return &Frame{
+		ImageToDraw: nil,
+	}
 }
