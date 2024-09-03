@@ -1019,7 +1019,7 @@
                         {
                          "name":"SpriteName",
                          "type":"string",
-                         "value":"Key"
+                         "value":"KeyGold"
                         }, 
                         {
                          "name":"SpriteSpawn",
