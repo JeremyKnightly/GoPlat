@@ -1,4 +1,4 @@
-package playerstatus
+package status
 
 import (
 	score "GoPlat/gameComponents/PlayerStatus/Score"
@@ -7,9 +7,10 @@ import (
 )
 
 type Status struct {
-	Score     *score.Score
-	Powers    *powers.Powers
-	Inventory *inventory.Inventory
+	Score         *score.Score
+	Powers        *powers.Powers
+	Inventory     *inventory.Inventory
+	TempInventory *inventory.Inventory
 }
 
 func (s *Status) AddKey(keyName string) {
@@ -19,8 +20,9 @@ func (s *Status) AddKey(keyName string) {
 
 func CreateNewStatus() *Status {
 	return &Status{
-		Score:     &score.Score{},
-		Inventory: &inventory.Inventory{},
-		Powers:    &powers.Powers{},
+		Score:         &score.Score{},
+		Inventory:     inventory.NewInventory(),
+		TempInventory: inventory.NewInventory(),
+		Powers:        &powers.Powers{},
 	}
 }

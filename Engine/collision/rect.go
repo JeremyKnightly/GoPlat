@@ -53,14 +53,14 @@ func (r *Rect) HandleProps(p *sprites.Player) {
 	isCheckpoint := false
 	checkpointIdx := 0
 	for _, property := range r.Properties {
-		if property.Name == "KillPlayer" && property.Value == true {
+		switch property.Name {
+		case "KillPlayer":
 			p.Kill()
-		}
-		if property.Name == "Checkpoint" {
+		case "Checkpoint":
 			isCheckpoint = true
-		}
-		if property.Name == "CheckPointIndex" {
+		case "CheckPointIndex":
 			checkpointIdx = int(property.Value.(float64))
+		default:
 		}
 	}
 

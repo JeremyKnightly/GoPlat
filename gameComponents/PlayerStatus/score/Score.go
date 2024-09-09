@@ -5,12 +5,13 @@ import "time"
 const DEFAULT_SCORE_VALUE = 100000
 const PUP_POINT_VALUE = 4000
 const ITEM_POINT_VALUE = 5000
+const KEY_POINT_VALUE = 8000
 const SCROLL_POINT_VALUE = 2500
 const DEATH_POINT_LOSS = 1000
 
 type Score struct {
 	GameStartTime                                      time.Time
-	ScoreValue                                         int
+	ScoreValue, KeysCollected                          int
 	Deaths, PUpsCollected, ItemsCollected, ScrollsRead int
 }
 
@@ -23,6 +24,7 @@ func (s *Score) evaluateScore() {
 	s.ScoreValue = DEFAULT_SCORE_VALUE - timeScoreDepletion
 	s.ScoreValue += s.PUpsCollected * PUP_POINT_VALUE
 	s.ScoreValue += s.ItemsCollected * ITEM_POINT_VALUE
+	s.ScoreValue += s.KeysCollected * KEY_POINT_VALUE
 	s.ScoreValue += s.ScrollsRead * SCROLL_POINT_VALUE
 	s.ScoreValue -= s.Deaths * DEATH_POINT_LOSS
 }
@@ -36,31 +38,66 @@ func (s *Score) ResetScore() {
 	s.ScoreValue = DEFAULT_SCORE_VALUE
 	s.PUpsCollected = 0
 	s.ItemsCollected = 0
+	s.KeysCollected = 0
 	s.ScrollsRead = 0
 }
 
-func (s *Score) AddItemPoints() {
-	s.ItemsCollected++
+func (s *Score) AddPoints(numItems int, itemType string) {
+	switch itemType {
+	case "item":
+		s.addItemPoints(numItems)
+	case "key":
+		s.addKeyPoints(numItems)
+	case "pup":
+		s.addPUpPoints(numItems)
+	case "scroll":
+		s.addScrollPoints(numItems)
+	}
 }
 
-func (s *Score) AddPUpPoints() {
-	s.PUpsCollected++
+func (s *Score) SubPoints(numItems int, itemType string) {
+	switch itemType {
+	case "item":
+		s.subItemPoints(numItems)
+	case "key":
+		s.subKeyPoints(numItems)
+	case "pup":
+		s.subPUpPoints(numItems)
+	case "scroll":
+		s.subScrollPoints(numItems)
+	}
 }
 
-func (s *Score) AddScrollPoints() {
-	s.ScrollsRead++
+func (s *Score) addKeyPoints(numKeys int) {
+	s.KeysCollected += numKeys
 }
 
-func (s *Score) SubItemPoints() {
-	s.ItemsCollected--
+func (s *Score) subKeyPoints(numKeys int) {
+	s.KeysCollected -= numKeys
 }
 
-func (s *Score) SubPUpPoints() {
-	s.PUpsCollected--
+func (s *Score) addItemPoints(numItems int) {
+	s.ItemsCollected += numItems
 }
 
-func (s *Score) SubScrollPoints() {
-	s.ScrollsRead--
+func (s *Score) subItemPoints(numItems int) {
+	s.ItemsCollected -= numItems
+}
+
+func (s *Score) addPUpPoints(numPUps int) {
+	s.PUpsCollected += numPUps
+}
+
+func (s *Score) subPUpPoints(numPUps int) {
+	s.PUpsCollected -= numPUps
+}
+
+func (s *Score) addScrollPoints(numScrolls int) {
+	s.ScrollsRead += numScrolls
+}
+
+func (s *Score) subScrollPoints(numScrolls int) {
+	s.ScrollsRead -= numScrolls
 }
 
 func (s *Score) AddDeath() {

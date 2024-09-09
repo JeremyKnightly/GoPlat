@@ -1,20 +1,51 @@
 package inventory
 
 type Item struct {
-	uniqueItemName string
-	itemSuperType  string
-	itemSubType    string
-	messageText    string
-	quantity       int
+	spawnName         string
+	spawnCollected    bool
+	spawnCollectSaved bool
+	itemSuperType     string
+	itemSubType       string
+	messageText       string
+	itemName          string
+	quantity          int
 }
 
 func NewItem() *Item {
 	return &Item{
-		uniqueItemName: "genericItem",
-		itemSuperType:  "item",
-		messageText:    "An Item",
-		quantity:       0,
+		spawnName:         "genericItem",
+		spawnCollected:    false,
+		spawnCollectSaved: false,
+		itemName:          "",
+		itemSuperType:     "item",
+		itemSubType:       "subItem",
+		messageText:       "An Item",
+		quantity:          0,
 	}
+}
+
+func (i *Item) Collect() {
+	i.spawnCollected = true
+}
+
+func (i *Item) UnCollect() {
+	i.spawnCollected = false
+}
+
+func (i *Item) IsCollected() bool {
+	return i.spawnCollected
+}
+
+func (i *Item) IsCollectSaved() bool {
+	return i.spawnCollectSaved
+}
+
+func (i *Item) SaveCollect() {
+	i.spawnCollectSaved = true
+}
+
+func (i *Item) UnSaveCollect() {
+	i.spawnCollectSaved = false
 }
 
 func (i *Item) AddItem() {
@@ -65,10 +96,18 @@ func (i *Item) SetMessageText(text string) {
 	i.messageText = text
 }
 
-func (i *Item) GetName() string {
-	return i.uniqueItemName
+func (i *Item) GetSpawnName() string {
+	return i.spawnName
 }
 
-func (i *Item) SetName(name string) {
-	i.uniqueItemName = name
+func (i *Item) SetSpawnName(name string) {
+	i.spawnName = name
+}
+
+func (i *Item) GetItemName() string {
+	return i.itemName
+}
+
+func (i *Item) SetItemName(name string) {
+	i.itemName = name
 }

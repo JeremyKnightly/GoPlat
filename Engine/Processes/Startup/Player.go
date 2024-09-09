@@ -1,7 +1,7 @@
 package startup
 
 import (
-	playerstatus "GoPlat/gameComponents/PlayerStatus"
+	"GoPlat/gameComponents/PlayerStatus/status"
 	"GoPlat/gameComponents/levels"
 	"GoPlat/gameComponents/sprites"
 
@@ -36,7 +36,7 @@ func CreateDefaultPlayer(lvl *levels.Level) *sprites.Player {
 		CanAnimationCancel:     false,
 		IsAirborn:              false,
 		CurrentCheckpointIndex: 0,
-		Status:                 playerstatus.CreateNewStatus(),
+		Status:                 status.CreateNewStatus(),
 	}
 	player.Status.Score.ResetScore()
 
