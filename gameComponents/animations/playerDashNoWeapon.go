@@ -63,7 +63,19 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 
 	frameVectors := []controls.Vector{
 		{
-			DeltaX: 2.5,
+			DeltaX: 2.7,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.7,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.6,
+			DeltaY: 0,
+		},
+		{
+			DeltaX: 2.6,
 			DeltaY: 0,
 		},
 		{
@@ -75,19 +87,7 @@ func GeneratePlayerDashNoWeapon() *ActionAnimation {
 			DeltaY: 0,
 		},
 		{
-			DeltaX: 2.5,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 2.5,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 2.5,
-			DeltaY: 0,
-		},
-		{
-			DeltaX: 2.2,
+			DeltaX: 2.4,
 			DeltaY: 0,
 		},
 		{

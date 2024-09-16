@@ -119,7 +119,7 @@ func GeneratePlayerJumpNoWeapon() *ActionAnimation {
 		},
 		AnimationComplete:       false,
 		FrameVectors:            frameVectors,
-		AllowCancelAfterFrame:   4,
+		AllowCancelAfterFrame:   6,
 		AllowCancelOnDirections: cancelDirections,
 		HasEffect:               true,
 		Effect:                  *GenerateEffectJump(),
