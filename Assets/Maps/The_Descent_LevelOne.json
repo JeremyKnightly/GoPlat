@@ -421,7 +421,7 @@
                  "y":321
                 }, 
                 {
-                 "height":93.5,
+                 "height":94.8333333333333,
                  "id":35,
                  "name":"",
                  "rotation":0,
@@ -999,10 +999,30 @@
                         {
                          "name":"HasNextSprite",
                          "type":"bool",
-                         "value":false
+                         "value":true
+                        }, 
+                        {
+                         "name":"ItemName",
+                         "type":"string",
+                         "value":"FloorKey"
+                        }, 
+                        {
+                         "name":"ItemText",
+                         "type":"string",
+                         "value":"It's a key."
+                        }, 
+                        {
+                         "name":"MessageText",
+                         "type":"string",
+                         "value":"Picked up a KEY!"
                         }, 
                         {
                          "name":"NextSpriteName",
+                         "type":"string",
+                         "value":"Blank"
+                        }, 
+                        {
+                         "name":"SpawnSubType",
                          "type":"string",
                          "value":"none"
                         }, 
@@ -1181,7 +1201,7 @@
                  "y":92
                 }, 
                 {
-                 "height":11.3333333333333,
+                 "height":15,
                  "id":159,
                  "name":"",
                  "properties":[
@@ -1193,7 +1213,7 @@
                         {
                          "name":"DespawnOnPickup",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"HasNextSprite",
@@ -1201,9 +1221,29 @@
                          "value":true
                         }, 
                         {
+                         "name":"ItemName",
+                         "type":"string",
+                         "value":"Widget"
+                        }, 
+                        {
+                         "name":"ItemText",
+                         "type":"string",
+                         "value":"It's a widget!"
+                        }, 
+                        {
+                         "name":"MessageText",
+                         "type":"string",
+                         "value":"Opened a CHEST!"
+                        }, 
+                        {
                          "name":"NextSpriteName",
                          "type":"string",
-                         "value":"OpenChest"
+                         "value":"ChestOpen"
+                        }, 
+                        {
+                         "name":"SpawnSubType",
+                         "type":"string",
+                         "value":"none"
                         }, 
                         {
                          "name":"SpawnType",
@@ -1228,14 +1268,168 @@
                         {
                          "name":"UniqueName",
                          "type":"string",
-                         "value":""
+                         "value":"LvlOneChest1"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":13,
-                 "x":253,
-                 "y":110
+                 "x":254,
+                 "y":111
+                }, 
+                {
+                 "height":16.9999666666666,
+                 "id":160,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"CanInteract",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"DespawnOnPickup",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"HasNextSprite",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"ItemName",
+                         "type":"string",
+                         "value":"Widget"
+                        }, 
+                        {
+                         "name":"ItemText",
+                         "type":"string",
+                         "value":"It's a widget."
+                        }, 
+                        {
+                         "name":"MessageText",
+                         "type":"string",
+                         "value":"Opened a CHEST!"
+                        }, 
+                        {
+                         "name":"NextSpriteName",
+                         "type":"string",
+                         "value":"ChestOpen"
+                        }, 
+                        {
+                         "name":"SpawnSubType",
+                         "type":"string",
+                         "value":"none"
+                        }, 
+                        {
+                         "name":"SpawnType",
+                         "type":"string",
+                         "value":"Item"
+                        }, 
+                        {
+                         "name":"Special",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"SpriteName",
+                         "type":"string",
+                         "value":"ChestClosed"
+                        }, 
+                        {
+                         "name":"SpriteSpawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"UniqueName",
+                         "type":"string",
+                         "value":"LvlOneChest2"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13,
+                 "x":719.833333333333,
+                 "y":495.33335
+                }, 
+                {
+                 "height":18.3333,
+                 "id":161,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"CanInteract",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"DespawnOnPickup",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"HasNextSprite",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"ItemName",
+                         "type":"string",
+                         "value":"FloorKey"
+                        }, 
+                        {
+                         "name":"ItemText",
+                         "type":"string",
+                         "value":"It's a key."
+                        }, 
+                        {
+                         "name":"MessageText",
+                         "type":"string",
+                         "value":"Picked up a KEY!"
+                        }, 
+                        {
+                         "name":"NextSpriteName",
+                         "type":"string",
+                         "value":"Blank"
+                        }, 
+                        {
+                         "name":"SpawnSubType",
+                         "type":"string",
+                         "value":"none"
+                        }, 
+                        {
+                         "name":"SpawnType",
+                         "type":"string",
+                         "value":"Key"
+                        }, 
+                        {
+                         "name":"Special",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"SpriteName",
+                         "type":"string",
+                         "value":"KeyGold"
+                        }, 
+                        {
+                         "name":"SpriteSpawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"UniqueName",
+                         "type":"string",
+                         "value":"LevelOneKey"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":14.6667,
+                 "x":74.3333166666667,
+                 "y":72.1666833333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1244,7 +1438,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":160,
+ "nextobjectid":162,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.0",

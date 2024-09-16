@@ -1,6 +1,8 @@
 package sprites
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type ItemSprite struct {
 	*Sprite
@@ -42,8 +44,6 @@ func (is *ItemSprite) GoToNextSprite() {
 
 	if is.HasNextSprite {
 		is.CurrentSpriteName = is.NextSpriteName
-	} else {
-		is.Exists = false
 	}
 }
 
@@ -67,12 +67,8 @@ func (is *ItemSprite) SetSpawnType(typeName string) {
 func (is *ItemSprite) GetCurrentSpriteName() string {
 	if len(is.CurrentSpriteName) > 0 {
 		return is.CurrentSpriteName
-	} /*else if is.Exists {
-		is.GoToPrevSprite()
-		return is.CurrentSpriteName
 	}
 
-	println("InvalidCurrentSpriteName")*/
 	return ""
 }
 
@@ -90,4 +86,12 @@ func (is *ItemSprite) GetSpriteFrameImage() *ebiten.Image {
 
 func (is *ItemSprite) DoesExist() bool {
 	return is.Exists
+}
+
+func (is *ItemSprite) GetSpawnName() string {
+	return is.UniqueName
+}
+
+func (is *ItemSprite) SetSpawnName(name string) {
+	is.UniqueName = name
 }

@@ -76,3 +76,12 @@ func (i *Inventory) GetItem(itemName string) (*Item, bool) {
 
 	return nil, false
 }
+
+func (i *Inventory) IsSpawnCollected(spawnName string) bool {
+	for _, item := range i.Items {
+		if item.GetSpawnName() == spawnName {
+			return item.IsCollected()
+		}
+	}
+	return false
+}

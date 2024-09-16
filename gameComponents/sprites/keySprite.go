@@ -66,14 +66,8 @@ func (ks *KeySprite) SetSpawnType(typeName string) {
 func (ks *KeySprite) GetCurrentSpriteName() string {
 	if len(ks.CurrentSpriteName) > 0 {
 		return ks.CurrentSpriteName
-	} /*else if ks.Exists {
-		println("loading prev key")
-
-		ks.GoToPrevSprite()
-		return ks.CurrentSpriteName
 	}
 
-	println("InvalidCurrentSpriteName")*/
 	return ""
 }
 
@@ -91,4 +85,12 @@ func (ks *KeySprite) GetSpriteFrameImage() *ebiten.Image {
 
 func (ks *KeySprite) DoesExist() bool {
 	return ks.Exists
+}
+
+func (ks *KeySprite) GetSpawnName() string {
+	return ks.UniqueName
+}
+
+func (ks *KeySprite) SetSpawnName(name string) {
+	ks.UniqueName = name
 }

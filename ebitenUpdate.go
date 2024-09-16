@@ -50,7 +50,7 @@ func (g *Game) PlayGame() {
 	g.setPlayerPositionWithInput()
 	g.setCameraPosition()
 	g.setPlayerFrame()
-	g.NPSpriteManager.UpdateInteractableSprites()
+	UpdateInteractableSprites(g.NPSpriteManager, g.currentLevel, g.Player.Status.TempInventory)
 	g.playSFX()
 }
 

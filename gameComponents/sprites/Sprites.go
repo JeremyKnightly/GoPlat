@@ -25,6 +25,8 @@ type interactableSprite interface {
 	SetSpriteFrameImage(*ebiten.Image)
 	GetSpriteFrameImage() *ebiten.Image
 	AddToPlayerStatus(*Player)
+	SetSpawnName(string)
+	GetSpawnName() string
 }
 
 type Frame struct {

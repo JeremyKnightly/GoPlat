@@ -18,18 +18,11 @@ func NewNPSpriteManager() *NPSpriteManager {
 	return &NPSpriteManager{}
 }
 
-func (npsm *NPSpriteManager) UpdateInteractableSprites() {
-	for _, interactable := range npsm.ExistingInteractables {
-		interactable.SetSpriteFrameImage(npsm.GetImageFromNamedSprite(interactable.GetCurrentSpriteName()))
-	}
-}
-
 func (npsm *NPSpriteManager) GetImageFromNamedSprite(imageName string) *ebiten.Image {
 	for _, namedSprite := range npsm.SpriteDB {
 		if namedSprite.Name == imageName {
 			return namedSprite.Sprite
 		}
 	}
-	println("image ", imageName, " not found!")
 	return nil
 }

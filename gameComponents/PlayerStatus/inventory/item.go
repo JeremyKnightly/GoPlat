@@ -6,7 +6,7 @@ type Item struct {
 	spawnCollectSaved bool
 	itemSuperType     string
 	itemSubType       string
-	messageText       string
+	itemText          string
 	itemName          string
 	quantity          int
 }
@@ -19,7 +19,7 @@ func NewItem() *Item {
 		itemName:          "",
 		itemSuperType:     "item",
 		itemSubType:       "subItem",
-		messageText:       "An Item",
+		itemText:          "An Item",
 		quantity:          0,
 	}
 }
@@ -88,12 +88,12 @@ func (i *Item) SetItemSubType(subType string) {
 	i.itemSubType = subType
 }
 
-func (i *Item) GetMessageText() string {
-	return i.messageText
+func (i *Item) GetItemText() string {
+	return i.itemText
 }
 
-func (i *Item) SetMessageText(text string) {
-	i.messageText = text
+func (i *Item) SetItemText(text string) {
+	i.itemText = text
 }
 
 func (i *Item) GetSpawnName() string {

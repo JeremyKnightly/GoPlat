@@ -66,13 +66,8 @@ func (pu *PUpSprite) SetSpawnType(typeName string) {
 func (pu *PUpSprite) GetCurrentSpriteName() string {
 	if len(pu.CurrentSpriteName) > 0 {
 		return pu.CurrentSpriteName
-	} /*else if pu.Exists {
-		println("loading prev pup")
-		pu.GoToPrevSprite()
-		return pu.CurrentSpriteName
 	}
 
-	println("InvalidCurrentSpriteName")*/
 	return ""
 }
 
@@ -90,4 +85,12 @@ func (pu *PUpSprite) GetSpriteFrameImage() *ebiten.Image {
 
 func (pu *PUpSprite) DoesExist() bool {
 	return pu.Exists
+}
+
+func (pu *PUpSprite) GetSpawnName() string {
+	return pu.UniqueName
+}
+
+func (pu *PUpSprite) SetSpawnName(name string) {
+	pu.UniqueName = name
 }

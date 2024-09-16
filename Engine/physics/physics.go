@@ -96,5 +96,5 @@ func handleFall(player *sprites.Player, pVector *controls.Vector) {
 	player.CurrentAnimationIndex = 9
 	player.IsWallSliding = false
 	player.IsIdle = false
-	pVector.DeltaY += 1.4
+	pVector.DeltaY += 1.6
 }
