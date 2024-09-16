@@ -58,20 +58,20 @@ func GeneratePlayerEdgeClimbNoWeapon() *ActionAnimation {
 			DeltaY: -3,
 		},
 		{
-			DeltaX: 1.5,
-			DeltaY: -2.5,
+			DeltaX: 1.2,
+			DeltaY: -2.4,
 		},
 		{
-			DeltaX: 2.4,
-			DeltaY: -2.6,
+			DeltaX: 2.0,
+			DeltaY: -2.4,
 		},
 		{
-			DeltaX: 1.9,
-			DeltaY: -2.3,
+			DeltaX: 1.45,
+			DeltaY: -2.1,
 		},
 		{
-			DeltaX: 1.6,
-			DeltaY: -.7,
+			DeltaX: 1.05,
+			DeltaY: -.4,
 		},
 	}
 
