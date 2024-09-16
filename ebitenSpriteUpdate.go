@@ -13,6 +13,7 @@ func UpdateInteractableSprites(npsm *sprites.NPSpriteManager, lvl *levels.Level,
 		spawner, err := GetSpawner(lvl, interactable.GetSpawnName())
 		if err != nil {
 			println("spawner not found: ", interactable.GetSpawnName())
+			continue
 		}
 
 		spawnCollected, showSpawn, goNextSprite := spawner.GetInteractStatus(inventory)
@@ -45,6 +46,7 @@ func GetSpawner(lvl *levels.Level, spawnName string) (*collision.Rect, error) {
 // -------------------initial loadup---------------------//
 func (g *Game) UpdateSpriteSpawns() {
 	npsm := g.NPSpriteManager
+	npsm.ClearInteractables()
 	collisionData := collision.ExtractCollisionData(g.currentLevel)
 
 	for _, collision := range collisionData {

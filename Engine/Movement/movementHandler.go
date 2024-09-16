@@ -85,6 +85,7 @@ func KeyPressed(control *controls.Control) bool {
 		return ebiten.IsKeyPressed(control.Key)
 	}
 
+	//If key is being pressed, if key was released, keyReleased set to false, then rtn
 	if ebiten.IsKeyPressed(control.Key) {
 		if control.KeyReleased {
 			control.KeyReleased = false

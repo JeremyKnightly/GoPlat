@@ -31,6 +31,7 @@ func handleJump(p *sprites.Player) bool {
 		p.ActionAnimations[p.CurrentAnimationIndex].Reset()
 		p.HasSecondJump = true
 		p.CanJump = false
+		p.IsAirborn = true
 		return true
 	} else if p.HasSecondJump && p.IsAirborn {
 		p.CurrentAnimationIndex = 3
