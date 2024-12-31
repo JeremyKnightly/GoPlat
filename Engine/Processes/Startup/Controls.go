@@ -86,6 +86,41 @@ func GetControls() []*controls.Control {
 		KeyReleased:      true,
 	}
 
+	//alternate keyboard controls
+	left2 := &controls.Control{
+		Key:       ebiten.KeyArrowLeft,
+		Direction: controls.LEFT,
+		Type:      "Keyboard",
+	}
+	right2 := &controls.Control{
+		Key:       ebiten.KeyArrowRight,
+		Direction: controls.RIGHT,
+		Type:      "Keyboard",
+	}
+	dashLeft2 := &controls.Control{
+		Keys: []ebiten.Key{
+			ebiten.KeyArrowLeft,
+			ebiten.KeyShiftRight,
+		},
+		Direction: controls.DASHLEFT,
+		Type:      "Keyboard",
+	}
+	dashRight2 := &controls.Control{
+		Keys: []ebiten.Key{
+			ebiten.KeyArrowRight,
+			ebiten.KeyShiftRight,
+		},
+		Direction: controls.DASHRIGHT,
+		Type:      "Keyboard",
+	}
+	jump2 := &controls.Control{
+		Key:              ebiten.KeyControlRight,
+		Direction:        controls.JUMP,
+		Type:             "Keyboard",
+		RequireJustPress: true,
+		KeyReleased:      true,
+	}
+
 	return []*controls.Control{
 		//Gamepad
 		GPLeft1,
@@ -102,5 +137,12 @@ func GetControls() []*controls.Control {
 		dashLeft,
 		dashRight,
 		space,
+
+		//alternate keyboard
+		left2,
+		right2,
+		dashLeft2,
+		dashRight2,
+		jump2,
 	}
 }

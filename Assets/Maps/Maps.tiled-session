@@ -38,10 +38,10 @@
                 7
             ],
             "scale": 1.5,
-            "selectedLayer": 2,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 224.99999999999997,
-                "y": 230.33333333333337
+                "x": 225,
+                "y": 46.666666666666686
             }
         },
         "LevelTwo.json#Dungeon Tile Set": {
@@ -51,30 +51,30 @@
             "expandedObjectLayers": [
                 12
             ],
-            "scale": 3,
+            "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 309.5,
-                "y": 101.16666666666666
+                "x": 198.33333333333334,
+                "y": 299.33333333333326
             }
         },
         "The_Descent_LevelTwo.json": {
             "expandedObjectLayers": [
                 6
             ],
-            "scale": 3,
+            "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 143.83333333333334,
-                "y": 563.6666666666666
+                "x": 625.6666666666666,
+                "y": 217.3333333333333
             }
         },
         "The_Descent__Playground.tmj": {
             "scale": 1.02125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 400,
-                "y": 480.2937576499388
+                "x": 399.99999999999994,
+                "y": 480.78335373317015
             }
         },
         "Tilesets/Dungeon Tile Set.tsx": {
@@ -97,12 +97,12 @@
     "last.exportedFilePath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps",
     "last.externalTilesetPath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps/Tilesets",
     "last.imagePath": "G:/VSCProjects/GoDev/GoPlat/Assets/Maps/Tilesets",
-    "map.height": 40,
+    "map.height": 200,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 50,
+    "map.width": 200,
     "openFiles": [
     ],
     "project": "Maps.tiled-project",
