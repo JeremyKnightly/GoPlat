@@ -5,6 +5,8 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        ".",
+        "Tilesets"
     ],
     "fileStates": {
         "": {
@@ -35,16 +37,28 @@
         },
         "LevelTwo.json": {
             "expandedObjectLayers": [
+                9,
                 7
             ],
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 225,
-                "y": 46.666666666666686
+                "x": 224.66666666666666,
+                "y": 230.66666666666669
             }
         },
         "LevelTwo.json#Dungeon Tile Set": {
+            "scaleInDock": 1
+        },
+        "LevelTwo.tmj": {
+            "scale": 0.5577763897564023,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 399.8017917133259,
+                "y": 801.3964165733482
+            }
+        },
+        "LevelTwo.tmj#Dungeon Tile Set": {
             "scaleInDock": 1
         },
         "The_Descent_LevelOne.json": {
@@ -54,27 +68,36 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 198.33333333333334,
-                "y": 299.33333333333326
+                "x": 389.3333333333333,
+                "y": 207.3333333333333
+            }
+        },
+        "The_Descent_LevelOne.tmj": {
+            "scale": 1.1776041666666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 479.7877045555065,
+                "y": 320.1415302963291
             }
         },
         "The_Descent_LevelTwo.json": {
             "expandedObjectLayers": [
-                6
+                6,
+                7
             ],
             "scale": 1.5,
-            "selectedLayer": 4,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 625.6666666666666,
-                "y": 217.3333333333333
+                "x": 614,
+                "y": 861.3333333333333
             }
         },
         "The_Descent__Playground.tmj": {
             "scale": 1.02125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 399.99999999999994,
-                "y": 480.78335373317015
+                "x": 399.5104039167687,
+                "y": 345.6548347613219
             }
         },
         "Tilesets/Dungeon Tile Set.tsx": {
@@ -104,12 +127,20 @@
     "map.tileWidth": 16,
     "map.width": 200,
     "openFiles": [
+        "LevelTwo.json",
+        "The_Descent_LevelOne.json",
+        "The_Descent_LevelTwo.json",
+        "The_Descent__Playground.tmj",
+        "The_Descent_LevelOne.tmj"
     ],
     "project": "Maps.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "LevelTwo.json",
+        "The_Descent_LevelOne.json",
+        "The_Descent_LevelTwo.json",
         "The_Descent__Playground.tmj",
+        "The_Descent_LevelOne.tmj",
         "test.json",
         "Tilesets/Dungeon.tsx",
         "LevelOne.tmj",
