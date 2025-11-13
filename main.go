@@ -77,4 +77,4 @@ func (game *Game) SetGameProperties() {
 	game.SoundManager = startup.GetAllSounds()
 	game.NPSpriteManager = sprites.NewNPSpriteManager()
 	game.NPSpriteManager.CreateSpriteDB()
-}
+} // Note to test commits
